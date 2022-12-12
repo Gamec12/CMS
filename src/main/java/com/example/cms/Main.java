@@ -32,7 +32,7 @@ public class Main extends Application {
         Text admin = new Text();
         admin.setOnMouseClicked(e-> {} );// open admin login
 
-        grid.add(title , 0 , 0 ,2, 2);
+        grid.add(title , 0 , 0 ,2, 1);
 
         grid.add(Register , 0 , 3);
         grid.add(Login , 1 , 3);
