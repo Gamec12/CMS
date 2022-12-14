@@ -29,13 +29,16 @@ public class Main extends Application {
         Button Login = new Button("Login");
        // Register.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));
 
-        Text admin = new Text();
-        admin.setOnMouseClicked(e-> {} );// open admin login
+        Text admin = new Text("An admin?");
+        admin.setOnMouseClicked(e-> {
+            admin.setText("HEHEHEHHHAH");
+        } );// open admin login
 
         grid.add(title , 0 , 0 ,2, 1);
 
         grid.add(Register , 0 , 3);
         grid.add(Login , 1 , 3);
+        grid.add(admin , 0 , 4);
         Scene s  = new Scene(grid , 500 , 500);
         stage.setScene(s);
         stage.setTitle("CMS");
@@ -43,13 +46,9 @@ public class Main extends Application {
         stage.show();
 
 
-
-
-
-
     }
 
-    private static GridPane GetDefaultPane() {
+    public static GridPane GetDefaultPane() {
         GridPane grid = new GridPane();
         grid.setPadding( new Insets(10));
         grid.setHgap(10);
