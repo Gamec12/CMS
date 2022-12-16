@@ -31,7 +31,8 @@ public class Main extends Application {
 
         Text admin = new Text("An admin?");
         admin.setOnMouseClicked(e-> {
-            admin.setText("HEHEHEHHHAH");
+            AdminPannel adminPannel = new AdminPannel();
+            adminPannel.start(stage);
         } );// open admin login
 
         grid.add(title , 0 , 0 ,2, 1);
