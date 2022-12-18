@@ -5,6 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="Scuffed main page look with a weird ICON">
+      <change afterPath="$PROJECT_DIR$/src/main/Data/Admin.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Data/Customers.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Data/Customers.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Data/Customers.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Data/Inventory.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminLogin.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Admin.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" afterDir="false" />
@@ -13,9 +19,11 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Product.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/User.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Validations.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomersView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminPannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminPannel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +59,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Uni/Semister 3/OOP/Projects/CMS/src/main/java/com/example/cms/Classes",
+    "last_opened_file_path": "D:/Uni/Semister 3/OOP/Projects/CMS/src/main",
     "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -60,14 +68,19 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src\main" />
       <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src\main\java\com\example\cms\Classes" />
       <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src\main\java\com\example\cms" />
       <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src\main\java\com\example\cms\Classes" />
       <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src\main\java\com\example\cms\Images" />
       <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src\main\java\com\example\cms" />
       <recent name="D:\Uni\Semister 3\OOP\Projects\CMS\src\Images" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.cms" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -84,7 +97,9 @@
       <workItem from="1670968209720" duration="1204000" />
       <workItem from="1671025731866" duration="8187000" />
       <workItem from="1671208675434" duration="3000" />
-      <workItem from="1671208707648" duration="3474000" />
+      <workItem from="1671208707648" duration="4305000" />
+      <workItem from="1671257830431" duration="14000" />
+      <workItem from="1671389327841" duration="3926000" />
     </task>
     <task id="LOCAL-00001" summary="sadad">
       <created>1670845813536</created>
@@ -121,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671040352622</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Scuffed main page look with a weird ICON">
+      <created>1671212419493</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1671212419493</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

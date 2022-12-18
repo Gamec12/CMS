@@ -1,5 +1,7 @@
 package com.example.cms;
 
+import com.example.cms.Classes.Inventory;
+import com.example.cms.Classes.Product;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -13,9 +15,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdminPannel extends Application {
-
+    //private Map<Integer , Product> products = new HashMap<>();
 
     public static void main(String[] args) {
        launch();
@@ -28,7 +32,6 @@ public class AdminPannel extends Application {
         GridPane gridPane = Main.GetDefaultPane();
         BorderPane border = new BorderPane();
 
-
         HBox box = new HBox(10);
 
         box.setPadding( new Insets(10));
@@ -37,20 +40,33 @@ public class AdminPannel extends Application {
 
         Button orders = new Button("Order");
         Button customers = new Button("Customers");
+        customers.setOnAction(e->{
+            CustomersView customersView = new CustomersView();
+            customersView.start(stage);
+        });
         box.getChildren().addAll(orders , customers);
         HBox.setMargin(orders , new Insets(10));
         HBox.setMargin(customers , new Insets(10));
         //ScrollPane items = new ScrollPane();
 
         ListView<String> listView = new ListView<>();
-        listView.getItems().addAll("Item 1" , "Item 2" , "Item 3" , "Item 4 ");
-        border.setCenter(listView);
+//        listView.getItems().addAll("Item 1" , "Item 2" , "Item 3" , "Item 4 ");
+//        border.setCenter(listView);
 //        listView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<String>() { what i wanted was when I click the thing more info appears
 //
 //        });
+//        products = inv.getProducts();
+//        for(Product p : products.values())
+//        {
+//            listView.getItems().add(p.toString());
+//        }
+
 
         Text text = new Text("Welcome");
         border.setTop(box);
+
+        // button to add items opens a new window and returns to the previous window after ading the item
+
 
 
 
