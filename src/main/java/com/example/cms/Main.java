@@ -43,7 +43,7 @@ public class Main extends Application {
         Scene s  = new Scene(grid , 500 , 500);
         stage.setScene(s);
         stage.setTitle("CMS");
-        stage.getIcons().add(new Image("D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Images\\Icon.jpg"));
+       // stage.getIcons().add(new Image("D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Images\\Icon.jpg"));
         stage.show();
 
 
@@ -56,6 +56,8 @@ public class Main extends Application {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         grid.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));
+        grid.setStyle("-fx-background-color: #fffff;");
+
         return grid;
     }
 

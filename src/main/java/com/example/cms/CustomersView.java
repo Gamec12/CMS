@@ -2,6 +2,7 @@ package com.example.cms;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -21,8 +22,14 @@ public class CustomersView extends Application {
         Text text = new Text("Customers");
         text.setFont(Font.font("arial", FontWeight.BOLD, 30));
         gridPane.add(text, 0 ,0 ,2,2);
+        Button button = new Button("Back");
+        gridPane.add(button , 0,3);
+        button.setOnAction(e->{
+            AdminPannel adminPannel = new AdminPannel();
+            adminPannel.start(stage);
+        });
         ListView listView = new ListView();
-        gridPane.add(listView , 0 , 3);
+        gridPane.add(listView , 0 , 4);
 
         listView.getItems().addAll("Test1" , "Test2" , "Test3");
 

@@ -5,6 +5,7 @@ import com.example.cms.Classes.Product;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -32,11 +33,7 @@ public class AdminPannel extends Application {
         GridPane gridPane = Main.GetDefaultPane();
         BorderPane border = new BorderPane();
 
-        HBox box = new HBox(10);
-
-        box.setPadding( new Insets(10));
-        box.setMaxHeight(200);
-        box.setMaxWidth(10000);
+        HBox box = gethBox();
 
         Button orders = new Button("Order");
         Button customers = new Button("Customers");
@@ -50,7 +47,8 @@ public class AdminPannel extends Application {
         //ScrollPane items = new ScrollPane();
 
         ListView<String> listView = new ListView<>();
-//        listView.getItems().addAll("Item 1" , "Item 2" , "Item 3" , "Item 4 ");
+        listView.getItems().addAll("Item 1" , "Item 2" , "Item 3" , "Item 4 ");
+        border.setCenter(listView);
 //        border.setCenter(listView);
 //        listView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<String>() { what i wanted was when I click the thing more info appears
 //
@@ -65,7 +63,16 @@ public class AdminPannel extends Application {
         Text text = new Text("Welcome");
         border.setTop(box);
 
-        // button to add items opens a new window and returns to the previous window after ading the item
+         HBox bottom = gethBox();
+         bottom.setAlignment(Pos.BOTTOM_LEFT);
+         Button add = new Button("Add a product");
+         add.setOnAction(e->{
+             // open something
+         });
+         bottom.getChildren().addAll(add);
+         border.setBottom(bottom);
+
+        // button to add items opens a new window and returns to the previous window after adding the item
 
 
 
@@ -76,5 +83,14 @@ public class AdminPannel extends Application {
 
         stage.setScene(new Scene(border , 500 , 500) );
         stage.show();
+    }
+
+    private static HBox gethBox() {
+        HBox box = new HBox(10);
+
+        box.setPadding( new Insets(10));
+        box.setMaxHeight(200);
+        box.setMaxWidth(10000);
+        return box;
     }
 }
