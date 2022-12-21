@@ -10,6 +10,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class CustomersView extends Application {
 
     public static void main(String[] args) {
@@ -26,7 +28,13 @@ public class CustomersView extends Application {
         gridPane.add(button , 0,3);
         button.setOnAction(e->{
             AdminPannel adminPannel = new AdminPannel();
-            adminPannel.start(stage);
+            try {
+                adminPannel.start(stage);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         ListView listView = new ListView();
         gridPane.add(listView , 0 , 4);

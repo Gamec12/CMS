@@ -2,15 +2,16 @@ package com.example.cms.Classes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Admin {
-    public void addProduct(Inventory myInv) {
+    public void addProduct(Inventory myInv) throws IOException {
         myInv.addProduct();
         myInv.save();
     }
 
-    public void deleteProduct(Inventory myInv) {
+    public void deleteProduct(Inventory myInv) throws IOException {
         myInv.deleteItem();
 
     }
@@ -31,12 +32,12 @@ public class Admin {
             } else {
                 System.out.println("\n>>>  ERROR: Login failed - incorrect password  <<<\n");
             }
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             System.out.println(ex);
         }
     }
 
-    public static void adminLoop(Inventory inventory) // will exit out of it if he wants to
+    public static void adminLoop(Inventory inventory) throws IOException // will exit out of it if he wants to
     {
         int id;
         double price;

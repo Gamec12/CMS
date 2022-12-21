@@ -56,7 +56,7 @@ public class Main extends Application {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         grid.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));
-        grid.setStyle("-fx-background-color: #fffff;");
+        //grid.setStyle("-fx-background-color: #fffff;");
 
         return grid;
     }

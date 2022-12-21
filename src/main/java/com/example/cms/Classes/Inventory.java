@@ -1,11 +1,10 @@
 package com.example.cms.Classes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.util.*;
+import java.io.ObjectOutputStream;
 
-public class Inventory {
+public class Inventory implements Serializable {
     private int capacity;                               // Determine the maximum number of products
     private int count;                                  // Current count of products in inventory
 
@@ -15,33 +14,12 @@ public class Inventory {
 
     java.io.File file = new java.io.File("src/main/Data/Inventory.json");
 
-    Gson gson = new GsonBuilder()                       // Use GsonBuilder to handle JSON files
-            .disableHtmlEscaping()
-            .setPrettyPrinting()
-            .serializeNulls()
-            .create();
 
-    public Inventory() {                                // Default constructor (calls parameterized constructor)
+    public Inventory() throws IOException, ClassNotFoundException {                                // Default constructor (calls parameterized constructor)
         this(1000);
-        try {
-            Scanner input = new Scanner(file);
-            String json = "";
-            while (input.hasNextLine()) {
-                json = json.concat(input.nextLine());
-            }
-            if(!(json.equals("")))
-            {
-                for (Product importedProduct : gson.fromJson(json, Product[].class)) {
-                    products.put(importedProduct.getItemID(),importedProduct) ;
-                    count++;
-                };
-            }
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/main/Data/inventory.dat"));
+        products = (Map<Integer, Product>) objectInputStream.readObject();
 
-
-
-        } catch (FileNotFoundException ignored) {
-            System.out.println("Couldn't find file");
-        }
 
     }
 
@@ -133,19 +111,19 @@ public class Inventory {
                 input.nextLine(); // to
             }
         }
-        Product a = new Product(id, name ,color, category, size, description, basePrice);
+        Product a = new Product(id, name ,color, category, size, description, basePrice , 999);
 
          products.put(id,a);
         count++;
     }
 
-    public void addProduct(Product newProduct) {        // Add product to inventory using Product parameter (for gui)
+    public void addProduct(Product newProduct) throws IOException {        // Add product to inventory using Product parameter (for gui)
         products.put(newProduct.getItemID() , newProduct);
+        save();
         this.count++;
     }
 
-    public void deleteItem()
-    {
+    public void deleteItem() throws IOException {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the id of the item to be deleted");
         int id = Validations.inputNum(); // enter the id of the item to be deleted
@@ -180,31 +158,9 @@ public class Inventory {
 
 
 
-    public boolean save() {                             // Saves inventory object to JSON
-        try {
-            PrintWriter output = new PrintWriter(file);
-
-            // Copy products array to new array with count set as capacity, to reduce nullified objects
-            Product[] filledProducts = new Product[products.size()];
-            int i = 0;
-
-            for(Product p : products.values())
-            {
-                filledProducts[i] = p;
-                i++;
-            }
-
-            // Print filledProducts into JSON file and close output
-            output.print(gson.toJson(filledProducts));
-            output.close();
-
-            return true;
-
-        } catch (FileNotFoundException ignored) {
-            // Handle exceptions
-            System.out.println("Something went wrong");
-            return false;
-        }
+    public void save() throws IOException {                             // Saves inventory object to JSON
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/Data/inventory.dat"));
+        out.writeObject(products);
     }
 
     public  Product getProduct(int id) // to search for an item with a specific id

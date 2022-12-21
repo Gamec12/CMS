@@ -13,6 +13,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class AdminLogin extends Application {
 
     public static void main(String[] args) {
@@ -32,7 +34,13 @@ public class AdminLogin extends Application {
             if(passwordField.getText().equals("12345"))
             {
                 AdminPannel adminPannel= new AdminPannel();
-                adminPannel.start(stage);
+                try {
+                    adminPannel.start(stage);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         grid.add(passwordField , 1 , 3);

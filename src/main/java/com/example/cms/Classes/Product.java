@@ -1,6 +1,8 @@
 package com.example.cms.Classes;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private int itemID;
     private String Name;
     private String color;
@@ -8,9 +10,11 @@ public class Product {
     private String size;
     private String description;
 
+    private int quantity;
+
     private String ImageSource;
     private double basePrice;
-    public Product(int itemID,String Name, String color, String category, String size, String description, double basePrice) {
+    public Product(int itemID,String Name, String color, String category, String size, String description, double basePrice , int quantity) {
         this.itemID = itemID;
         this.color = color;
         this.category = category;
@@ -19,6 +23,7 @@ public class Product {
         this.basePrice = basePrice;
         this.Name = Name;
         discountPrice = 0; // it won't be discounted by default
+        this.quantity =quantity;
     }
 
     private double discountPrice;

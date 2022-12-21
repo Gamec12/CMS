@@ -15,12 +15,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AdminPannel extends Application {
-    //private Map<Integer , Product> products = new HashMap<>();
+    private Map<Integer , Product> products = new HashMap<>();
 
     public static void main(String[] args) {
        launch();
@@ -29,7 +30,8 @@ public class AdminPannel extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException, ClassNotFoundException {
+        Inventory inv = new Inventory();
         GridPane gridPane = Main.GetDefaultPane();
         BorderPane border = new BorderPane();
 
@@ -47,7 +49,11 @@ public class AdminPannel extends Application {
         //ScrollPane items = new ScrollPane();
 
         ListView<String> listView = new ListView<>();
-        listView.getItems().addAll("Item 1" , "Item 2" , "Item 3" , "Item 4 ");
+        for(Product p : inv.getProducts().values())
+        {
+            listView.getItems().add(p.toString());
+            System.out.println(p.toString());
+        }
         border.setCenter(listView);
 //        border.setCenter(listView);
 //        listView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<String>() { what i wanted was when I click the thing more info appears
@@ -67,7 +73,15 @@ public class AdminPannel extends Application {
          bottom.setAlignment(Pos.BOTTOM_LEFT);
          Button add = new Button("Add a product");
          add.setOnAction(e->{
-             // open something
+             AddItem addItem = null;
+             try {
+                 addItem = new AddItem(inv);
+             } catch (IOException ex) {
+                 throw new RuntimeException(ex);
+             } catch (ClassNotFoundException ex) {
+                 throw new RuntimeException(ex);
+             }
+             addItem.start(stage);
          });
          bottom.getChildren().addAll(add);
          border.setBottom(bottom);
