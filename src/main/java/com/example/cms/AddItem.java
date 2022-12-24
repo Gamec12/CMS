@@ -84,7 +84,7 @@ public class AddItem extends Application {
         TextField  quantity = new TextField();
         gridPane.add(l8,0 , 11);
         gridPane.add(quantity , 1 , 11);
-        Button add = new Button();
+        Button add = new Button("Add");
         add.setOnAction(e->{
             Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(basePrice.getText()));
             try {

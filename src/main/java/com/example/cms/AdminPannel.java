@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class AdminPannel extends Application {
     private Map<Integer , Product> products = new HashMap<>();
@@ -49,11 +51,7 @@ public class AdminPannel extends Application {
         //ScrollPane items = new ScrollPane();
 
         ListView<String> listView = new ListView<>();
-        for(Product p : inv.getProducts().values())
-        {
-            listView.getItems().add(p.toString());
-            System.out.println(p.toString());
-        }
+        getItems(inv, listView);
         border.setCenter(listView);
 //        border.setCenter(listView);
 //        listView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<String>() { what i wanted was when I click the thing more info appears
@@ -76,14 +74,40 @@ public class AdminPannel extends Application {
              AddItem addItem = null;
              try {
                  addItem = new AddItem(inv);
+             } catch (IOException | ClassNotFoundException ex) {
+                 throw new RuntimeException(ex);
+             }
+             addItem.start(stage);
+         });
+
+         Button delete  = new Button("Delete Item");
+         delete.setOnAction(e->{
+             TextInputDialog dialog = new TextInputDialog();
+             dialog.setTitle("Enter an item to delete");
+             dialog.setHeaderText("Enter the id of an item");
+             dialog.setContentText("Item ID");
+
+             Optional<String> result = dialog.showAndWait();
+             if(result.isPresent())
+             {
+                 inv.getProducts().remove(Integer.parseInt(result.get()));
+                 try {
+                     inv.save();
+                 } catch (IOException ex) {
+                     throw new RuntimeException(ex);
+                 }
+             }
+             AdminPannel adminPannel = new AdminPannel();
+             try {
+                 adminPannel.start(stage);
              } catch (IOException ex) {
                  throw new RuntimeException(ex);
              } catch (ClassNotFoundException ex) {
                  throw new RuntimeException(ex);
              }
-             addItem.start(stage);
          });
-         bottom.getChildren().addAll(add);
+
+         bottom.getChildren().addAll(add , delete);
          border.setBottom(bottom);
 
         // button to add items opens a new window and returns to the previous window after adding the item
@@ -97,6 +121,14 @@ public class AdminPannel extends Application {
 
         stage.setScene(new Scene(border , 500 , 500) );
         stage.show();
+    }
+
+    private static void getItems(Inventory inv, ListView<String> listView) {
+        for(Product p : inv.getProducts().values())
+        {
+            listView.getItems().add(p.toString());
+            System.out.println(p.toString());
+        }
     }
 
     private static HBox gethBox() {
