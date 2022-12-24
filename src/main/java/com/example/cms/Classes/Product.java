@@ -12,6 +12,8 @@ public class Product implements Serializable {
 
     private int quantity;
 
+
+
     private String ImageSource;
     private double basePrice;
     public Product(int itemID,String Name, String color, String category, String size, String description, double basePrice , int quantity) {
@@ -93,6 +95,10 @@ public class Product implements Serializable {
         return Name;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -103,6 +109,7 @@ public class Product implements Serializable {
                 ", size='" + size + '\'' +
                 ", description='" + description + '\'' +
                 ", basePrice=" + basePrice +
+                "quantity" + quantity +
                 '}';
     }
 }

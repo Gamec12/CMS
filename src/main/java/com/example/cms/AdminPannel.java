@@ -100,14 +100,34 @@ public class AdminPannel extends Application {
              AdminPannel adminPannel = new AdminPannel();
              try {
                  adminPannel.start(stage);
-             } catch (IOException ex) {
-                 throw new RuntimeException(ex);
-             } catch (ClassNotFoundException ex) {
+             } catch (IOException | ClassNotFoundException ex) {
                  throw new RuntimeException(ex);
              }
          });
 
-         bottom.getChildren().addAll(add , delete);
+         Button edit = new Button("Edit Item");
+        edit.setOnAction(e->{
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Enter an item to delete");
+            dialog.setHeaderText("Enter the id of an item");
+            dialog.setContentText("Item ID");
+
+            Optional<String> result = dialog.showAndWait();
+            if(result.isPresent())
+            {
+                int id = Integer.parseInt(result.get());
+                EditItem editItem = new  EditItem(inv , id);
+
+                try {
+                    editItem.start(stage);
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+        });
+
+         bottom.getChildren().addAll(add , delete , edit);
          border.setBottom(bottom);
 
         // button to add items opens a new window and returns to the previous window after adding the item

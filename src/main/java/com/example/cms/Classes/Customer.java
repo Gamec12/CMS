@@ -7,8 +7,9 @@ import java.util.TreeMap;
 
 public class Customer extends User implements Serializable {
     public static int nextId = 1; // to know the next id sequentially
-    Cart cart;
     static Map<Integer, Customer> customers = new TreeMap<>();
+
+    Cart cart = new Cart();
 
     public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password) {
         super(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);
@@ -171,6 +172,7 @@ public class Customer extends User implements Serializable {
             throw new RuntimeException(e);
         }
     }
+
 }
 
 

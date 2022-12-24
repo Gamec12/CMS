@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="Added binary files">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/DeletePannel.java" afterDir="false" />
+    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="remove and add works">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/EditItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Data/inventory.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Data/inventory.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminLogin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminPannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminPannel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +91,7 @@
       <workItem from="1671208707648" duration="4305000" />
       <workItem from="1671257830431" duration="14000" />
       <workItem from="1671389327841" duration="3926000" />
-      <workItem from="1671889874290" duration="2940000" />
+      <workItem from="1671889874290" duration="13548000" />
     </task>
     <task id="LOCAL-00001" summary="sadad">
       <created>1670845813536</created>
@@ -145,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671643589801</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="remove and add works">
+      <created>1671894133604</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1671894133604</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +177,7 @@
     <MESSAGE value="sadad" />
     <MESSAGE value="Scuffed main page look with a weird ICON" />
     <MESSAGE value="Added binary files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added binary files" />
+    <MESSAGE value="remove and add works" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove and add works" />
   </component>
 </project>
