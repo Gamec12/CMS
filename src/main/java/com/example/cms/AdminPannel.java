@@ -53,6 +53,15 @@ public class AdminPannel extends Application {
         ListView<String> listView = new ListView<>();
         getItems(inv, listView);
         border.setCenter(listView);
+        listView.setOnMouseClicked(e->{
+            String selectedItem = listView.getSelectionModel().getSelectedItem();
+            ItemDetails itemDetails = new ItemDetails(selectedItem , inv);
+            if(itemDetails.equals(""))
+            {
+                return;
+            }
+            itemDetails.start(stage);
+        });
 //        border.setCenter(listView);
 //        listView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<String>() { what i wanted was when I click the thing more info appears
 //
@@ -148,6 +157,7 @@ public class AdminPannel extends Application {
         {
             listView.getItems().add(p.toString());
             System.out.println(p.toString());
+
         }
     }
 

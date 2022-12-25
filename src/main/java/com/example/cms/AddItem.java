@@ -96,19 +96,11 @@ public class AddItem extends Application {
             AdminPannel adminPannel = new AdminPannel();
             try {
                 adminPannel.start(stage);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         });
-
-        gridPane.add(add , 2 , 12);
-        stage.setScene(new Scene(gridPane , 650 , 600));
-        stage.show();
-
-
-
+        EditItem.ItemButtons(stage, gridPane, add);
 
 
     }

@@ -23,7 +23,7 @@ public class Main extends Application {
 
 
         Text title = new Text("Welcome!");
-        title.setFont(Font.font("arial", FontWeight.BOLD, 30));
+        setText(title);
 
         Button Register = new Button("Registration");
         Button Login = new Button("Login");
@@ -47,6 +47,10 @@ public class Main extends Application {
         stage.show();
 
 
+    }
+
+    public static void setText(Text title) {
+        title.setFont(Font.font("arial", FontWeight.BOLD, 30));
     }
 
     public static GridPane GetDefaultPane() {

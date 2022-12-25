@@ -112,8 +112,22 @@ public class EditItem extends Application {
                 throw new RuntimeException(ex);
             }
         });
+        ItemButtons(stage, gridPane, edit);
+    }
+
+    static void ItemButtons(Stage stage, GridPane gridPane, Button edit) {
+        Button back = new Button("Back");
+        back.setOnAction(e->{
+            AdminPannel adminPannel = new AdminPannel();
+            try {
+                adminPannel.start(stage);
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         gridPane.add(edit , 2 , 12);
+        gridPane.add(back , 1 , 12);
         stage.setScene(new Scene(gridPane , 650 , 600));
         stage.show();
     }
