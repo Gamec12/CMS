@@ -94,14 +94,15 @@ public class EditItem extends Application {
 
             inv.getProducts().remove(id);
 
-            if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
-            {
-                ID.setText("ID already exists");
-                ID.setStyle("-fx-text-fill: red");
-                return;
-            }
+
             if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
             {
+                if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
+                {
+                    ID.setText("ID already exists");
+                    ID.setStyle("-fx-text-fill: red");
+                    return;
+                }
                 System.out.println("HELP");
                 try {
                     inv.addProduct(new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText())));

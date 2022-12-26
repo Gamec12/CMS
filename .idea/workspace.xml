@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="made thte list clickable">
+    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="added validations">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerPannel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Data/inventory.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Data/inventory.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminPannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminPannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Validations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Validations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/EditItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/EditItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/ItemDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/ItemDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +90,7 @@
       <workItem from="1671913177394" duration="934000" />
       <workItem from="1671914424069" duration="4000" />
       <workItem from="1671962613928" duration="12340000" />
-      <workItem from="1672055013899" duration="4773000" />
+      <workItem from="1672055013899" duration="9895000" />
     </task>
     <task id="LOCAL-00001" summary="sadad">
       <created>1670845813536</created>
@@ -175,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671986506616</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added validations">
+      <created>1672059856031</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1672059856031</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,7 +200,8 @@
     <MESSAGE value="remove and add works" />
     <MESSAGE value="Edit works wahooo" />
     <MESSAGE value="made thte list clickable" />
-    <option name="LAST_COMMIT_MESSAGE" value="made thte list clickable" />
+    <MESSAGE value="added validations" />
+    <option name="LAST_COMMIT_MESSAGE" value="added validations" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CMS$AdminPannel.ic" NAME="AdminPannel Coverage Results" MODIFIED="1671975531814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
