@@ -2,6 +2,7 @@ package com.example.cms;
 
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
+import com.example.cms.Classes.Validations;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -87,18 +88,29 @@ public class AddItem extends Application {
         gridPane.add(quantity , 1 , 11);
         Button add = new Button("Add");
         add.setOnAction(e->{
-            Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) );
-            try {
-                inv.addProduct(product);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+
+            if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
+            {
+                ID.setText("ID already exists");
+                ID.setStyle("-fx-text-fill: red");
+                return;
             }
-            AdminPannel adminPannel = new AdminPannel();
-            try {
-                adminPannel.start(stage);
-            } catch (IOException | ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
+            if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
+            {
+                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) );
+                try {
+                    inv.addProduct(product);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                AdminPannel adminPannel = new AdminPannel();
+                try {
+                    adminPannel.start(stage);
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
+
         });
         EditItem.ItemButtons(stage, gridPane, add);
 

@@ -8,11 +8,16 @@ import java.util.TreeMap;
 public class Customer extends User implements Serializable {
     public static int nextId = 1; // to know the next id sequentially
     static Map<Integer, Customer> customers = new TreeMap<>();
+    String address1;
+    String address2;
+    String zipCode;
 
     Cart cart = new Cart();
 
-    public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password) {
+    public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password , String address1 ) {
         super(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);
+        this.address1 = address1;
+
 
     }
 
@@ -24,7 +29,7 @@ public class Customer extends User implements Serializable {
 
     public static Customer register() {
         Scanner input = new Scanner(System.in);
-        String firstName, lastName, mobileNumber, gender, emailAddress, userName, password;
+        String firstName, lastName, mobileNumber, gender, emailAddress, userName, password, address;
         System.out.println("\n>>>  Enter your first name");
         firstName = input.next();
         System.out.println("\n>>>  Enter your last name");
@@ -40,10 +45,13 @@ public class Customer extends User implements Serializable {
         System.out.println("\n>>>  Enter your password");
         password = input.next();
 
+        System.out.println("Enter your address");
+        address = input.nextLine();
+
         System.out.println("\n>>>  Account successfully created  <<<");
         System.out.println(">>>  Press [ 1 ] to login  <<<\n");
 
-        return new Customer(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);
+        return new Customer(firstName, lastName, mobileNumber, gender, emailAddress, userName, password , address);
     }
 
 //    public static boolean checkCustomer(ListOfCustomers l1, String userName, String password) {
@@ -166,9 +174,7 @@ public class Customer extends User implements Serializable {
             customers = (Map<Integer, Customer>) in.readObject();
         } catch (FileNotFoundException ex) {
             System.out.println(ex);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

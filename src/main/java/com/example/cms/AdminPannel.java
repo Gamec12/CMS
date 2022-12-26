@@ -39,7 +39,7 @@ public class AdminPannel extends Application {
 
         HBox box = gethBox();
 
-        Button orders = new Button("Order");
+        Button orders = new Button("Orders");
         Button customers = new Button("Customers");
         customers.setOnAction(e->{
             CustomersView customersView = new CustomersView();
@@ -56,7 +56,7 @@ public class AdminPannel extends Application {
         listView.setOnMouseClicked(e->{
             String selectedItem = listView.getSelectionModel().getSelectedItem();
             ItemDetails itemDetails = new ItemDetails(selectedItem , inv);
-            if(itemDetails.equals(""))
+            if(selectedItem.equals(""))
             {
                 return;
             }

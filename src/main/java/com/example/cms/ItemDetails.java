@@ -7,8 +7,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -39,45 +42,46 @@ public class ItemDetails extends Application {
         Main.setText(text);
         gridPane.add(text , 0 , 0 ,2, 2);
 
-        Label l1 = new Label("ID :");
-        Label ID = new Label( String.valueOf(product.getItemID()));
+         bigLabel l1 = new bigLabel("ID :");
+        bigLabel ID = new bigLabel( String.valueOf(product.getItemID()));
         gridPane.add(l1 , 0 , 3);
         gridPane.add(ID , 1 , 3);
 
-        Label l2 = new Label("Name :");
-        Label Name = new Label( String.valueOf(product.getName()));
+        bigLabel l2 = new bigLabel("Name :");
+        bigLabel Name = new bigLabel( String.valueOf(product.getName()));
         gridPane.add(l2 , 0 , 4);
         gridPane.add(Name , 1 , 4);
 
-        Label l3 = new Label("Color :");
-        Label color = new Label( String.valueOf(product.getColor()));
+        bigLabel l3 = new bigLabel("Color :");
+        bigLabel color = new bigLabel( String.valueOf(product.getColor()));
         gridPane.add(l3 , 0 , 5);
         gridPane.add(color , 1 , 5);
 
-        Label l4 = new Label("category :");
-        Label category = new Label( String.valueOf(product.getCategory()));
+        bigLabel l4 = new bigLabel("category :");
+        bigLabel category = new bigLabel( String.valueOf(product.getCategory()));
         gridPane.add(l4 , 0 , 6);
         gridPane.add(category , 1 , 6);
 
-        Label l5 = new Label("size :");
-        Label size = new Label( String.valueOf(product.getSize()));
+        bigLabel l5 = new bigLabel("size :");
+        bigLabel size = new bigLabel( String.valueOf(product.getSize()));
         gridPane.add(l5 , 0 , 7);
         gridPane.add(size , 1 , 7);
 
-        Label l6 = new Label("description :");
-        Label description = new Label( String.valueOf(product.getDescription()));
+        bigLabel l6 = new bigLabel("description :");
+        TextArea description = new TextArea( String.valueOf(product.getDescription()));
+        description.setEditable(false);
         gridPane.add(l6 , 0 , 8);
-        gridPane.add(description , 1 , 8);
+        gridPane.add(description , 0 , 9);
 
-        Label l7 = new Label("description :");
-        Label basePrice = new Label( String.valueOf(product.getBasePrice()));
-        gridPane.add(l7 , 0 , 9);
-        gridPane.add(basePrice , 1 , 9);
+        bigLabel l7 = new bigLabel("description :");
+        bigLabel basePrice = new bigLabel( String.valueOf(product.getBasePrice()));
+        gridPane.add(l7 , 0 , 10);
+        gridPane.add(basePrice , 1 , 10);
 
-        Label l8 = new Label("Quantity");
-        Label  quantity = new Label( String.valueOf(product.getQuantity()));
-        gridPane.add(l8 , 0 , 10);
-        gridPane.add(quantity , 1 , 10);
+        Label l8 = new bigLabel("Quantity");
+        Label  quantity = new bigLabel( String.valueOf(product.getQuantity()));
+        gridPane.add(l8 , 0 , 11);
+        gridPane.add(quantity , 1 , 11);
 
         Button back = new Button("Back");
         back.setOnAction(e->{
@@ -88,7 +92,7 @@ public class ItemDetails extends Application {
                 throw new RuntimeException(ex);
             }
         });
-        gridPane.add(back , 0 , 11);
+        gridPane.add(back , 0 , 12);
 
         Button edit = new Button("Edit Item");
         edit.setOnAction(e->{
@@ -110,23 +114,40 @@ public class ItemDetails extends Application {
         Button delete = new Button("Delete");
         delete.setOnAction(e->{
             inv.getProducts().remove(id);
-            AdminPannel adminPannel = new AdminPannel();
-            try {
-                adminPannel.start(stage);
-            } catch (IOException | ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
+            SaveBackToAdmin(stage, inv);
         });
 
 
         HBox box = new HBox();
         box.getChildren().addAll(edit , delete);
         box.setPadding(new Insets(10));
-        HBox.setMargin(delete , new Insets(10));
-        gridPane.add(box , 1 , 11);
+        HBox.setMargin(delete , new Insets(0 , 0 ,0 ,13));
+        gridPane.add(box , 1 , 12);
 
-        stage.setScene(new Scene(gridPane , 400 , 500));
+        stage.setScene(new Scene(gridPane , 750 , 650));
         stage.show();
 
+    }
+
+    static void SaveBackToAdmin(Stage stage, Inventory inv) {
+        try {
+            inv.save();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        AdminPannel adminPannel = new AdminPannel();
+        try {
+            adminPannel.start(stage);
+        } catch (IOException | ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    static class   bigLabel  extends Label{
+        public bigLabel(String name)
+        {
+            super(name);
+            fontProperty().set(Font.font("arial",FontWeight.BOLD,20));
+
+        }
     }
 }
