@@ -88,4 +88,8 @@ public void displayCart()
     {
         return arr.isEmpty();
     }
+
+    public void addProduct(Product p) {
+        arr.add(p);
+    }
 }

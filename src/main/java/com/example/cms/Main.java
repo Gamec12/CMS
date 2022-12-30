@@ -1,8 +1,8 @@
 package com.example.cms;
 
+import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
-import com.example.cms.Classes.Validations;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -81,9 +81,20 @@ public class Main extends Application {
             VBox vBox = new VBox();
             vBox.setSpacing(10);
             vBox.setPadding(new Insets(10));
-            ImageView imageView = new ImageView(new Image(p.ImageSource));
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(100);
+            ImageView imageView;
+            try{
+                imageView = new ImageView(new Image(p.ImageSource));
+
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+            }
+            catch (IllegalArgumentException ex)
+            {
+                imageView = new ImageView(new Image("https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg"));
+            }
+            // temporrary until I know how to put items
+
+
             Text item = new Text(p.toString());
 
 
@@ -97,7 +108,7 @@ public class Main extends Application {
         }
     }
 
-    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView) {
+    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer) {
         for(Product p : inv.getProducts().values())
         {
             VBox vBox = new VBox();
@@ -105,7 +116,20 @@ public class Main extends Application {
             vBox.setPadding(new Insets(10));
 
             Button button = new Button("Add to cart");
-            ImageView imageView = new ImageView(new Image(p.ImageSource));
+            button.setOnAction(e->{
+                customer.getCart().addProduct(p);
+            });
+            ImageView imageView;
+            try{
+                imageView = new ImageView(new Image(p.ImageSource));
+
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+            }
+            catch (IllegalArgumentException ex)
+            {
+                imageView = new ImageView(new Image("https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg"));
+            }
             HBox hBox = new HBox();
             hBox.setSpacing(30);
 

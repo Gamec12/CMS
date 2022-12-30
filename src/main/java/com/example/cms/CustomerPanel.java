@@ -19,7 +19,7 @@ Inventory inv;
 Customer customer;
     public CustomerPanel() throws IOException, ClassNotFoundException {
         inv = new Inventory();
-        //this.customer = customer;
+        this.customer = new Customer("Adam" , "Loay" , "01116607644", "Male" , "adamlo2ay@gmail.com" , "Gamec" , "1234" , "40 north hillStreet" );
     }
 
 
@@ -38,7 +38,7 @@ Customer customer;
         HBox filter = new HBox();
 
         ListView<VBox> listView = new ListView<>();
-        Main.getItemsCustomer(inv, listView);
+        Main.getItemsCustomer(inv, listView , customer);
         borderPane.setCenter(listView);
 
 
