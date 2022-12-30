@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -46,7 +47,15 @@ Customer customer;
 //        Button orders = new Button("Orders");
         Button cart = new Button("Cart"); // maybe image in the future
         Button profile = new Button("Profile");
-        hBox.getChildren().addAll(profile,cart);
+
+        //Label l1 = new Label("Welcome " + customer.getFirstName());
+
+        Label l1 = new Label( String.valueOf(customer.getCart().getCount()));
+        hBox.getChildren().addAll(profile,cart , l1);
+        HBox.setMargin(cart, new Insets(0,15,0,0));
+
+
+
         borderPane.setTop(hBox);
         HBox.setMargin(profile, new Insets(0,15,0,0));
 

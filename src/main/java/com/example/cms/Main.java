@@ -118,6 +118,7 @@ public class Main extends Application {
             Button button = new Button("Add to cart");
             button.setOnAction(e->{
                 customer.getCart().addProduct(p);
+
             });
             ImageView imageView;
             try{

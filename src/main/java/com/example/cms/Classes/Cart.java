@@ -91,5 +91,11 @@ public void displayCart()
 
     public void addProduct(Product p) {
         arr.add(p);
+        System.out.println(p.toString());
+        count++;
+    }
+
+    public int getCount() {
+        return count;
     }
 }
