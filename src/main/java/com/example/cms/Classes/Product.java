@@ -14,9 +14,9 @@ public class Product implements Serializable {
 
 
 
-    private String ImageSource;
+    public String ImageSource;
     private double basePrice;
-    public Product(int itemID,String Name, String color, String category, String size, String description, double basePrice , int quantity) {
+    public Product(int itemID,String Name, String color, String category, String size, String description, double basePrice , int quantity, String ImageSource) {
         this.itemID = itemID;
         this.color = color;
         this.category = category;
@@ -26,6 +26,7 @@ public class Product implements Serializable {
         this.Name = Name;
         discountPrice = 0; // it won't be discounted by default
         this.quantity =quantity;
+        this.ImageSource = ImageSource;
     }
 
     private double discountPrice;

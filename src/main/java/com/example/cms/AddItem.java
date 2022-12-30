@@ -86,7 +86,13 @@ public class AddItem extends Application {
         TextField  quantity = new TextField();
         gridPane.add(l8,0 , 11);
         gridPane.add(quantity , 1 , 11);
+        Label l9 = new Label("Image source");
+        TextField ImageSource = new TextField();
+        gridPane.add(l9 , 0 , 12);
+        gridPane.add(ImageSource , 1 , 12);
+
         Button add = new Button("Add");
+
         add.setOnAction(e->{
 
             if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
@@ -97,7 +103,7 @@ public class AddItem extends Application {
             }
             if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
             {
-                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) );
+                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
                 try {
                     inv.addProduct(product);
                 } catch (IOException ex) {

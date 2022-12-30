@@ -1,12 +1,18 @@
 package com.example.cms;
 
+import com.example.cms.Classes.Inventory;
+import com.example.cms.Classes.Product;
+import com.example.cms.Classes.Validations;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+
 
 
 public class Main extends Application {
@@ -67,6 +75,56 @@ public class Main extends Application {
     }
 
 
+    public static void getItems(Inventory inv, ListView<VBox> listView) {
+        for(Product p : inv.getProducts().values())
+        {
+            VBox vBox = new VBox();
+            vBox.setSpacing(10);
+            vBox.setPadding(new Insets(10));
+            ImageView imageView = new ImageView(new Image(p.ImageSource));
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+            Text item = new Text(p.toString());
+
+
+            vBox.getChildren().addAll(imageView,item);
+           // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));
+
+            listView.getItems().add(vBox);
+
+            System.out.println(p.toString());
+
+        }
+    }
+
+    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView) {
+        for(Product p : inv.getProducts().values())
+        {
+            VBox vBox = new VBox();
+            vBox.setSpacing(10);
+            vBox.setPadding(new Insets(10));
+
+            Button button = new Button("Add to cart");
+            ImageView imageView = new ImageView(new Image(p.ImageSource));
+            HBox hBox = new HBox();
+            hBox.setSpacing(30);
+
+            hBox.getChildren().addAll(imageView,button);
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+            Text item = new Text(p.toString());
+            vBox.getChildren().addAll(hBox,item);
+
+            listView.getItems().add(vBox);
+
+            System.out.println(p.toString());
+
+        }
+    }
+
+    public static void ConfirmAdd(Stage stage, GridPane gridPane, TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource, Button button, Inventory inv) {
+
+    }
     public static void main(String[] args) {
         launch();
     }

@@ -17,7 +17,7 @@ public class Inventory implements Serializable {
 
     public Inventory() throws IOException, ClassNotFoundException {                                // Default constructor (calls parameterized constructor)
         this(1000);
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/main/Data/inventory.dat"));
+       ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/main/Data/inventory.dat"));
         products = (Map<Integer, Product>) objectInputStream.readObject();
 
 
@@ -111,7 +111,7 @@ public class Inventory implements Serializable {
                 input.nextLine(); // to
             }
         }
-        Product a = new Product(id, name ,color, category, size, description, basePrice , 999);
+        Product a = new Product(id, name ,color, category, size, description, basePrice , 999 , "src/main/Data/Inventory.json");
 
          products.put(id,a);
         count++;

@@ -1,13 +1,27 @@
 package com.example.cms;
 
+import com.example.cms.Classes.Customer;
+import com.example.cms.Classes.Inventory;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class CustomerPannel extends Application {
+import java.io.IOException;
+
+public class CustomerPanel extends Application {
+
+
+Inventory inv;
+Customer customer;
+    public CustomerPanel() throws IOException, ClassNotFoundException {
+        inv = new Inventory();
+        //this.customer = customer;
+    }
+
 
     public static void main(String[] args) {
         launch(args);
@@ -22,6 +36,10 @@ public class CustomerPannel extends Application {
         hBox.setPadding(new Insets(10));
         VBox vBox = new VBox();
         HBox filter = new HBox();
+
+        ListView<VBox> listView = new ListView<>();
+        Main.getItemsCustomer(inv, listView);
+        borderPane.setCenter(listView);
 
 
 

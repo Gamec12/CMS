@@ -88,35 +88,38 @@ public class EditItem extends Application {
         TextField  quantity = new TextField(String.valueOf(product.getQuantity()) );
         gridPane.add(l8,0 , 11);
         gridPane.add(quantity , 1 , 11);
+
+        Label l9 = new Label("ImageSource");
+        TextField  imageSource = new TextField(product.ImageSource);
+        gridPane.add(l9,0 , 12);
+        gridPane.add(imageSource , 1 , 12);
+
+
         Button edit = new Button("Edit");
         edit.setOnAction(e->{
 
-
-            inv.getProducts().remove(id);
-
-
             if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
             {
-                if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
-                {
-                    ID.setText("ID already exists");
-                    ID.setStyle("-fx-text-fill: red");
-                    return;
-                }
-                System.out.println("HELP");
-                try {
-                    inv.addProduct(new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText())));
-                }
-                catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-
+                if (Confirm(ID, name, color, category, size, description, basePrice, quantity, imageSource)) return;
                 ItemDetails.SaveBackToAdmin(stage, inv);
-                }
 
+            }
         });
-        ItemButtons(stage, gridPane, edit);
+
+        EditItem.ItemButtons(stage, gridPane,edit );
     }
+
+    public  boolean Confirm(TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource) {
+
+        try {
+            inv.addProduct(new Product(Integer.parseInt(ID.getText()), name.getText() , color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), imageSource.getText()));
+        }
+        catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        return false;
+    }
+
 
     static void ItemButtons(Stage stage, GridPane gridPane, Button edit) {
         Button back = new Button("Back");
@@ -129,8 +132,8 @@ public class EditItem extends Application {
             }
         });
 
-        gridPane.add(edit , 2 , 12);
-        gridPane.add(back , 1 , 12);
+        gridPane.add(edit , 2 , 14);
+        gridPane.add(back , 1 , 14);
         stage.setScene(new Scene(gridPane , 650 , 600));
         stage.show();
     }

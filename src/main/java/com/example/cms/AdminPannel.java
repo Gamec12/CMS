@@ -7,10 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -23,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class AdminPannel extends Application {
-    private Map<Integer , Product> products = new HashMap<>();
+
 
     public static void main(String[] args) {
        launch();
@@ -50,12 +47,12 @@ public class AdminPannel extends Application {
         HBox.setMargin(customers , new Insets(10));
         //ScrollPane items = new ScrollPane();
 
-        ListView<String> listView = new ListView<>();
-        getItems(inv, listView);
+        ListView<VBox> listView = new ListView<>();
+        Main.getItems(inv, listView);
         border.setCenter(listView);
         listView.setOnMouseClicked(e->{
-            String selectedItem = listView.getSelectionModel().getSelectedItem();
-            ItemDetails itemDetails = new ItemDetails(selectedItem , inv);
+            VBox selectedItem = listView.getSelectionModel().getSelectedItem();
+            ItemDetails itemDetails = new ItemDetails((String.valueOf(selectedItem.getChildren().get(1)))  , inv);
             if(selectedItem.equals(""))
             {
                 return;
@@ -80,7 +77,7 @@ public class AdminPannel extends Application {
          bottom.setAlignment(Pos.BOTTOM_LEFT);
          Button add = new Button("Add a product");
          add.setOnAction(e->{
-             AddItem addItem = null;
+             AddItem addItem;
              try {
                  addItem = new AddItem(inv);
              } catch (IOException | ClassNotFoundException ex) {
@@ -113,7 +110,7 @@ public class AdminPannel extends Application {
                  throw new RuntimeException(ex);
              }
          });
-
+            //
          Button edit = new Button("Edit Item");
         edit.setOnAction(e->{
             TextInputDialog dialog = new TextInputDialog();
@@ -152,7 +149,7 @@ public class AdminPannel extends Application {
         stage.show();
     }
 
-    private static void getItems(Inventory inv, ListView<String> listView) {
+    public static void getItems(Inventory inv, ListView<String> listView) {
         for(Product p : inv.getProducts().values())
         {
             listView.getItems().add(p.toString());

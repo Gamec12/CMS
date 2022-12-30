@@ -34,7 +34,8 @@ public class ItemDetails extends Application {
     public void start(Stage stage) {
         GridPane gridPane = Main.GetDefaultPane();
         int id;
-        id = Integer.parseInt(itemSelected.substring(itemSelected.indexOf('=') +1 , itemSelected.indexOf(','))); // to get id
+        System.out.println(itemSelected);
+        id = Integer.parseInt(itemSelected.substring(itemSelected.indexOf("D=") +2 , itemSelected.indexOf(','))); // to get id
         System.out.println(id);
         Product product = inv.getProduct(id);
 
@@ -82,6 +83,7 @@ public class ItemDetails extends Application {
         Label  quantity = new bigLabel( String.valueOf(product.getQuantity()));
         gridPane.add(l8 , 0 , 11);
         gridPane.add(quantity , 1 , 11);
+        bigLabel l9 = new bigLabel("Image Source");
 
         Button back = new Button("Back");
         back.setOnAction(e->{
