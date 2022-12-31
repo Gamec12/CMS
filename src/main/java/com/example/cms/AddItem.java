@@ -63,7 +63,8 @@ public class AddItem extends Application {
         gridPane.add(color , 1 , 5);
 
         Label l4 = new Label("Category");
-        TextField  category = new TextField();
+        ComboBox<String> category = new ComboBox<>();
+        category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Gloves","Scarf","Underwear","Swimwear","Belt","Jewelry","Watch","Bag","Wallet","Other");
         gridPane.add(l4,0 , 6);
         gridPane.add(category , 1 , 6);
 
@@ -103,7 +104,7 @@ public class AddItem extends Application {
             }
             if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
             {
-                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
+                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getSelectionModel().getSelectedItem() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
                 try {
                     inv.addProduct(product);
                 } catch (IOException ex) {

@@ -5,10 +5,7 @@ import com.example.cms.Classes.Product;
 import com.example.cms.Classes.Validations;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -65,7 +62,10 @@ public class EditItem extends Application {
         gridPane.add(color , 1 , 5);
 
         Label l4 = new Label("Category");
-        TextField  category = new TextField(product.getCategory());
+        ComboBox<String> category = new ComboBox<>();
+
+        category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Gloves","Scarf","Underwear","Swimwear","Belt","Jewelry","Watch","Bag","Wallet","Other");
+        category.getSelectionModel().select(category.getItems().indexOf(product.getCategory()));
         gridPane.add(l4,0 , 6);
         gridPane.add(category , 1 , 6);
 
@@ -109,10 +109,10 @@ public class EditItem extends Application {
         EditItem.ItemButtons(stage, gridPane,edit );
     }
 
-    public  boolean Confirm(TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource) {
+    public  boolean Confirm(TextField ID, TextField name, TextField color, ComboBox category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource) {
 
         try {
-            inv.addProduct(new Product(Integer.parseInt(ID.getText()), name.getText() , color.getText() , category.getText() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), imageSource.getText()));
+            inv.addProduct(new Product(Integer.parseInt(ID.getText()), name.getText() , color.getText() , (String) category.getSelectionModel().getSelectedItem(), size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), imageSource.getText()));
         }
         catch (IOException ex) {
             throw new RuntimeException(ex);

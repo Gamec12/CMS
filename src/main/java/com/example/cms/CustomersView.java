@@ -30,9 +30,7 @@ public class CustomersView extends Application {
             AdminPannel adminPannel = new AdminPannel();
             try {
                 adminPannel.start(stage);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         });
