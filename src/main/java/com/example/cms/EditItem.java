@@ -89,9 +89,9 @@ public class EditItem extends Application {
         gridPane.add(quantity , 1 , 11);
 
         Label l9 = new Label("ImageSource");
-        TextField  imageSource = new TextField(product.ImageSource);
+        TextField  ImageSource = new TextField(product.ImageSource);
         gridPane.add(l9,0 , 12);
-        gridPane.add(imageSource , 1 , 12);
+        gridPane.add(ImageSource , 1 , 12);
 
 
         Button edit = new Button("Edit");
@@ -99,7 +99,65 @@ public class EditItem extends Application {
 
             if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
             {
-                if (Confirm(ID, name, color, category, size, description, basePrice, quantity, imageSource)) return;
+                if(name.getText().equals("") || color.getText().equals("") || category.getValue().equals("") || size.getText().equals("") || description.getText().equals("") || basePrice.getText().equals("") || quantity.getText().equals("") || ImageSource.getText().equals("") || category.getSelectionModel().getSelectedItem() == null)
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Please fill all the fields");
+                    alert.showAndWait();
+                    return;
+                }
+
+                else if(!Validations.isInt(ID))
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Please enter a valid ID");
+                    alert.showAndWait();
+                }
+                inv.getProducts().remove(id);
+                if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
+                {
+                    ID.setText("ID already exists");
+                    ID.setStyle("-fx-text-fill: red");
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("ID already exists");
+                    return;
+                }
+
+                else if (!Validations.isDouble((basePrice)))
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Please enter a valid price");
+                    alert.showAndWait();
+                    return;
+                }
+                else if(!Validations.isInt(quantity))
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Please enter a valid quantity");
+                    alert.showAndWait();
+                    return;
+                }
+                else
+                {
+
+                    Product p = new Product(Integer.parseInt(ID.getText()) , name.getText() , color.getText() , category.getValue() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) , ImageSource.getText());
+                    try {
+                        inv.addProduct(p);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Item added successfully");
+                    alert.showAndWait();
+                    stage.close();
+                }
                 ItemDetails.SaveBackToAdmin(stage, inv);
 
             }
@@ -108,17 +166,17 @@ public class EditItem extends Application {
         EditItem.ItemButtons(stage, gridPane,edit );
     }
 
-    public  boolean Confirm(TextField ID, TextField name, TextField color, ComboBox category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource) {
-
-        try {
-            inv.getProducts().remove(id);
-            inv.addProduct(new Product(Integer.parseInt(ID.getText()), name.getText() , color.getText() , (String) category.getSelectionModel().getSelectedItem(), size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), imageSource.getText()));
-        }
-        catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        return false;
-    }
+//    public  boolean Confirm(TextField ID, TextField name, TextField color, ComboBox category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource) {
+//
+//        try {
+//            inv.getProducts().remove(id);
+//            inv.addProduct(new Product(Integer.parseInt(ID.getText()), name.getText() , color.getText() , (String) category.getSelectionModel().getSelectedItem(), size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), imageSource.getText()));
+//        }
+//        catch (IOException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//        return false;
+//    }
 
 
     static void ItemButtons(Stage stage, GridPane gridPane, Button edit) {

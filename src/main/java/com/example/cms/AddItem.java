@@ -103,6 +103,16 @@ public class AddItem extends Application {
                 alert.showAndWait();
                 return;
             }
+
+            else if(!Validations.isInt(ID))
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Please enter a valid ID");
+                alert.showAndWait();
+                return;
+            }
+
             if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
             {
                 ID.setText("ID already exists");
@@ -111,16 +121,7 @@ public class AddItem extends Application {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("ID already exists");
-                return;
-            }
-            else if(!Validations.isInt(ID))
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Please enter a valid ID");
-                alert.showAndWait();
-            }
-
+                alert.showAndWait();}
 
              else if (!Validations.isDouble((basePrice)))
             {
@@ -128,7 +129,6 @@ public class AddItem extends Application {
                 alert.setTitle("Error");
                 alert.setHeaderText("Please enter a valid price");
                 alert.showAndWait();
-                return;
             }
             else if(!Validations.isInt(quantity))
             {
@@ -136,7 +136,6 @@ public class AddItem extends Application {
                 alert.setTitle("Error");
                 alert.setHeaderText("Please enter a valid quantity");
                 alert.showAndWait();
-                return;
             }
             else
             {
