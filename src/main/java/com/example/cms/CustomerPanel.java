@@ -45,8 +45,9 @@ Customer customer;
         comboBox.getItems().add("All");
 
         HBox dropDown = new HBox();
+        Label label = new Label("Choose a category");
         dropDown.setPadding(new Insets(10));
-        dropDown.getChildren().add(comboBox);
+        dropDown.getChildren().addAll(label,comboBox);
         HBox.setMargin(comboBox , new Insets(10));
 
 

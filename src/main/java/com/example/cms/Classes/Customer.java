@@ -153,6 +153,8 @@ public class Customer extends User implements Serializable {
 
                     } catch (IOException ex) {
                         System.out.println(ex);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
                     }
                     break;
                 case "e":
