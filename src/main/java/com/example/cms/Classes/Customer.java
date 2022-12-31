@@ -195,6 +195,7 @@ public class Customer extends User implements Serializable {
     public Cart  getCart() {
         return cart;
     }
+
 }
 
 
