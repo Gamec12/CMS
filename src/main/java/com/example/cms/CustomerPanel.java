@@ -46,6 +46,10 @@ Customer customer;
 
 //        Button orders = new Button("Orders");
         Button cart = new Button("Cart"); // maybe image in the future
+cart.setOnAction(e->{
+    cart cart1 = new cart(customer);
+    cart1.start(stage);
+});
         Button profile = new Button("Profile");
 
         //Label l1 = new Label("Welcome " + customer.getFirstName());

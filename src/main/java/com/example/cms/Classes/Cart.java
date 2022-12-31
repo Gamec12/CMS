@@ -4,10 +4,12 @@ import java.util.ArrayList;
 public class Cart {
 private ArrayList<Product> arr;
 private int count;
+private double sum;
 
 public Cart()
 {
     count = 0;
+    sum=0;
     arr = new ArrayList<>();
 }
 
@@ -26,6 +28,7 @@ public void addToCart(int id, Inventory myInv)
         arr.add(test);
         System.out.println("Added sucessfully");
         count++;
+        sum+= test.getBasePrice();
     }
     else
     {
@@ -41,7 +44,10 @@ public void removeFromCart(int id)
     {
         if(arr.get(i).getItemID() == id)
         {
+            sum=sum- arr.get(i).getBasePrice();
             arr.remove(i);
+            count--;
+
         }
     }
 }
@@ -97,5 +103,9 @@ public void displayCart()
 
     public int getCount() {
         return count;
+    }
+
+    public double getSum() {
+        return sum;
     }
 }

@@ -188,6 +188,10 @@ public class Customer extends User implements Serializable {
         }
     }
 
+    public String getAddress1() {
+        return address1;
+    }
+
     public Cart  getCart() {
         return cart;
     }

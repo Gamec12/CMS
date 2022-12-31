@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="Fixed a bug">
+    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="Scuffed main page look with a weird ICON">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/cart.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +213,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="sadad" />
-    <MESSAGE value="Scuffed main page look with a weird ICON" />
     <MESSAGE value="Added binary files" />
     <MESSAGE value="remove and add works" />
     <MESSAGE value="Edit works wahooo" />
@@ -220,7 +220,8 @@
     <MESSAGE value="added validations" />
     <MESSAGE value="ADDED IMAGESSSSS" />
     <MESSAGE value="Fixed a bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed a bug" />
+    <MESSAGE value="Scuffed main page look with a weird ICON" />
+    <option name="LAST_COMMIT_MESSAGE" value="Scuffed main page look with a weird ICON" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
