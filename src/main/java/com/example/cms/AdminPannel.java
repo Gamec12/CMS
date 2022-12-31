@@ -141,7 +141,6 @@ public class AdminPannel extends Application {
 
 
 
-
         box.setBackground(new Background(new BackgroundFill(Color.BLACK , null , null)));
         Button ViewAllItems = new Button();
 
