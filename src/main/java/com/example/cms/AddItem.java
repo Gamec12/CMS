@@ -64,7 +64,7 @@ public class AddItem extends Application {
 
         Label l4 = new Label("Category");
         ComboBox<String> category = new ComboBox<>();
-        category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Gloves","Scarf","Underwear","Swimwear","Belt","Jewelry","Watch","Bag","Wallet","Other");
+        Main.getCategories(category);
         gridPane.add(l4,0 , 6);
         gridPane.add(category , 1 , 6);
 
@@ -123,4 +123,6 @@ public class AddItem extends Application {
 
 
     }
+
+
 }

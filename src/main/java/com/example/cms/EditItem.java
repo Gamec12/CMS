@@ -63,8 +63,7 @@ public class EditItem extends Application {
 
         Label l4 = new Label("Category");
         ComboBox<String> category = new ComboBox<>();
-
-        category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Gloves","Scarf","Underwear","Swimwear","Belt","Jewelry","Watch","Bag","Wallet","Other");
+        Main.getCategories(category);
         category.getSelectionModel().select(category.getItems().indexOf(product.getCategory()));
         gridPane.add(l4,0 , 6);
         gridPane.add(category , 1 , 6);
@@ -112,6 +111,7 @@ public class EditItem extends Application {
     public  boolean Confirm(TextField ID, TextField name, TextField color, ComboBox category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource) {
 
         try {
+            inv.getProducts().remove(id);
             inv.addProduct(new Product(Integer.parseInt(ID.getText()), name.getText() , color.getText() , (String) category.getSelectionModel().getSelectedItem(), size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), imageSource.getText()));
         }
         catch (IOException ex) {

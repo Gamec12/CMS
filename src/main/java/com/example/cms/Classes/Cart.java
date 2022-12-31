@@ -43,6 +43,7 @@ public void removeFromCart(int id)
         if(arr.get(i).getItemID() == id)
         {
             arr.remove(i);
+            count--;
         }
     }
 }

@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
@@ -32,14 +33,31 @@ Customer customer;
     public void start(Stage stage) {
         GridPane gridPane = Main.GetDefaultPane();
 
+
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10));
         VBox vBox = new VBox();
-        HBox filter = new HBox();
 
         ListView<VBox> listView = new ListView<>();
-        Main.getItemsCustomer(inv, listView , customer);
+        ComboBox<String> comboBox = new ComboBox<>();
+        Main.getCategories(comboBox);
+
+        HBox dropDown = new HBox();
+        dropDown.setPadding(new Insets(10));
+        dropDown.getChildren().add(comboBox);
+        HBox.setMargin(comboBox , new Insets(10));
+
+
+
+
+        borderPane.setBottom(dropDown);
+        comboBox.setOnAction(e->{
+            Main.getItemsCustomer(inv , listView ,customer ,comboBox);
+
+        });
+        Main.getItemsCustomer(inv, listView , customer, comboBox);
+
         borderPane.setCenter(listView);
 
 
@@ -58,6 +76,8 @@ Customer customer;
 
         borderPane.setTop(hBox);
         HBox.setMargin(profile, new Insets(0,15,0,0));
+
+
 
 
         stage.setScene(new Scene(borderPane, 500, 500));
