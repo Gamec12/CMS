@@ -95,28 +95,84 @@ public class AddItem extends Application {
         Button add = new Button("Add");
 
         add.setOnAction(e->{
-
+            if(name.getText().equals("") || color.getText().equals("") || category.getValue().equals("") || size.getText().equals("") || description.getText().equals("") || basePrice.getText().equals("") || quantity.getText().equals("") || ImageSource.getText().equals("") || category.getSelectionModel().getSelectedItem() == null)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Please fill all the fields");
+                alert.showAndWait();
+                return;
+            }
             if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
             {
                 ID.setText("ID already exists");
                 ID.setStyle("-fx-text-fill: red");
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("ID already exists");
                 return;
             }
-            if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
+            else if(!Validations.isInt(ID))
             {
-                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getSelectionModel().getSelectedItem() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Please enter a valid ID");
+                alert.showAndWait();
+            }
+
+
+             else if (!Validations.isDouble((basePrice)))
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Please enter a valid price");
+                alert.showAndWait();
+                return;
+            }
+            else if(!Validations.isInt(quantity))
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Please enter a valid quantity");
+                alert.showAndWait();
+                return;
+            }
+            else
+            {
+                Product p = new Product(Integer.parseInt(ID.getText()) , name.getText() , color.getText() , category.getValue() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) , ImageSource.getText());
                 try {
-                    inv.addProduct(product);
+                    inv.addProduct(p);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                AdminPannel adminPannel = new AdminPannel();
-                try {
-                    adminPannel.start(stage);
-                } catch (IOException | ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("Item added successfully");
+                alert.showAndWait();
+                stage.close();
             }
+
+//            if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
+//            {
+//                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getSelectionModel().getSelectedItem() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
+//                try {
+//                    inv.addProduct(product);
+//                } catch (IOException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//                AdminPannel adminPannel = new AdminPannel();
+//                try {
+//                    adminPannel.start(stage);
+//                } catch (IOException | ClassNotFoundException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//            }
+
+
+
+
+
 
         });
         EditItem.ItemButtons(stage, gridPane, add);

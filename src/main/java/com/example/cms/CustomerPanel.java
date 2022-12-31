@@ -42,6 +42,7 @@ Customer customer;
         ListView<VBox> listView = new ListView<>();
         ComboBox<String> comboBox = new ComboBox<>();
         Main.getCategories(comboBox);
+        comboBox.getItems().add("All");
 
         HBox dropDown = new HBox();
         dropDown.setPadding(new Insets(10));

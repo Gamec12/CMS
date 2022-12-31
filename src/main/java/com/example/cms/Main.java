@@ -106,7 +106,7 @@ public class Main extends Application {
 
     public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox comboBox) {
         listView.getItems().clear();
-        if(comboBox.getSelectionModel().getSelectedItem() == null) {
+        if(comboBox.getSelectionModel().getSelectedItem() == null || comboBox.getSelectionModel().getSelectedItem().toString().equals("All")) {
 
             for (Product p : inv.getProducts().values()) {
                 setItems(listView, customer, p);

@@ -28,7 +28,7 @@ public void addToCart(int id, Inventory myInv)
         arr.add(test);
         System.out.println("Added sucessfully");
         count++;
-        sum+= test.getBasePrice();
+
     }
     else
     {
@@ -44,7 +44,6 @@ public void removeFromCart(int id)
     {
         if(arr.get(i).getItemID() == id)
         {
-            sum=sum- arr.get(i).getBasePrice();
             arr.remove(i);
             count--;
 
@@ -106,6 +105,9 @@ public void displayCart()
     }
 
     public double getSum() {
+        for (Product product : arr) {
+            sum += product.getBasePrice();
+        }
         return sum;
     }
 }

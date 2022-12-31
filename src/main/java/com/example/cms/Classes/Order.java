@@ -6,30 +6,49 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
     static int id = 1;
-    public static ArrayList<Order> orders = new ArrayList<>() ;
-    public  ArrayList<Product> items = new ArrayList<>();
+    private static ArrayList<Order> orders = new ArrayList<>() ;
+    private   ArrayList<Product> items = new ArrayList<>();
 
     private Date date ;
-    Order(Cart c1 , String userName) throws IOException {
+    public Order(Cart c1 , String userName) throws IOException, ClassNotFoundException {
+        date = new Date();
         if(!c1.isEmpty())
         {
-            File file = new File("orders.json");
-
-            FileWriter out = new FileWriter(file);
-            date = new Date();
-            Gson json = new Gson();
-            json.toJson(c1.getArr() ,out);
-            out.close();
-
-            System.out.println("Ordered sucessfully");
+            Load();
+            items.addAll(c1.getArr());
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Orders.dat"));
+            out.writeObject(orders);
         }
 
     }
+    public Order() throws IOException, ClassNotFoundException {
+        Load();
+    }
+
+    private static void Load() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream( new FileInputStream("Orders.dat"));
+        orders = (ArrayList<Order>) in.readObject();
+    }
 
     public static void load() throws IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream( new FileInputStream("Orders.dat") );
-        orders = (ArrayList<Order>) in.readObject();
+
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static ArrayList<Order> getOrders() {
+        return orders;
+    }
+
+    public ArrayList<Product> getItems() {
+        return items;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }
