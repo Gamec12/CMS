@@ -1,4 +1,4 @@
-package com.example.cms.Classes;
+package com.example.cms.CustomerSide;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
