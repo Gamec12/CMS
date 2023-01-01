@@ -78,4 +78,12 @@ public class Order implements Serializable {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/Data/Orders.dat"));
         out.writeObject(orders);
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "items=" + items +
+                ", date=" + date +
+                '}';
+    }
 }
