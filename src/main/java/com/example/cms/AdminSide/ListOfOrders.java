@@ -36,7 +36,7 @@ public class ListOfOrders extends Application {
         }
 
 
-        stage.setScene(new Scene(listView, 300, 250));
+        stage.setScene(new Scene(listView, 550, 500));
         stage.show();
         
 
