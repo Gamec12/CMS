@@ -1,0 +1,221 @@
+Index: src/main/java/com/example/cms/AdminSide/AdminPannel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms.AdminSide;\r\n\r\nimport com.example.cms.Classes.Inventory;\r\nimport com.example.cms.Classes.Product;\r\nimport com.example.cms.Main;\r\nimport javafx.application.Application;\r\nimport javafx.geometry.Insets;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.layout.*;\r\nimport javafx.scene.paint.Color;\r\nimport javafx.scene.text.Text;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.IOException;\r\nimport java.util.Optional;\r\n\r\npublic class AdminPannel extends Application {\r\n\r\n\r\n    public static void main(String[] args) {\r\n        launch();\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) throws IOException, ClassNotFoundException {\r\n        Inventory inv = new Inventory();\r\n        BorderPane border = new BorderPane();\r\n\r\n        HBox box = gethBox();\r\n\r\n        Button orders = new Button(\"Orders\");\r\n        Button customers = new Button(\"Customers\");\r\n        customers.setOnAction(e -> {\r\n            CustomersView customersView = new CustomersView();\r\n            try {\r\n                customersView.start(stage);\r\n            } catch (IOException ex) {\r\n                throw new RuntimeException(ex);\r\n            } catch (ClassNotFoundException ex) {\r\n                throw new RuntimeException(ex);\r\n            }\r\n        });\r\n        box.getChildren().addAll(orders, customers);\r\n        HBox.setMargin(orders, new Insets(10));\r\n        HBox.setMargin(customers, new Insets(10));\r\n        //ScrollPane items = new ScrollPane();\r\n\r\n        ListView<VBox> listView = new ListView<>();\r\n        Main.getItems(inv, listView);\r\n        border.setCenter(listView);\r\n        listView.setOnMouseClicked(e -> {\r\n            VBox selectedItem = listView.getSelectionModel().getSelectedItem();\r\n            // get the number between the []\r\n            String ID = selectedItem.getChildren().get(1).toString();\r\n            ID = ID.substring(ID.indexOf(\"\\\"[\") + 2, ID.indexOf(\"]\"));\r\n            System.out.println(ID);\r\n\r\n            ItemDetails itemDetails = new ItemDetails(Integer.parseInt(ID), inv);\r\n            if (selectedItem.equals(\"\")) {\r\n                return;\r\n            }\r\n            itemDetails.start(stage);\r\n        });\r\n\r\n        border.setTop(box);\r\n\r\n        HBox bottom = gethBox();\r\n        bottom.setAlignment(Pos.BOTTOM_LEFT);\r\n        Button add = new Button(\"Add a product\");\r\n        add.setOnAction(e -> {\r\n            AddItem addItem;\r\n            try {\r\n                addItem = new AddItem(inv);\r\n            } catch (IOException | ClassNotFoundException ex) {\r\n                throw new RuntimeException(ex);\r\n            }\r\n            addItem.start(stage);\r\n        });\r\n\r\n        Button delete = new Button(\"Delete Item\");\r\n        delete.setOnAction(e -> {\r\n            TextInputDialog dialog = new TextInputDialog();\r\n            dialog.setTitle(\"Enter an item to delete\");\r\n            dialog.setHeaderText(\"Enter the id of an item\");\r\n            dialog.setContentText(\"Item ID\");\r\n\r\n            Optional<String> result = dialog.showAndWait();\r\n            if (result.isPresent()) {\r\n                inv.getProducts().remove(Integer.parseInt(result.get()));\r\n                try {\r\n                    inv.save();\r\n                } catch (IOException ex) {\r\n                    throw new RuntimeException(ex);\r\n                }\r\n            }\r\n            AdminPannel adminPannel = new AdminPannel();\r\n            try {\r\n                adminPannel.start(stage);\r\n            } catch (IOException | ClassNotFoundException ex) {\r\n                throw new RuntimeException(ex);\r\n            }\r\n        });\r\n\r\n        Button edit = new Button(\"Edit Item\");\r\n        edit.setOnAction(e -> {\r\n            TextInputDialog dialog = new TextInputDialog();\r\n            dialog.setTitle(\"Enter an item to delete\");\r\n            dialog.setHeaderText(\"Enter the id of an item\");\r\n            dialog.setContentText(\"Item ID\");\r\n\r\n            Optional<String> result = dialog.showAndWait();\r\n            if (result.isPresent()) {\r\n                int id = Integer.parseInt(result.get());\r\n                EditItem editItem = new EditItem(inv, id);\r\n\r\n                try {\r\n                    editItem.start(stage);\r\n                } catch (IOException | ClassNotFoundException ex) {\r\n                    throw new RuntimeException(ex);\r\n                }\r\n            }\r\n\r\n        });\r\n\r\n        bottom.getChildren().addAll(add, delete, edit);\r\n        border.setBottom(bottom);\r\n\r\n        box.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));\r\n\r\n        stage.setScene(new Scene(border, 500, 500));\r\n        stage.show();\r\n    }\r\n\r\n    private static HBox gethBox() {\r\n        HBox box = new HBox(10);\r\n\r\n        box.setPadding(new Insets(10));\r\n        box.setMaxHeight(200);\r\n        box.setMaxWidth(10000);\r\n        return box;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/AdminSide/AdminPannel.java b/src/main/java/com/example/cms/AdminSide/AdminPannel.java
+--- a/src/main/java/com/example/cms/AdminSide/AdminPannel.java	(revision daac5d921b24a573e24c0e0efd99ece3335c06a6)
++++ b/src/main/java/com/example/cms/AdminSide/AdminPannel.java	(date 1672605072025)
+@@ -31,6 +31,14 @@
+         HBox box = gethBox();
+ 
+         Button orders = new Button("Orders");
++        orders.setOnAction(e->{
++            ListOfOrders listOfOrders = new ListOfOrders();
++            try {
++                listOfOrders.start(stage);
++            } catch (IOException | ClassNotFoundException ex) {
++                throw new RuntimeException(ex);
++            }
++        });
+         Button customers = new Button("Customers");
+         customers.setOnAction(e -> {
+             CustomersView customersView = new CustomersView();
+Index: src/main/Data/Orders.dat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>��\u0000\u0005sr\u0000\u0011java.util.TreeMap\f��>-%j�\u0003\u0000\u0001L\u0000\ncomparatort\u0000\u0016Ljava/util/Comparator;xppw\u0004\u0000\u0000\u0000\u0002sr\u0000\u0011java.lang.Integer\u0012⠤���8\u0002\u0000\u0001I\u0000\u0005valuexr\u0000\u0010java.lang.Number���\u001D\u000B���\u0002\u0000\u0000xp\u0000\u0000\u0000\u0004sr\u0000\u0013java.util.ArrayListx��\u001D��a�\u0003\u0000\u0001I\u0000\u0004sizexp\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sr\u0000\u001Dcom.example.cms.Classes.Order�Ao���t�\u0002\u0000\u0002L\u0000\u0004datet\u0000\u0010Ljava/util/Date;L\u0000\u0005itemst\u0000\u0015Ljava/util/ArrayList;xpsr\u0000\u000Ejava.util.Datehj�\u0001KYt\u0019\u0003\u0000\u0000xpw\b\u0000\u0000\u0001�n�fQxsq\u0000~\u0000\u0006\u0000\u0000\u0000\u0003w\u0004\u0000\u0000\u0000\u0003sr\u0000\u001Fcom.example.cms.Classes.Product�El��h��\u0002\u0000\tD\u0000\tbasePriceI\u0000\u0006itemIDI\u0000\bquantityL\u0000\u000BImageSourcet\u0000\u0012Ljava/lang/String;L\u0000\u0004Nameq\u0000~\u0000\u0010L\u0000\bcategoryq\u0000~\u0000\u0010L\u0000\u0005colorq\u0000~\u0000\u0010L\u0000\u000Bdescriptionq\u0000~\u0000\u0010L\u0000\u0004sizeq\u0000~\u0000\u0010xp@i\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0000\u0000\u0000wt\u0000BC:\\Users\\adaml\\OneDrive\\Windows PC\\Desktop\\IMG-20220604-WA0009.jpgt\u0000\u000BAkarat Dript\u0000\u0005Shirtt\u0000\u0004Bluet\u0000\u0017To be one with the dript\u0000\u0001Msq\u0000~\u0000\u000F@i\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0000\u0000\u0000wt\u0000BC:\\Users\\adaml\\OneDrive\\Windows PC\\Desktop\\IMG-20220604-WA0009.jpgt\u0000\u000BAkarat Dript\u0000\u0005Shirtt\u0000\u0004Bluet\u0000\u0017To be one with the dript\u0000\u0001Msq\u0000~\u0000\u000F@i\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0000\u0000\u0000wt\u0000BC:\\Users\\adaml\\OneDrive\\Windows PC\\Desktop\\IMG-20220604-WA0009.jpgt\u0000\u000BAkarat Dript\u0000\u0005Shirtt\u0000\u0004Bluet\u0000\u0017To be one with the dript\u0000\u0001Mxq\u0000~\u0000\u000Bxsq\u0000~\u0000\u0003\u0000\u0000\u0000\nsq\u0000~\u0000\u0006\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sq\u0000~\u0000\bsq\u0000~\u0000\fw\b\u0000\u0000\u0001�nݥaxsq\u0000~\u0000\u0006\u0000\u0000\u0000\u0002w\u0004\u0000\u0000\u0000\u0002sq\u0000~\u0000\u000F@i\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0000\u0000\u0000wt\u0000BC:\\Users\\adaml\\OneDrive\\Windows PC\\Desktop\\IMG-20220604-WA0009.jpgt\u0000\u000BAkarat Dript\u0000\u0005Shirtt\u0000\u0004Bluet\u0000\u0017To be one with the dript\u0000\u0001Msq\u0000~\u0000\u000F@i\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0000\u0000\u0000wt\u0000BC:\\Users\\adaml\\OneDrive\\Windows PC\\Desktop\\IMG-20220604-WA0009.jpgt\u0000\u000BAkarat Dript\u0000\u0005Shirtt\u0000\u0004Bluet\u0000\u0017To be one with the dript\u0000\u0001Mxq\u0000~\u0000(xx
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/Data/Orders.dat b/src/main/Data/Orders.dat
+--- a/src/main/Data/Orders.dat	(revision daac5d921b24a573e24c0e0efd99ece3335c06a6)
++++ b/src/main/Data/Orders.dat	(date 1672604359916)
+@@ -1,3 +1,2 @@
+ �� sr java.util.TreeMap��>-%j� L 
+-comparatort Ljava/util/Comparator;xppw   sr java.lang.Integer⠤���8 I valuexr java.lang.Number������  xp   sr java.util.ArrayListx����a� I sizexp   w   sr com.example.cms.Classes.Order�Ao���t� L datet Ljava/util/Date;L itemst Ljava/util/ArrayList;xpsr java.util.Datehj�KYt  xpw  �n�fQxsq ~    w   sr com.example.cms.Classes.Product�El��h�� 	D 	basePriceI itemIDI quantityL ImageSourcet Ljava/lang/String;L Nameq ~ L categoryq ~ L colorq ~ L descriptionq ~ L sizeq ~ xp@i         �   wt BC:\Users\adaml\OneDrive\Windows PC\Desktop\IMG-20220604-WA0009.jpgt Akarat Dript Shirtt Bluet To be one with the dript Msq ~ @i         �   wt BC:\Users\adaml\OneDrive\Windows PC\Desktop\IMG-20220604-WA0009.jpgt Akarat Dript Shirtt Bluet To be one with the dript Msq ~ @i         �   wt BC:\Users\adaml\OneDrive\Windows PC\Desktop\IMG-20220604-WA0009.jpgt Akarat Dript Shirtt Bluet To be one with the dript Mxq ~ xsq ~    
+-sq ~    w   sq ~ sq ~ w  �nݥaxsq ~    w   sq ~ @i         �   wt BC:\Users\adaml\OneDrive\Windows PC\Desktop\IMG-20220604-WA0009.jpgt Akarat Dript Shirtt Bluet To be one with the dript Msq ~ @i         �   wt BC:\Users\adaml\OneDrive\Windows PC\Desktop\IMG-20220604-WA0009.jpgt Akarat Dript Shirtt Bluet To be one with the dript Mxq ~ (xx
+\ No newline at end of file
++comparatort Ljava/util/Comparator;xppw   sr java.lang.Integer⠤���8 I valuexr java.lang.Number������  xp   sr java.util.ArrayListx����a� I sizexp   w   sr com.example.cms.Classes.Order<�R�Es L datet Ljava/util/Date;L itemst Ljava/util/ArrayList;xpsr java.util.Datehj�KYt  xpw  �n��xsq ~    w   sr com.example.cms.Classes.Product�El��h�� 	D 	basePriceI itemIDI quantityL ImageSourcet Ljava/lang/String;L Nameq ~ L categoryq ~ L colorq ~ L descriptionq ~ L sizeq ~ xp@i         �   wt BC:\Users\adaml\OneDrive\Windows PC\Desktop\IMG-20220604-WA0009.jpgt Akarat Dript Shirtt Bluet To be one with the dript Mxq ~ xx
+\ No newline at end of file
+Index: src/main/java/com/example/cms/AdminSide/ListOfOrders.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms.AdminSide;\r\n\r\nimport com.example.cms.Classes.Order;\r\nimport javafx.application.Application;\r\nimport javafx.scene.control.ListView;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.util.Map;\r\nimport java.util.TreeMap;\r\n\r\npublic class ListOfOrders extends Application {\r\n    Map<Integer, Order> customers = new TreeMap<>();\r\n\r\n    public static void main(String[] args) {\r\n        launch(args);\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) {\r\n        stage.setTitle(\"List of orders\");\r\n        ListView listView = new ListView();\r\n        \r\n\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/AdminSide/ListOfOrders.java b/src/main/java/com/example/cms/AdminSide/ListOfOrders.java
+--- a/src/main/java/com/example/cms/AdminSide/ListOfOrders.java	(revision daac5d921b24a573e24c0e0efd99ece3335c06a6)
++++ b/src/main/java/com/example/cms/AdminSide/ListOfOrders.java	(date 1672604849307)
+@@ -1,25 +1,55 @@
+ package com.example.cms.AdminSide;
+ 
+ import com.example.cms.Classes.Order;
++import com.example.cms.Main;
+ import javafx.application.Application;
++import javafx.scene.Scene;
++import javafx.scene.control.Button;
+ import javafx.scene.control.ListView;
++import javafx.scene.layout.VBox;
+ import javafx.stage.Stage;
+ 
++import java.io.FileInputStream;
++import java.io.FileNotFoundException;
++import java.io.IOException;
++import java.io.ObjectInputStream;
++import java.util.ArrayList;
+ import java.util.Map;
+ import java.util.TreeMap;
+ 
+ public class ListOfOrders extends Application {
+-    Map<Integer, Order> customers = new TreeMap<>();
++    Map<Integer, ArrayList<Order>> orders = new TreeMap<>();
+ 
+     public static void main(String[] args) {
+         launch(args);
+     }
+ 
+     @Override
+-    public void start(Stage stage) {
++    public void start(Stage stage) throws IOException, ClassNotFoundException {
+         stage.setTitle("List of orders");
+         ListView listView = new ListView();
+-        
++        ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/Orders.dat"));
++        orders = (Map<Integer, ArrayList<Order>>) in.readObject();
++        for( ArrayList<Order> entry : orders.values())
++        {
++            for(Order order : entry)
++            {
++                listView.getItems().add(order);
++            }
++        }
++        Button back = new Button("Back");
++        back.setOnAction(e->{
++            AdminPannel adminPannel = new AdminPannel();
++            try {
++                adminPannel.start(stage);
++            } catch (IOException | ClassNotFoundException ex) {
++                throw new RuntimeException(ex);
++            }
++        });
++        VBox vBox = new VBox(back , listView);
++        stage.setScene(new Scene(listView , 500 , 500));
++        stage.show();
++
+ 
+ 
+     }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"2462b4e4-dd8f-4779-bc52-877c0ed5cba1\" name=\"Changes\" comment=\"IDK\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/Data/Orders.dat\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/Data/customers.dat\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/ListOfOrders.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/Data/Customers.dat\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/Data/inventory.dat\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/Data/inventory.dat\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Product.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Product.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/login.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/login.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/OrderDetails.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/OrderDetails.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/cart.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/cart.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Main.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JavaFXApplication\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2IoR3rofCksxYgGVCOu4yfgpctX\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/Uni/Semister 3/OOP/Projects/CMS/src/main&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Classes\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\Data\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\Images\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Classes\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Images\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\" />\r\n    </key>\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"com.example.cms\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"2462b4e4-dd8f-4779-bc52-877c0ed5cba1\" name=\"Changes\" comment=\"\" />\r\n      <created>1670845756934</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1670845756934</updated>\r\n      <workItem from=\"1670845758209\" duration=\"3198000\" />\r\n      <workItem from=\"1670874655959\" duration=\"900000\" />\r\n      <workItem from=\"1670875567763\" duration=\"1690000\" />\r\n      <workItem from=\"1670968209720\" duration=\"1204000\" />\r\n      <workItem from=\"1671025731866\" duration=\"8187000\" />\r\n      <workItem from=\"1671208675434\" duration=\"3000\" />\r\n      <workItem from=\"1671208707648\" duration=\"4305000\" />\r\n      <workItem from=\"1671257830431\" duration=\"14000\" />\r\n      <workItem from=\"1671389327841\" duration=\"3926000\" />\r\n      <workItem from=\"1671889874290\" duration=\"14205000\" />\r\n      <workItem from=\"1671913177394\" duration=\"934000\" />\r\n      <workItem from=\"1671914424069\" duration=\"4000\" />\r\n      <workItem from=\"1671962613928\" duration=\"12340000\" />\r\n      <workItem from=\"1672055013899\" duration=\"9895000\" />\r\n      <workItem from=\"1672433412923\" duration=\"125000\" />\r\n      <workItem from=\"1672434904794\" duration=\"1673000\" />\r\n      <workItem from=\"1672484947783\" duration=\"664000\" />\r\n      <workItem from=\"1672510583310\" duration=\"3162000\" />\r\n      <workItem from=\"1672572754121\" duration=\"1561000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"sadad\">\r\n      <created>1670845813536</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670845813536</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"sadad\">\r\n      <created>1670845875925</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670845875925</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1670876427342</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670876427342</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1670876657601</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670876657601</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1671040352622</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671040352622</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1671212419493</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671212419493</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Added binary files\">\r\n      <created>1671643571527</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671643571527</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Added binary files\">\r\n      <created>1671643589801</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671643589801</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"remove and add works\">\r\n      <created>1671894133604</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671894133604</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Edit works wahooo\">\r\n      <created>1671904536322</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671904536322</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"made thte list clickable\">\r\n      <created>1671986506616</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671986506616</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"added validations\">\r\n      <created>1672059856031</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672059856031</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"ADDED IMAGESSSSS\">\r\n      <created>1672430019192</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672430019192</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Fixed a bug\">\r\n      <created>1672432192712</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672432192712</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Fixed a bug\">\r\n      <created>1672433032199</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672433032199</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Semi- added categories\">\r\n      <created>1672492269704</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672492269704</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Semi- added categories\">\r\n      <created>1672512811579</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672512811579</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"added a label for choosing a category\">\r\n      <created>1672512974794</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672512974794</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"IDK\">\r\n      <created>1672515077448</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672515077448</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"20\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"sadad\" />\r\n    <MESSAGE value=\"Scuffed main page look with a weird ICON\" />\r\n    <MESSAGE value=\"Added binary files\" />\r\n    <MESSAGE value=\"remove and add works\" />\r\n    <MESSAGE value=\"Edit works wahooo\" />\r\n    <MESSAGE value=\"made thte list clickable\" />\r\n    <MESSAGE value=\"added validations\" />\r\n    <MESSAGE value=\"ADDED IMAGESSSSS\" />\r\n    <MESSAGE value=\"Fixed a bug\" />\r\n    <MESSAGE value=\"Semi- added categories\" />\r\n    <MESSAGE value=\"added a lable for chosing a category\" />\r\n    <MESSAGE value=\"added a label for choosing a category\" />\r\n    <MESSAGE value=\"IDK\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"IDK\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/CMS$AdminPannel.ic\" NAME=\"AdminPannel Coverage Results\" MODIFIED=\"1671975531814\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\">\r\n      <FILTER>com.example.cms.*</FILTER>\r\n    </SUITE>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision daac5d921b24a573e24c0e0efd99ece3335c06a6)
++++ b/.idea/workspace.xml	(date 1672605044141)
+@@ -4,22 +4,12 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="IDK">
+-      <change afterPath="$PROJECT_DIR$/src/main/Data/Orders.dat" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/Data/customers.dat" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/ListOfOrders.java" afterDir="false" />
++    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="update idk I forgor">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/Data/Customers.dat" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/Data/inventory.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Data/inventory.dat" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/Data/Orders.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Data/Orders.dat" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AdminPannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AdminPannel.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/ListOfOrders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/ListOfOrders.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Product.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/login.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/OrderDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/OrderDetails.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/cart.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -245,7 +235,21 @@
+       <option name="project" value="LOCAL" />
+       <updated>1672515077448</updated>
+     </task>
+-    <option name="localTasksCounter" value="20" />
++    <task id="LOCAL-00020" summary="update idk I forgor">
++      <created>1672603009234</created>
++      <option name="number" value="00020" />
++      <option name="presentableId" value="LOCAL-00020" />
++      <option name="project" value="LOCAL" />
++      <updated>1672603009234</updated>
++    </task>
++    <task id="LOCAL-00021" summary="update idk I forgor">
++      <created>1672603056626</created>
++      <option name="number" value="00021" />
++      <option name="presentableId" value="LOCAL-00021" />
++      <option name="project" value="LOCAL" />
++      <updated>1672603056626</updated>
++    </task>
++    <option name="localTasksCounter" value="22" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -276,7 +280,8 @@
+     <MESSAGE value="added a lable for chosing a category" />
+     <MESSAGE value="added a label for choosing a category" />
+     <MESSAGE value="IDK" />
+-    <option name="LAST_COMMIT_MESSAGE" value="IDK" />
++    <MESSAGE value="update idk I forgor" />
++    <option name="LAST_COMMIT_MESSAGE" value="update idk I forgor" />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+     <SUITE FILE_PATH="coverage/CMS$AdminPannel.ic" NAME="AdminPannel Coverage Results" MODIFIED="1671975531814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+Index: src/main/java/com/example/cms/Classes/Order.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms.Classes;\r\n\r\n\r\nimport java.io.*;\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\nimport java.util.Map;\r\nimport java.util.TreeMap;\r\n\r\npublic class Order implements Serializable {\r\n    static int id = 1;\r\n\r\n    private   ArrayList<Product> items = new ArrayList<>();\r\n\r\n    static Map<Integer, ArrayList<Order>> orders = new TreeMap<>();\r\n\r\n    private Date date ;\r\n    public Order(Cart c1 , int id) throws IOException, ClassNotFoundException {\r\n        date = new Date();\r\n\r\n        if(!c1.isEmpty())\r\n        {\r\n            Load();\r\n            if((orders.containsKey(id)))\r\n            {\r\n                orders.get(id).add(this);\r\n            }\r\n            else\r\n            {\r\n                ArrayList<Order> temp = new ArrayList<>();\r\n                temp.add(this);\r\n                orders.put(id,temp);\r\n            }\r\n            ArrayList<Order> arrayList = orders.get(id);\r\n            arrayList.add(this);\r\n\r\n            items.addAll(c1.getArr());\r\n            for(int i = 0 ; i < c1.getArr().size();i++)\r\n            {\r\n                c1.getArr().get(i).setQuantity(c1.getArr().get(i).getQuantity()-1);\r\n            }\r\n            orders.put(id , arrayList);\r\n\r\n            save();\r\n        }\r\n\r\n    }\r\n    public Order() throws IOException, ClassNotFoundException {\r\n        Load();\r\n    }\r\n\r\n    private static void Load() throws IOException, ClassNotFoundException {\r\n        ObjectInputStream in = new ObjectInputStream( new FileInputStream(\"src/main/Data/Orders.dat\"));\r\n        orders = (Map<Integer, ArrayList<Order>>) in.readObject();\r\n    }\r\n\r\n    public static void load() throws IOException, ClassNotFoundException {\r\n\r\n    }\r\n\r\n    public static int getId() {\r\n        return id;\r\n    }\r\n\r\n    public static Map<Integer, ArrayList<Order>> getOrders() {\r\n        return orders;\r\n    }\r\n\r\n    public ArrayList<Product> getItems() {\r\n        return items;\r\n    }\r\n\r\n    public Date getDate() {\r\n        return date;\r\n    }\r\n\r\n    public void save() throws IOException {\r\n        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(\"src/main/Data/Orders.dat\"));\r\n        out.writeObject(orders);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/Classes/Order.java b/src/main/java/com/example/cms/Classes/Order.java
+--- a/src/main/java/com/example/cms/Classes/Order.java	(revision daac5d921b24a573e24c0e0efd99ece3335c06a6)
++++ b/src/main/java/com/example/cms/Classes/Order.java	(date 1672604364362)
+@@ -44,6 +44,7 @@
+             save();
+         }
+ 
++
+     }
+     public Order() throws IOException, ClassNotFoundException {
+         Load();
+@@ -78,4 +79,21 @@
+         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/Data/Orders.dat"));
+         out.writeObject(orders);
+     }
++
++    public static void setId(int id) {
++        Order.id = id;
++    }
++
++    public void setItems(ArrayList<Product> items) {
++        this.items = items;
++    }
++
++    public static void setOrders(Map<Integer, ArrayList<Order>> orders) {
++        Order.orders = orders;
++    }
++
++    public void setDate(Date date) {
++        this.date = date;
++    }
++
+ }
