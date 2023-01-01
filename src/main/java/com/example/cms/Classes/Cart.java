@@ -47,6 +47,7 @@ public void removeFromCart(int id)
         {
             arr.remove(i);
             count--;
+            return;
 
         }
     }
@@ -111,4 +112,13 @@ public void displayCart()
         }
         return sum;
     }
+
+    public void setCount(int i) {
+        count = i;
+    }
+
+    public void setSum(int i) {
+        sum = i;
+    }
+
 }

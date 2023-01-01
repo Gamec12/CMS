@@ -48,7 +48,7 @@ public class Regestration extends Application {
     private GridPane createRegistrationFormPane() {
 
 
-        GridPane gridPane = new GridPane();
+        GridPane gridPane = Main.GetDefaultPane();
 
         gridPane.setAlignment(Pos.CENTER);
 
@@ -199,8 +199,12 @@ public class Regestration extends Application {
                     showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a valid Email");
                     return;
                 }
+            try {
                 Customer customer = new Customer(nameField.getText(),lastnameField.getText(),mobileNumberfield.getText(), genderfield.getText(), emailField.getText(), usernamefield.getText(), passwordField.getText(), addressfield.getText());
-                Main main = new Main();
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            Main main = new Main();
                 showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Registration Successful!", "Welcome " + nameField.getText());
             try {
                 main.start(stage);

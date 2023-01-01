@@ -1,6 +1,7 @@
 package com.example.cms.CustomerSide;
 
 import com.example.cms.Classes.Customer;
+import com.example.cms.Classes.Order;
 import com.example.cms.Classes.Product;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,10 +19,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class OrderDetails extends Application {
-    Customer ahmed;
-    public OrderDetails(Customer ahmed){
-        this.ahmed=ahmed;
+    Customer customer;
+    public OrderDetails(Customer customer){
+        this.customer =customer;
     }
     public static void getItemsOrderDetails( ListView<VBox> listView, Customer customer,Stage stage) {
         for(Product p : customer.getCart().getArr())
@@ -65,15 +68,33 @@ public class OrderDetails extends Application {
     public void start(Stage Stage) {
 Stage.setTitle("Order Details");
         ListView x =new ListView();
-        getItemsOrderDetails(x,ahmed,Stage);
+        getItemsOrderDetails(x, customer,Stage);
         VBox box=new VBox(x);
-        Label l1=new Label(ahmed.getFirstName() +" "+ahmed.getLastName());
-        Label l2=new Label(ahmed.getMobileNumber());
-        Label l3=new Label(ahmed.getEmailAddress());
-        Label l4=new Label(ahmed.getAddress1());
-        Label l5= new Label("Number Of Products  "+String.valueOf(ahmed.getCart().getCount()));
-        Label l6= new Label("Total Price  "+String.valueOf(ahmed.getCart().getSum()));
+        Label l1=new Label(customer.getFirstName() +" "+ customer.getLastName());
+        Label l2=new Label(customer.getMobileNumber());
+        Label l3=new Label(customer.getEmailAddress());
+        Label l4=new Label(customer.getAddress1());
+        Label l5= new Label("Number Of Products  "+String.valueOf(customer.getCart().getCount()));
+        Label l6= new Label("Total Price  "+String.valueOf(customer.getCart().getSum()));
         Button confirm=new Button("Confirm Order");
+        confirm.setOnAction(e->{
+            try {
+                Order order=new Order(customer.getCart() ,customer.getId());
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            customer.getCart().getArr().clear();
+            customer.getCart().setCount(0);
+            customer.getCart().setSum(0);
+            try {
+                CustomerPanel customerPanel=new CustomerPanel(customer);
+                customerPanel.start(Stage);
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+        });
         box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,confirm);
         box.setBackground(new Background(new BackgroundFill(Color.WHITE , null , null)));
         Stage.setScene(new Scene(box , 500 , 500) );

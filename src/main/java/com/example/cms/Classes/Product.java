@@ -24,20 +24,10 @@ public class Product implements Serializable {
         this.description = description;
         this.basePrice = basePrice;
         this.Name = Name;
-        discountPrice = 0; // it won't be discounted by default
         this.quantity =quantity;
         this.ImageSource = ImageSource;
     }
 
-    private double discountPrice;
-
-    public double getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(double discountPrice) {
-        this.discountPrice = discountPrice;
-    }
     public int getItemID() {
         return itemID;
     }
@@ -98,6 +88,10 @@ public class Product implements Serializable {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override

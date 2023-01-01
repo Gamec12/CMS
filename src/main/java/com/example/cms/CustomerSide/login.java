@@ -1,5 +1,7 @@
-package com.example.cms.Classes;
+package com.example.cms.CustomerSide;
 
+import com.example.cms.Classes.Customer;
+import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,21 +21,30 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Window;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class login extends Application {
-
+    Map<Integer, Customer> customers = new TreeMap<>();
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/Customers.dat"));
+        customers = (Map<Integer, Customer>) in.readObject();
+        in.close();
         primaryStage.setTitle("Login Form");
 
         GridPane gridPane = createRegistrationFormPane();
 
-        addUIControls(gridPane);
+        addUIControls(gridPane ,primaryStage);
 
         Scene scene = new Scene(gridPane, 800, 500);
 
@@ -44,7 +55,7 @@ public class login extends Application {
     private GridPane createRegistrationFormPane() {
 
 
-        GridPane gridPane = new GridPane();
+        GridPane gridPane = Main.GetDefaultPane();
 
         gridPane.setAlignment(Pos.CENTER);
 
@@ -68,7 +79,7 @@ public class login extends Application {
 
         return gridPane;
     }
-    private void addUIControls(GridPane gridPane) {
+    private void addUIControls(GridPane gridPane , Stage stage) {
 
         Label headerLabel = new Label("Login Form");
         headerLabel.setFont(Font.font("Arial", 24));
@@ -93,35 +104,52 @@ public class login extends Application {
         gridPane.add(passwordField, 1, 3);
 
 
-        Button submitButton = new Button("Submit");
+        Button submitButton = new Button("Log in");
         submitButton.setPrefHeight(40);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
+        submitButton.setOnAction(e->{
+            if(passwordField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a password");
+                return;
+            }
+            if (usernamefield.getText().isEmpty())
+            {
+                showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a username");
+                return;
+            }
+            for(Customer c : customers.values())
+            {
+                if(c.getUserName().equals(usernamefield.getText()) && c.getPassword().equals(passwordField.getText()))
+                {
+                    try {
+                        CustomerPanel cp = new CustomerPanel(c);
+                        cp.start(stage);
+
+                    } catch (IOException | ClassNotFoundException ioException) {
+                        System.out.println(e);
+                    }
+                    return;
+                }
+            }
+            showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Wrong username or password");
+
+
+        });
         gridPane.add(submitButton, 0, 9, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
 
-        submitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(passwordField.getText().isEmpty()) {
-                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a password");
-                    return;
-                }
-                if (usernamefield.getText().isEmpty())
-                {
-                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a username");
-                    return;
-                }
-            }
-            private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-                Alert alert = new Alert(alertType);
-                alert.setTitle(title);
-                alert.setHeaderText(null);
-                alert.setContentText(message);
-                alert.initOwner(owner);
-                alert.show();
-            }
-        });
+
+
+
+    }
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }

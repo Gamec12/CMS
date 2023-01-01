@@ -5,6 +5,7 @@ import com.example.cms.Classes.Product;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -20,9 +21,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class cart extends Application {
-    Customer ahmed;
-    public cart(Customer ahmed) {
-        this.ahmed = ahmed;
+    Customer customer;
+    public cart(Customer customer) {
+        this.customer = customer;
     }
     public static void getItemsCart( ListView<VBox> listView, Customer customer,Stage stage) {
         for(Product p : customer.getCart().getArr())
@@ -73,12 +74,12 @@ public class cart extends Application {
 
         stage.setTitle("cart");
  ListView x =new ListView();
- getItemsCart(x,ahmed,stage);
+ getItemsCart(x, customer,stage);
         Button b=new Button("Back");
         b.setOnAction(e->{
             CustomerPanel c1 = null;
             try {
-                c1 = new CustomerPanel(ahmed);
+                c1 = new CustomerPanel(customer);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             } catch (ClassNotFoundException ex) {
@@ -88,8 +89,15 @@ public class cart extends Application {
         });
         Button b1 =new Button("Checkout");
         b1.setOnAction(e->{
-OrderDetails l=new OrderDetails(ahmed);
-l.start(stage);
+            if(customer.getCart().getArr().size()==0)
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Cart is Empty");
+                alert.showAndWait();
+                return;
+            }
+            OrderDetails l=new OrderDetails(customer);
+            l.start(stage);
         });
         VBox box= new VBox(x);
         box.getChildren().addAll(b,b1);

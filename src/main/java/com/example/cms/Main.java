@@ -6,6 +6,8 @@ import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
 import com.example.cms.CustomerSide.CustomerPanel;
+import com.example.cms.CustomerSide.Regestration;
+import com.example.cms.CustomerSide.login;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,7 +36,27 @@ public class Main extends Application {
         setText(title);
 
         Button Register = new Button("Registration");
+
+
+
+
         Button Login = new Button("Login");
+
+        Register.setOnAction(e->{
+            Regestration regestration = new Regestration();
+            regestration.start(stage);
+        });
+
+        Login.setOnAction(e->{
+            login login = new login();
+            try {
+                login.start(stage);
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+        });
 
         Text admin = new Text("Admin Login");
         admin.setOnMouseClicked(e-> {
@@ -66,7 +88,7 @@ public class Main extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-        grid.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));
+        grid.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY ,null , null)));
         //grid.setStyle("-fx-background-color: #fffff;");
 
         return grid;

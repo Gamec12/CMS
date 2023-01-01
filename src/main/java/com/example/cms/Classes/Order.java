@@ -4,21 +4,44 @@ package com.example.cms.Classes;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Order implements Serializable {
     static int id = 1;
-    private static ArrayList<Order> orders = new ArrayList<>() ;
+
     private   ArrayList<Product> items = new ArrayList<>();
 
+    static Map<Integer, ArrayList<Order>> orders = new TreeMap<>();
+
     private Date date ;
-    public Order(Cart c1 , String userName) throws IOException, ClassNotFoundException {
+    public Order(Cart c1 , int id) throws IOException, ClassNotFoundException {
         date = new Date();
+
         if(!c1.isEmpty())
         {
             Load();
+            if((orders.containsKey(id)))
+            {
+                orders.get(id).add(this);
+            }
+            else
+            {
+                ArrayList<Order> temp = new ArrayList<>();
+                temp.add(this);
+                orders.put(id,temp);
+            }
+            ArrayList<Order> arrayList = orders.get(id);
+            arrayList.add(this);
+
             items.addAll(c1.getArr());
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Orders.dat"));
-            out.writeObject(orders);
+            for(int i = 0 ; i < c1.getArr().size();i++)
+            {
+                c1.getArr().get(i).setQuantity(c1.getArr().get(i).getQuantity()-1);
+            }
+            orders.put(id , arrayList);
+
+            save();
         }
 
     }
@@ -27,8 +50,8 @@ public class Order implements Serializable {
     }
 
     private static void Load() throws IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream( new FileInputStream("Orders.dat"));
-        orders = (ArrayList<Order>) in.readObject();
+        ObjectInputStream in = new ObjectInputStream( new FileInputStream("src/main/Data/Orders.dat"));
+        orders = (Map<Integer, ArrayList<Order>>) in.readObject();
     }
 
     public static void load() throws IOException, ClassNotFoundException {
@@ -39,7 +62,7 @@ public class Order implements Serializable {
         return id;
     }
 
-    public static ArrayList<Order> getOrders() {
+    public static Map<Integer, ArrayList<Order>> getOrders() {
         return orders;
     }
 
@@ -49,5 +72,10 @@ public class Order implements Serializable {
 
     public Date getDate() {
         return date;
+    }
+
+    public void save() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/Data/Orders.dat"));
+        out.writeObject(orders);
     }
 }
