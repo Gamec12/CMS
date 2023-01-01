@@ -95,7 +95,12 @@ Stage.setTitle("Order Details");
 
 
         });
-        box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,confirm);
+        Button back=new Button("back");
+        back.setOnAction(e->{
+            cart cart1=new cart(customer);
+            cart1.start(Stage);
+        });
+        box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,confirm,back);
         box.setBackground(new Background(new BackgroundFill(Color.WHITE , null , null)));
         Stage.setScene(new Scene(box , 500 , 500) );
         Stage.show();
