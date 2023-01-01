@@ -1,0 +1,212 @@
+Index: src/main/java/com/example/cms/AddItem.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms;\r\n\r\nimport com.example.cms.Classes.Inventory;\r\nimport com.example.cms.Classes.Product;\r\nimport com.example.cms.Classes.Validations;\r\nimport javafx.application.Application;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.layout.GridPane;\r\nimport javafx.scene.text.Font;\r\nimport javafx.scene.text.FontWeight;\r\nimport javafx.scene.text.Text;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.IOException;\r\n\r\npublic class AddItem extends Application {\r\n    Inventory inv = new Inventory();\r\n\r\n    public AddItem(Inventory inv) throws IOException, ClassNotFoundException {\r\n        this.inv = inv;\r\n\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        launch(args);\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) {\r\n        GridPane gridPane =Main.GetDefaultPane();\r\n        Text title = new Text(\"Enter the item's details\");\r\n        title.setFont(Font.font(\"arial\", FontWeight.BOLD, 18));\r\n        gridPane.add(title , 0 , 0 , 2 ,2);\r\n\r\n        Label l1 = new Label(\"Item ID\");\r\n        TextField ID = new TextField();\r\n        gridPane.add(l1,0 , 3);\r\n        gridPane.add(ID , 1 , 3);\r\n\r\n\r\n\r\n        Label l2 = new Label(\"Name\");\r\n        TextField name = new TextField();\r\n        gridPane.add(l2,0 , 4);\r\n        gridPane.add(name , 1 , 4);\r\n        // String color;\r\n\r\n        Label l3 = new Label(\"Color\");\r\n//        ColorPicker colorPicker = new ColorPicker();\r\n//        colorPicker.setOnAction(e->\r\n//        {\r\n//\r\n//        });\r\n\r\n        TextField  color = new TextField();\r\n        gridPane.add(l3,0 , 5);\r\n        gridPane.add(color , 1 , 5);\r\n\r\n        Label l4 = new Label(\"Category\");\r\n        ComboBox<String> category = new ComboBox<>();\r\n        Main.getCategories(category);\r\n        gridPane.add(l4,0 , 6);\r\n        gridPane.add(category , 1 , 6);\r\n\r\n        Label l5 = new Label(\"Size\");\r\n        TextField  size = new TextField();\r\n        gridPane.add(l5,0 , 7);\r\n        gridPane.add(size , 1 , 7);\r\n\r\n        Label l6 = new Label(\"description\");\r\n        TextArea description = new TextArea();\r\n        gridPane.add(l6,0 , 8);\r\n        gridPane.add(description , 1 , 9);\r\n\r\n        Label l7 = new Label(\"Price\");\r\n        TextField  basePrice = new TextField();\r\n        gridPane.add(l7,0 , 10);\r\n        gridPane.add(basePrice , 1 , 10);\r\n\r\n        Label l8 = new Label(\"Quantity\");\r\n        TextField  quantity = new TextField();\r\n        gridPane.add(l8,0 , 11);\r\n        gridPane.add(quantity , 1 , 11);\r\n        Label l9 = new Label(\"Image source\");\r\n        TextField ImageSource = new TextField();\r\n        gridPane.add(l9 , 0 , 12);\r\n        gridPane.add(ImageSource , 1 , 12);\r\n\r\n        Button add = new Button(\"Add\");\r\n\r\n        add.setOnAction(e->{\r\n\r\n            if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id\r\n            {\r\n                ID.setText(\"ID already exists\");\r\n                ID.setStyle(\"-fx-text-fill: red\");\r\n                return;\r\n            }\r\n            if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))\r\n            {\r\n                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getSelectionModel().getSelectedItem() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());\r\n                try {\r\n                    inv.addProduct(product);\r\n                } catch (IOException ex) {\r\n                    throw new RuntimeException(ex);\r\n                }\r\n                AdminPannel adminPannel = new AdminPannel();\r\n                try {\r\n                    adminPannel.start(stage);\r\n                } catch (IOException | ClassNotFoundException ex) {\r\n                    throw new RuntimeException(ex);\r\n                }\r\n            }\r\n\r\n        });\r\n        EditItem.ItemButtons(stage, gridPane, add);\r\n\r\n\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/AddItem.java b/src/main/java/com/example/cms/AddItem.java
+--- a/src/main/java/com/example/cms/AddItem.java	(revision 4aa7dc3db4b4702af7d74cd8ece16fb32d5a4f13)
++++ b/src/main/java/com/example/cms/AddItem.java	(date 1672508406063)
+@@ -95,28 +95,84 @@
+         Button add = new Button("Add");
+ 
+         add.setOnAction(e->{
+-
++            if(name.getText().equals("") || color.getText().equals("") || category.getValue().equals("") || size.getText().equals("") || description.getText().equals("") || basePrice.getText().equals("") || quantity.getText().equals("") || ImageSource.getText().equals("") || category.getSelectionModel().getSelectedItem() == null)
++            {
++                Alert alert = new Alert(Alert.AlertType.ERROR);
++                alert.setTitle("Error");
++                alert.setHeaderText("Please fill all the fields");
++                alert.showAndWait();
++                return;
++            }
+             if(Validations.idExists( inv, Integer.parseInt(ID.getText()))) // so that we don't add same id
+             {
+                 ID.setText("ID already exists");
+                 ID.setStyle("-fx-text-fill: red");
++
++                Alert alert = new Alert(Alert.AlertType.ERROR);
++                alert.setTitle("Error");
++                alert.setHeaderText("ID already exists");
+                 return;
+             }
+-            if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
++            else if(!Validations.isInt(ID))
++            {
++                Alert alert = new Alert(Alert.AlertType.ERROR);
++                alert.setTitle("Error");
++                alert.setHeaderText("Please enter a valid ID");
++                alert.showAndWait();
++            }
++
++
++             else if (!Validations.isDouble((basePrice)))
+             {
+-                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getSelectionModel().getSelectedItem() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
++                Alert alert = new Alert(Alert.AlertType.ERROR);
++                alert.setTitle("Error");
++                alert.setHeaderText("Please enter a valid price");
++                alert.showAndWait();
++                return;
++            }
++            else if(!Validations.isInt(quantity))
++            {
++                Alert alert = new Alert(Alert.AlertType.ERROR);
++                alert.setTitle("Error");
++                alert.setHeaderText("Please enter a valid quantity");
++                alert.showAndWait();
++                return;
++            }
++            else
++            {
++                Product p = new Product(Integer.parseInt(ID.getText()) , name.getText() , color.getText() , category.getValue() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) , ImageSource.getText());
+                 try {
+-                    inv.addProduct(product);
++                    inv.addProduct(p);
+                 } catch (IOException ex) {
+                     throw new RuntimeException(ex);
+                 }
+-                AdminPannel adminPannel = new AdminPannel();
+-                try {
+-                    adminPannel.start(stage);
+-                } catch (IOException | ClassNotFoundException ex) {
+-                    throw new RuntimeException(ex);
+-                }
++                Alert alert = new Alert(Alert.AlertType.INFORMATION);
++                alert.setTitle("Success");
++                alert.setHeaderText("Item added successfully");
++                alert.showAndWait();
++                stage.close();
+             }
++
++//            if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
++//            {
++//                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getSelectionModel().getSelectedItem() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
++//                try {
++//                    inv.addProduct(product);
++//                } catch (IOException ex) {
++//                    throw new RuntimeException(ex);
++//                }
++//                AdminPannel adminPannel = new AdminPannel();
++//                try {
++//                    adminPannel.start(stage);
++//                } catch (IOException | ClassNotFoundException ex) {
++//                    throw new RuntimeException(ex);
++//                }
++//            }
++
++
++
++
++
+ 
+         });
+         EditItem.ItemButtons(stage, gridPane, add);
+Index: src/main/java/com/example/cms/CustomerPanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms;\r\n\r\nimport com.example.cms.Classes.Customer;\r\nimport com.example.cms.Classes.Inventory;\r\nimport javafx.application.Application;\r\nimport javafx.geometry.Insets;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.ComboBox;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.ListView;\r\nimport javafx.scene.layout.*;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.IOException;\r\n\r\npublic class CustomerPanel extends Application {\r\n\r\n\r\nInventory inv;\r\nCustomer customer;\r\n    public CustomerPanel() throws IOException, ClassNotFoundException {\r\n        inv = new Inventory();\r\n        this.customer = new Customer(\"Adam\" , \"Loay\" , \"01116607644\", \"Male\" , \"adamlo2ay@gmail.com\" , \"Gamec\" , \"1234\" , \"40 north hillStreet\" );\r\n    }\r\n\r\n\r\n    public static void main(String[] args) {\r\n        launch(args);\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) {\r\n        GridPane gridPane = Main.GetDefaultPane();\r\n\r\n\r\n        BorderPane borderPane = new BorderPane();\r\n        HBox hBox = new HBox();\r\n        hBox.setPadding(new Insets(10));\r\n        VBox vBox = new VBox();\r\n\r\n        ListView<VBox> listView = new ListView<>();\r\n        ComboBox<String> comboBox = new ComboBox<>();\r\n        Main.getCategories(comboBox);\r\n\r\n        HBox dropDown = new HBox();\r\n        dropDown.setPadding(new Insets(10));\r\n        dropDown.getChildren().add(comboBox);\r\n        HBox.setMargin(comboBox , new Insets(10));\r\n\r\n\r\n\r\n\r\n        borderPane.setBottom(dropDown);\r\n        comboBox.setOnAction(e->{\r\n            Main.getItemsCustomer(inv , listView ,customer ,comboBox);\r\n\r\n        });\r\n        Main.getItemsCustomer(inv, listView , customer, comboBox);\r\n\r\n        borderPane.setCenter(listView);\r\n\r\n\r\n\r\n//        Button orders = new Button(\"Orders\");\r\n        Button cart = new Button(\"Cart\"); // maybe image in the future\r\n        Button profile = new Button(\"Profile\");\r\n\r\n        //Label l1 = new Label(\"Welcome \" + customer.getFirstName());\r\n\r\n        Label l1 = new Label( String.valueOf(customer.getCart().getCount()));\r\n        hBox.getChildren().addAll(profile,cart , l1);\r\n        HBox.setMargin(cart, new Insets(0,15,0,0));\r\n\r\n\r\n\r\n        borderPane.setTop(hBox);\r\n        HBox.setMargin(profile, new Insets(0,15,0,0));\r\n\r\n\r\n\r\n\r\n        stage.setScene(new Scene(borderPane, 500, 500));\r\n        stage.show();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/CustomerPanel.java b/src/main/java/com/example/cms/CustomerPanel.java
+--- a/src/main/java/com/example/cms/CustomerPanel.java	(revision 4aa7dc3db4b4702af7d74cd8ece16fb32d5a4f13)
++++ b/src/main/java/com/example/cms/CustomerPanel.java	(date 1672506786914)
+@@ -42,6 +42,7 @@
+         ListView<VBox> listView = new ListView<>();
+         ComboBox<String> comboBox = new ComboBox<>();
+         Main.getCategories(comboBox);
++        comboBox.getItems().add("All");
+ 
+         HBox dropDown = new HBox();
+         dropDown.setPadding(new Insets(10));
+Index: src/main/java/com/example/cms/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms;\r\n\r\nimport com.example.cms.Classes.Customer;\r\nimport com.example.cms.Classes.Inventory;\r\nimport com.example.cms.Classes.Product;\r\nimport javafx.application.Application;\r\nimport javafx.geometry.Insets;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.layout.*;\r\nimport javafx.scene.paint.Color;\r\nimport javafx.scene.text.Font;\r\nimport javafx.scene.text.FontWeight;\r\nimport javafx.scene.text.Text;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.IOException;\r\nimport java.util.Objects;\r\n\r\n\r\npublic class Main extends Application {\r\n    @Override\r\n    public void start(Stage stage) throws IOException {\r\n        GridPane grid = GetDefaultPane();\r\n\r\n\r\n        Text title = new Text(\"Welcome!\");\r\n        setText(title);\r\n\r\n        Button Register = new Button(\"Registration\");\r\n        Button Login = new Button(\"Login\");\r\n       // Register.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));\r\n\r\n        Text admin = new Text(\"An admin?\");\r\n        admin.setOnMouseClicked(e-> {\r\n            AdminLogin adminLogin = new AdminLogin();\r\n            adminLogin.start(stage);\r\n        } );// open admin login\r\n\r\n        grid.add(title , 0 , 0 ,2, 1);\r\n\r\n        grid.add(Register , 0 , 3);\r\n        grid.add(Login , 1 , 3);\r\n        grid.add(admin , 0 , 4);\r\n        Scene s  = new Scene(grid , 500 , 500);\r\n        stage.setScene(s);\r\n        stage.setTitle(\"CMS\");\r\n        //stage.getIcons().add(new Image(\"D:\\\\Uni\\\\Semister 3\\\\OOP\\\\Projects\\\\CMS\\\\src\\\\main\\\\java\\\\com\\\\example\\\\cms\\\\Images\\\\Icon.jpg\"));\r\n        stage.show();\r\n\r\n\r\n    }\r\n\r\n    public static void setText(Text title) {\r\n        title.setFont(Font.font(\"arial\", FontWeight.BOLD, 30));\r\n    }\r\n\r\n    public static GridPane GetDefaultPane() {\r\n        GridPane grid = new GridPane();\r\n        grid.setPadding( new Insets(10));\r\n        grid.setHgap(10);\r\n        grid.setVgap(10);\r\n        grid.setAlignment(Pos.CENTER);\r\n        grid.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));\r\n        //grid.setStyle(\"-fx-background-color: #fffff;\");\r\n\r\n        return grid;\r\n    }\r\n\r\n\r\n    public static void getItems(Inventory inv, ListView<VBox> listView) {\r\n        for(Product p : inv.getProducts().values())\r\n        {\r\n            VBox vBox = new VBox();\r\n            vBox.setSpacing(10);\r\n            vBox.setPadding(new Insets(10));\r\n            ImageView imageView;\r\n            try{\r\n                imageView = new ImageView(new Image(p.ImageSource));\r\n\r\n                imageView.setFitHeight(100);\r\n                imageView.setFitWidth(100);\r\n            }\r\n            catch (IllegalArgumentException ex)\r\n            {\r\n                imageView = new ImageView(new Image(\"https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg\"));\r\n            }\r\n            // temporrary until I know how to put items\r\n\r\n\r\n            Text item = new Text(p.toString());\r\n\r\n\r\n            vBox.getChildren().addAll(imageView,item);\r\n           // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));\r\n\r\n            listView.getItems().add(vBox);\r\n\r\n            System.out.println(p.toString());\r\n\r\n        }\r\n    }\r\n\r\n    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox comboBox) {\r\n        listView.getItems().clear();\r\n        if(comboBox.getSelectionModel().getSelectedItem() == null) {\r\n\r\n            for (Product p : inv.getProducts().values()) {\r\n                setItems(listView, customer, p);\r\n\r\n                System.out.println(p.toString());\r\n            }\r\n        }\r\n            else\r\n            {\r\n\r\n                for(Product p : inv.getProducts().values())\r\n                {\r\n                    if(!Objects.equals(p.getCategory(), (String) comboBox.getSelectionModel().getSelectedItem()))\r\n                    {\r\n                        continue;\r\n                    }\r\n                    setItems(listView, customer, p);\r\n\r\n                }\r\n\r\n\r\n        }\r\n    }\r\n\r\n    private static void setItems(ListView<VBox> listView, Customer customer, Product p) {\r\n        VBox vBox = new VBox();\r\n        vBox.setSpacing(10);\r\n        vBox.setPadding(new Insets(10));\r\n\r\n        Button button = new Button(\"Add to cart\");\r\n        button.setOnAction(e->{\r\n            customer.getCart().addProduct(p);\r\n\r\n        });\r\n        ImageView imageView;\r\n        try{\r\n            imageView = new ImageView(new Image(p.ImageSource));\r\n\r\n            imageView.setFitHeight(100);\r\n            imageView.setFitWidth(100);\r\n        }\r\n        catch (IllegalArgumentException ex)\r\n        {\r\n            imageView = new ImageView(new Image(\"https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg\"));\r\n        }\r\n        HBox hBox = new HBox();\r\n        hBox.setSpacing(30);\r\n\r\n        hBox.getChildren().addAll(imageView,button);\r\n        imageView.setFitHeight(100);\r\n        imageView.setFitWidth(100);\r\n        Text item = new Text(p.toString());\r\n        vBox.getChildren().addAll(hBox,item);\r\n\r\n        listView.getItems().add(vBox);\r\n    }\r\n\r\n    public static void getCategories(ComboBox<String> category) {\r\n        category.getItems().addAll(\"Hoodie\",\"T-Shirt\",\"Shirt\",\"Pants\",\"Shorts\",\"Sweater\",\"Jacket\",\"Socks\",\"Shoes\",\"Hat\",\"Gloves\",\"Scarf\",\"Underwear\",\"Swimwear\",\"Belt\",\"Jewelry\",\"Watch\",\"Bag\",\"Wallet\",\"Other\");\r\n    }\r\n\r\n    public static void ConfirmAdd(Stage stage, GridPane gridPane, TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource, Button button, Inventory inv) {\r\n\r\n    }\r\n    public static void main(String[] args) {\r\n        launch();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/Main.java b/src/main/java/com/example/cms/Main.java
+--- a/src/main/java/com/example/cms/Main.java	(revision 4aa7dc3db4b4702af7d74cd8ece16fb32d5a4f13)
++++ b/src/main/java/com/example/cms/Main.java	(date 1672506825323)
+@@ -106,7 +106,7 @@
+ 
+     public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox comboBox) {
+         listView.getItems().clear();
+-        if(comboBox.getSelectionModel().getSelectedItem() == null) {
++        if(comboBox.getSelectionModel().getSelectedItem() == null || comboBox.getSelectionModel().getSelectedItem().toString().equals("All")) {
+ 
+             for (Product p : inv.getProducts().values()) {
+                 setItems(listView, customer, p);
+Index: src/main/java/com/example/cms/Classes/Cart.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms.Classes;\r\nimport java.util.ArrayList;\r\n\r\npublic class Cart {\r\nprivate ArrayList<Product> arr;\r\n\r\nprivate int count;\r\n\r\npublic Cart()\r\n{\r\n    count = 0;\r\n    arr = new ArrayList<>();\r\n}\r\n\r\npublic Cart(Product A)\r\n{\r\n    count = 1;\r\n    arr = new ArrayList<>(); // sum\r\n    arr.add(A);\r\n\r\n}\r\npublic void addToCart(int id, Inventory myInv)\r\n{\r\n    Product test = getProduct(id , myInv);\r\n    if(test != null) // making sure that there is something with that id\r\n    {\r\n        arr.add(test);\r\n        System.out.println(\"Added sucessfully\");\r\n        count++;\r\n    }\r\n    else\r\n    {\r\n        System.out.println(\"Invalid ID\");\r\n    }\r\n\r\n\r\n}\r\n\r\npublic void removeFromCart(int id)\r\n{\r\n    for(int i = 0 ; i< arr.size();i++)\r\n    {\r\n        if(arr.get(i).getItemID() == id)\r\n        {\r\n            arr.remove(i);\r\n            count--;\r\n        }\r\n    }\r\n}\r\n\r\npublic void clearCart()\r\n{\r\n    arr.clear();\r\n}\r\npublic void displayCart()\r\n{\r\n    if(count == 0)\r\n    {\r\n        System.out.println(\"cart is empty\");\r\n        return;\r\n    }\r\n    double price = 0;\r\n    System.out.println(\"There are \" + count + \" items in the cart\");\r\n    for(int i = 0 ; i< arr.size();i++)\r\n    {\r\n        System.out.println(\"Order \" + i + \" is \");\r\n        System.out.println(arr.get(i).getItemID());\r\n        System.out.println(arr.get(i).getName());\r\n        System.out.println(arr.get(i).getColor());\r\n        System.out.println(arr.get(i).getCategory());\r\n        System.out.println(arr.get(i).getSize());\r\n        System.out.println(arr.get(i).getDescription());\r\n        System.out.println(arr.get(i).getBasePrice());\r\n        price += arr.get(i).getBasePrice();\r\n\r\n    }\r\n    System.out.println( \"Total price \"+ price);\r\n}\r\n\r\n    public  Product getProduct(int id , Inventory I) // to search for an item with a specific id\r\n    {\r\n        return I.getProduct(id);\r\n    }\r\n\r\n    public ArrayList<Product> getArr() {\r\n        return arr;\r\n    }\r\n\r\n    public  boolean isEmpty()\r\n    {\r\n        return arr.isEmpty();\r\n    }\r\n\r\n    public void addProduct(Product p) {\r\n        arr.add(p);\r\n        System.out.println(p.toString());\r\n        count++;\r\n    }\r\n\r\n    public int getCount() {\r\n        return count;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/Classes/Cart.java b/src/main/java/com/example/cms/Classes/Cart.java
+--- a/src/main/java/com/example/cms/Classes/Cart.java	(revision 4aa7dc3db4b4702af7d74cd8ece16fb32d5a4f13)
++++ b/src/main/java/com/example/cms/Classes/Cart.java	(date 1672507642283)
+@@ -44,6 +44,7 @@
+         {
+             arr.remove(i);
+             count--;
++            return;
+         }
+     }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"2462b4e4-dd8f-4779-bc52-877c0ed5cba1\" name=\"Changes\" comment=\"Semi- added categories\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/Data/inventory.dat\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/Data/inventory.dat\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerPanel.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/CustomerPanel.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/EditItem.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/EditItem.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Main.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JavaFXApplication\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2IoR3rofCksxYgGVCOu4yfgpctX\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/Uni/Semister 3/OOP/Projects/CMS/src/main&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Classes\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\Images\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\Data\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Classes\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Images\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\" />\r\n    </key>\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"com.example.cms\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"2462b4e4-dd8f-4779-bc52-877c0ed5cba1\" name=\"Changes\" comment=\"\" />\r\n      <created>1670845756934</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1670845756934</updated>\r\n      <workItem from=\"1670845758209\" duration=\"3198000\" />\r\n      <workItem from=\"1670874655959\" duration=\"900000\" />\r\n      <workItem from=\"1670875567763\" duration=\"1690000\" />\r\n      <workItem from=\"1670968209720\" duration=\"1204000\" />\r\n      <workItem from=\"1671025731866\" duration=\"8187000\" />\r\n      <workItem from=\"1671208675434\" duration=\"3000\" />\r\n      <workItem from=\"1671208707648\" duration=\"4305000\" />\r\n      <workItem from=\"1671257830431\" duration=\"14000\" />\r\n      <workItem from=\"1671389327841\" duration=\"3926000\" />\r\n      <workItem from=\"1671889874290\" duration=\"14205000\" />\r\n      <workItem from=\"1671913177394\" duration=\"934000\" />\r\n      <workItem from=\"1671914424069\" duration=\"4000\" />\r\n      <workItem from=\"1671962613928\" duration=\"12340000\" />\r\n      <workItem from=\"1672055013899\" duration=\"9895000\" />\r\n      <workItem from=\"1672433412923\" duration=\"125000\" />\r\n      <workItem from=\"1672434904794\" duration=\"1673000\" />\r\n      <workItem from=\"1672484947783\" duration=\"664000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"sadad\">\r\n      <created>1670845813536</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670845813536</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"sadad\">\r\n      <created>1670845875925</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670845875925</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1670876427342</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670876427342</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1670876657601</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670876657601</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1671040352622</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671040352622</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1671212419493</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671212419493</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Added binary files\">\r\n      <created>1671643571527</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671643571527</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Added binary files\">\r\n      <created>1671643589801</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671643589801</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"remove and add works\">\r\n      <created>1671894133604</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671894133604</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Edit works wahooo\">\r\n      <created>1671904536322</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671904536322</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"made thte list clickable\">\r\n      <created>1671986506616</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671986506616</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"added validations\">\r\n      <created>1672059856031</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672059856031</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"ADDED IMAGESSSSS\">\r\n      <created>1672430019192</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672430019192</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Fixed a bug\">\r\n      <created>1672432192712</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672432192712</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Fixed a bug\">\r\n      <created>1672433032199</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672433032199</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Semi- added categories\">\r\n      <created>1672492269704</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672492269704</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"17\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"sadad\" />\r\n    <MESSAGE value=\"Scuffed main page look with a weird ICON\" />\r\n    <MESSAGE value=\"Added binary files\" />\r\n    <MESSAGE value=\"remove and add works\" />\r\n    <MESSAGE value=\"Edit works wahooo\" />\r\n    <MESSAGE value=\"made thte list clickable\" />\r\n    <MESSAGE value=\"added validations\" />\r\n    <MESSAGE value=\"ADDED IMAGESSSSS\" />\r\n    <MESSAGE value=\"Fixed a bug\" />\r\n    <MESSAGE value=\"Semi- added categories\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Semi- added categories\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/CMS$AdminPannel.ic\" NAME=\"AdminPannel Coverage Results\" MODIFIED=\"1671975531814\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\">\r\n      <FILTER>com.example.cms.*</FILTER>\r\n    </SUITE>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 4aa7dc3db4b4702af7d74cd8ece16fb32d5a4f13)
++++ b/.idea/workspace.xml	(date 1672507642351)
+@@ -4,14 +4,12 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="Semi- added categories">
++    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="filter by categories works now">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/Data/inventory.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Data/inventory.dat" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AddItem.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Cart.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerPanel.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/EditItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/EditItem.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -214,7 +212,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1672492269704</updated>
+     </task>
+-    <option name="localTasksCounter" value="17" />
++    <task id="LOCAL-00017" summary="filter by categories works now">
++      <created>1672506678049</created>
++      <option name="number" value="00017" />
++      <option name="presentableId" value="LOCAL-00017" />
++      <option name="project" value="LOCAL" />
++      <updated>1672506678049</updated>
++    </task>
++    <option name="localTasksCounter" value="18" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -242,7 +247,8 @@
+     <MESSAGE value="ADDED IMAGESSSSS" />
+     <MESSAGE value="Fixed a bug" />
+     <MESSAGE value="Semi- added categories" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Semi- added categories" />
++    <MESSAGE value="filter by categories works now" />
++    <option name="LAST_COMMIT_MESSAGE" value="filter by categories works now" />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+     <SUITE FILE_PATH="coverage/CMS$AdminPannel.ic" NAME="AdminPannel Coverage Results" MODIFIED="1671975531814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

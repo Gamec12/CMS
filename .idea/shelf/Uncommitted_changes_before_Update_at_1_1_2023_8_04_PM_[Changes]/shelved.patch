@@ -1,0 +1,298 @@
+Index: src/main/java/com/example/cms/Classes/login.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/Classes/login.java b/src/main/java/com/example/cms/CustomerSide/login.java
+rename from src/main/java/com/example/cms/Classes/login.java
+rename to src/main/java/com/example/cms/CustomerSide/login.java
+--- a/src/main/java/com/example/cms/Classes/login.java	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
++++ b/src/main/java/com/example/cms/CustomerSide/login.java	(date 1672596297191)
+@@ -1,5 +1,6 @@
+-package com.example.cms.Classes;
++package com.example.cms.CustomerSide;
+ 
++import com.example.cms.Main;
+ import javafx.application.Application;
+ import javafx.event.ActionEvent;
+ import javafx.event.EventHandler;
+@@ -44,7 +45,7 @@
+     private GridPane createRegistrationFormPane() {
+ 
+ 
+-        GridPane gridPane = new GridPane();
++        GridPane gridPane = Main.GetDefaultPane();
+ 
+         gridPane.setAlignment(Pos.CENTER);
+ 
+@@ -93,35 +94,37 @@
+         gridPane.add(passwordField, 1, 3);
+ 
+ 
+-        Button submitButton = new Button("Submit");
++        Button submitButton = new Button("Log in");
+         submitButton.setPrefHeight(40);
+         submitButton.setDefaultButton(true);
+         submitButton.setPrefWidth(100);
+-        gridPane.add(submitButton, 0, 9, 2, 1);
+-        GridPane.setHalignment(submitButton, HPos.CENTER);
+-        GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
+-
+-        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+-            @Override
+-            public void handle(ActionEvent event) {
+-                if(passwordField.getText().isEmpty()) {
+-                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a password");
+-                    return;
+-                }
+-                if (usernamefield.getText().isEmpty())
+-                {
+-                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a username");
+-                    return;
+-                }
+-            }
+-            private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+-                Alert alert = new Alert(alertType);
+-                alert.setTitle(title);
+-                alert.setHeaderText(null);
+-                alert.setContentText(message);
+-                alert.initOwner(owner);
+-                alert.show();
+-            }
+-        });
++        submitButton.setOnAction(e->{
++            if(passwordField.getText().isEmpty()) {
++                showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a password");
++                return;
++            }
++            if (usernamefield.getText().isEmpty())
++            {
++                showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a username");
++                return;
++            }
++
++
++        });
++        gridPane.add(submitButton, 0, 9, 2, 1);
++        GridPane.setHalignment(submitButton, HPos.CENTER);
++        GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
++
++
++
++
++    }
++    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
++        Alert alert = new Alert(alertType);
++        alert.setTitle(title);
++        alert.setHeaderText(null);
++        alert.setContentText(message);
++        alert.initOwner(owner);
++        alert.show();
+     }
+ }
+Index: src/main/java/com/example/cms/Classes/Customer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms.Classes;\r\n\r\nimport java.io.*;\r\nimport java.util.Map;\r\nimport java.util.Scanner;\r\nimport java.util.TreeMap;\r\n\r\npublic class Customer extends User implements Serializable {\r\n    public static int nextId = 1; // to know the next id sequentially\r\n    private static int id;\r\n    static Map<Integer, Customer> customers = new TreeMap<>();\r\n    String address1;\r\n    String address2;\r\n    String zipCode;\r\n\r\n    Cart cart = new Cart();\r\n\r\n    public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password, String address1) {\r\n        super(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);\r\n        this.address1 = address1;\r\n        id = nextId;\r\n        nextId++;\r\n        customers.put(id, this);\r\n    }\r\n\r\n    public String getAddress1() {\r\n        return address1;\r\n    }\r\n\r\n    public Cart getCart() {\r\n        return cart;\r\n    }\r\n\r\n}\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/Classes/Customer.java b/src/main/java/com/example/cms/Classes/Customer.java
+--- a/src/main/java/com/example/cms/Classes/Customer.java	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
++++ b/src/main/java/com/example/cms/Classes/Customer.java	(date 1672595621350)
+@@ -10,17 +10,17 @@
+     private static int id;
+     static Map<Integer, Customer> customers = new TreeMap<>();
+     String address1;
+-    String address2;
+-    String zipCode;
+ 
+     Cart cart = new Cart();
+ 
+-    public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password, String address1) {
++    public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password, String address1) throws IOException, ClassNotFoundException {
+         super(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);
++        load();
+         this.address1 = address1;
+         id = nextId;
+         nextId++;
+         customers.put(id, this);
++        save();
+     }
+ 
+     public String getAddress1() {
+@@ -31,6 +31,16 @@
+         return cart;
+     }
+ 
++    public static void load() throws IOException, ClassNotFoundException {
++        ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/customers.dat"));
++        customers = (Map<Integer, Customer>) in.readObject();
++    }
++
++    public static void save() throws IOException {
++        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/Data/customers.dat"));
++        out.writeObject(customers);
++    }
++
+ }
+ 
+ 
+Index: src/main/java/com/example/cms/CustomerSide/Regestration.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms.CustomerSide;\r\n\r\nimport com.example.cms.Classes.Customer;\r\nimport com.example.cms.Main;\r\nimport javafx.application.Application;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.event.EventHandler;\r\nimport javafx.scene.layout.GridPane;\r\nimport javafx.geometry.Pos;\r\nimport javafx.geometry.Insets;\r\nimport javafx.scene.layout.ColumnConstraints;\r\nimport javafx.geometry.HPos;\r\nimport javafx.scene.layout.Priority;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Alert;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.stage.Stage;\r\nimport javafx.scene.control.PasswordField;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.text.Font;\r\nimport javafx.stage.Window;\r\n\r\nimport java.io.IOException;\r\n\r\n\r\npublic class Regestration extends Application {\r\n\r\n    public static void main(String[] args) {\r\n        launch(args);\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage)\r\n    {\r\n        stage.setTitle(\"Registration Form\");\r\n\r\n        GridPane gridPane = createRegistrationFormPane();\r\n\r\n        addUIControls(gridPane, stage);\r\n\r\n        Scene scene = new Scene(gridPane, 800, 500);\r\n\r\n        stage.setScene(scene);\r\n        stage.show();\r\n    }\r\n\r\n    private GridPane createRegistrationFormPane() {\r\n\r\n\r\n        GridPane gridPane = new GridPane();\r\n\r\n        gridPane.setAlignment(Pos.CENTER);\r\n\r\n        gridPane.setPadding(new Insets(40, 40, 40, 40));\r\n\r\n\r\n        gridPane.setHgap(10);\r\n\r\n\r\n        gridPane.setVgap(10);\r\n\r\n\r\n        ColumnConstraints columnOneConstraints = new ColumnConstraints(100, 100, Double.MAX_VALUE);\r\n\r\n        columnOneConstraints.setHalignment(HPos.RIGHT);\r\n\r\n        ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);\r\n        columnTwoConstrains.setHgrow(Priority.ALWAYS);\r\n\r\n        gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);\r\n\r\n        return gridPane;\r\n    }\r\n    private void addUIControls(GridPane gridPane, Stage stage) {\r\n\r\n        Label headerLabel = new Label(\"Registration Form\");\r\n        headerLabel.setFont(Font.font(\"Arial\", 24));\r\n        gridPane.add(headerLabel, 0,0,2,1);\r\n        GridPane.setHalignment(headerLabel, HPos.CENTER);\r\n        GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));\r\n\r\n        Label nameLabel = new Label(\"First Name: \");\r\n        gridPane.add(nameLabel, 0,1);\r\n\r\n        TextField nameField = new TextField();\r\n        nameField.setPrefHeight(40);\r\n        gridPane.add(nameField, 1,1);\r\n\r\n        Label lastNameLabel = new Label(\"Last Name: \");\r\n        gridPane.add(lastNameLabel, 0,2);\r\n\r\n        TextField lastnameField = new TextField();\r\n        lastnameField.setPrefHeight(40);\r\n        gridPane.add(lastnameField, 1,2);\r\n\r\n        Label emailLabel = new Label(\"Email : \");\r\n        gridPane.add(emailLabel, 0, 3);\r\n\r\n        TextField emailField = new TextField();\r\n        emailField.setPrefHeight(40);\r\n        gridPane.add(emailField, 1, 3);\r\n        Label passwordLabel = new Label(\"Password : \");\r\n        gridPane.add(passwordLabel, 0, 4);\r\n\r\n        PasswordField passwordField = new PasswordField();\r\n        passwordField.setPrefHeight(40);\r\n        gridPane.add(passwordField, 1, 4);\r\n\r\n        Label username = new Label(\"username :\");\r\n        gridPane.add(username, 0, 5);\r\n\r\n        TextField usernamefield = new TextField();\r\n        usernamefield.setPrefHeight(40);\r\n        gridPane.add(usernamefield, 1, 5);\r\n\r\n        Label address = new Label(\"address :\");\r\n        gridPane.add(address, 0, 6);\r\n\r\n        TextField addressfield = new TextField();\r\n        addressfield.setPrefHeight(40);\r\n        gridPane.add(addressfield, 1, 6);\r\n\r\n        Label gender = new Label(\"gender:\");\r\n        gridPane.add(gender, 0, 7);\r\n\r\n        TextField genderfield = new TextField();\r\n        genderfield.setPrefHeight(40);\r\n        gridPane.add(genderfield, 1, 7);\r\n\r\n        Label mobileNumber = new Label(\"mobileNumber :\");\r\n        gridPane.add(mobileNumber, 0, 8);\r\n\r\n        TextField mobileNumberfield = new TextField();\r\n        mobileNumberfield.setPrefHeight(40);\r\n        gridPane.add(mobileNumberfield, 1, 8);\r\n\r\n        Button submitButton = new Button(\"Submit\");\r\n        submitButton.setPrefHeight(40);\r\n        submitButton.setDefaultButton(true);\r\n        submitButton.setPrefWidth(100);\r\n        gridPane.add(submitButton, 0, 9, 2, 1);\r\n        GridPane.setHalignment(submitButton, HPos.CENTER);\r\n        GridPane.setMargin(submitButton, new Insets(20, 0,20,0));\r\n        submitButton.setOnAction(e->{\r\n\r\n\r\n                if(nameField.getText().isEmpty()) {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter your firstName\");\r\n                    return;\r\n\r\n                }\r\n                if(emailField.getText().isEmpty()) {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter your email\");\r\n                    return;\r\n                }\r\n\r\n                if (lastnameField.getText().isEmpty())\r\n                {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter your lastName\");\r\n                    return;\r\n                }\r\n\r\n                if(passwordField.getText().isEmpty()) {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter a password\");\r\n                    return;\r\n                }\r\n\r\n                if (usernamefield.getText().isEmpty())\r\n                {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter a username\");\r\n                    return;\r\n                }\r\n\r\n                if (addressfield.getText().isEmpty())\r\n                {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter a address\");\r\n                    return;\r\n                }\r\n\r\n                if (genderfield.getText().isEmpty())\r\n                {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter your gender\");\r\n                    return;\r\n                }\r\n\r\n                if (mobileNumberfield.getText().isEmpty())\r\n                {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter mobileNumber\");\r\n                    return;\r\n                }\r\n                String regex = \"^[A-Za-z0-9+_.-]+@(.+)$\";\r\n                if (emailField.getText().matches(regex))\r\n                {\r\n                    System.out.println(\" \");\r\n                }\r\n                else\r\n                {\r\n                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), \"Form Error!\", \"Please enter a valid Email\");\r\n                    return;\r\n                }\r\n                Customer customer = new Customer(nameField.getText(),lastnameField.getText(),mobileNumberfield.getText(), genderfield.getText(), emailField.getText(), usernamefield.getText(), passwordField.getText(), addressfield.getText());\r\n                Main main = new Main();\r\n                showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), \"Registration Successful!\", \"Welcome \" + nameField.getText());\r\n            try {\r\n                main.start(stage);\r\n            } catch (IOException ex) {\r\n                throw new RuntimeException(ex);\r\n            }\r\n\r\n\r\n        });\r\n\r\n\r\n\r\n    }\r\n    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {\r\n        Alert alert = new Alert(alertType);\r\n        alert.setTitle(title);\r\n        alert.setHeaderText(null);\r\n        alert.setContentText(message);\r\n        alert.initOwner(owner);\r\n        alert.show();\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/CustomerSide/Regestration.java b/src/main/java/com/example/cms/CustomerSide/Regestration.java
+--- a/src/main/java/com/example/cms/CustomerSide/Regestration.java	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
++++ b/src/main/java/com/example/cms/CustomerSide/Regestration.java	(date 1672595824359)
+@@ -48,7 +48,7 @@
+     private GridPane createRegistrationFormPane() {
+ 
+ 
+-        GridPane gridPane = new GridPane();
++        GridPane gridPane = Main.GetDefaultPane();
+ 
+         gridPane.setAlignment(Pos.CENTER);
+ 
+@@ -199,8 +199,12 @@
+                     showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a valid Email");
+                     return;
+                 }
++            try {
+                 Customer customer = new Customer(nameField.getText(),lastnameField.getText(),mobileNumberfield.getText(), genderfield.getText(), emailField.getText(), usernamefield.getText(), passwordField.getText(), addressfield.getText());
+-                Main main = new Main();
++            } catch (IOException | ClassNotFoundException ex) {
++                throw new RuntimeException(ex);
++            }
++            Main main = new Main();
+                 showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Registration Successful!", "Welcome " + nameField.getText());
+             try {
+                 main.start(stage);
+Index: src/main/java/com/example/cms/Classes/Order.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms.Classes;\r\n\r\n\r\nimport java.io.*;\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\n\r\npublic class Order implements Serializable {\r\n    static int id = 1;\r\n    private static ArrayList<Order> orders = new ArrayList<>() ;\r\n    private   ArrayList<Product> items = new ArrayList<>();\r\n\r\n    private Date date ;\r\n    public Order(Cart c1 , String userName) throws IOException, ClassNotFoundException {\r\n        date = new Date();\r\n        if(!c1.isEmpty())\r\n        {\r\n            Load();\r\n            items.addAll(c1.getArr());\r\n            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(\"Orders.dat\"));\r\n            out.writeObject(orders);\r\n        }\r\n\r\n    }\r\n    public Order() throws IOException, ClassNotFoundException {\r\n        Load();\r\n    }\r\n\r\n    private static void Load() throws IOException, ClassNotFoundException {\r\n        ObjectInputStream in = new ObjectInputStream( new FileInputStream(\"Orders.dat\"));\r\n        orders = (ArrayList<Order>) in.readObject();\r\n    }\r\n\r\n    public static void load() throws IOException, ClassNotFoundException {\r\n\r\n    }\r\n\r\n    public static int getId() {\r\n        return id;\r\n    }\r\n\r\n    public static ArrayList<Order> getOrders() {\r\n        return orders;\r\n    }\r\n\r\n    public ArrayList<Product> getItems() {\r\n        return items;\r\n    }\r\n\r\n    public Date getDate() {\r\n        return date;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/Classes/Order.java b/src/main/java/com/example/cms/Classes/Order.java
+--- a/src/main/java/com/example/cms/Classes/Order.java	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
++++ b/src/main/java/com/example/cms/Classes/Order.java	(date 1672594946820)
+@@ -7,7 +7,7 @@
+ 
+ public class Order implements Serializable {
+     static int id = 1;
+-    private static ArrayList<Order> orders = new ArrayList<>() ;
++    private static ArrayList<Order> orders = new ArrayList<>();
+     private   ArrayList<Product> items = new ArrayList<>();
+ 
+     private Date date ;
+Index: src/main/java/com/example/cms/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cms;\r\n\r\nimport com.example.cms.AdminSide.AdminLogin;\r\nimport com.example.cms.AdminSide.CustomersView;\r\nimport com.example.cms.Classes.Customer;\r\nimport com.example.cms.Classes.Inventory;\r\nimport com.example.cms.Classes.Product;\r\nimport com.example.cms.CustomerSide.CustomerPanel;\r\nimport javafx.application.Application;\r\nimport javafx.geometry.Insets;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.layout.*;\r\nimport javafx.scene.paint.Color;\r\nimport javafx.scene.text.Font;\r\nimport javafx.scene.text.FontWeight;\r\nimport javafx.scene.text.Text;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.IOException;\r\nimport java.util.Objects;\r\n\r\n\r\npublic class Main extends Application {\r\n    @Override\r\n    public void start(Stage stage) throws IOException { // throws IOException, ClassNotFoundException {\r\n        GridPane grid = GetDefaultPane();\r\n\r\n\r\n        Text title = new Text(\"Welcome to the CMS\");\r\n        setText(title);\r\n\r\n        Button Register = new Button(\"Registration\");\r\n        Button Login = new Button(\"Login\");\r\n\r\n        Text admin = new Text(\"Admin Login\");\r\n        admin.setOnMouseClicked(e-> {\r\n            AdminLogin adminLogin = new AdminLogin();\r\n            adminLogin.start(stage);\r\n        } );// open admin login\r\n\r\n        grid.add(title , 0 , 0 ,2, 1);\r\n\r\n        grid.add(Register , 0 , 3);\r\n        grid.add(Login , 1 , 3);\r\n        grid.add(admin , 0 , 4);\r\n        Scene s  = new Scene(grid , 500 , 500);\r\n        stage.setScene(s);\r\n        stage.setTitle(\"CMS\");\r\n        //stage.getIcons().add(new Image(\"D:\\\\Uni\\\\Semister 3\\\\OOP\\\\Projects\\\\CMS\\\\src\\\\main\\\\java\\\\com\\\\example\\\\cms\\\\Images\\\\Icon.jpg\"));\r\n        stage.show();\r\n\r\n\r\n    }\r\n\r\n    public static void setText(Text title) {\r\n        title.setFont(Font.font(\"arial\", FontWeight.BOLD, 30));\r\n    }\r\n\r\n    public static GridPane GetDefaultPane() {\r\n        GridPane grid = new GridPane();\r\n        grid.setPadding( new Insets(10));\r\n        grid.setHgap(10);\r\n        grid.setVgap(10);\r\n        grid.setAlignment(Pos.CENTER);\r\n        grid.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));\r\n        //grid.setStyle(\"-fx-background-color: #fffff;\");\r\n\r\n        return grid;\r\n    }\r\n\r\n\r\n    public static void getItems(Inventory inv, ListView<VBox> listView) {\r\n        for(Product p : inv.getProducts().values())\r\n        {\r\n            VBox vBox = new VBox();\r\n            vBox.setSpacing(10);\r\n            vBox.setPadding(new Insets(10));\r\n            ImageView imageView;\r\n            try{\r\n                imageView = new ImageView(new Image(p.ImageSource));\r\n\r\n                imageView.setFitHeight(100);\r\n                imageView.setFitWidth(100);\r\n            }\r\n            catch (IllegalArgumentException ex)\r\n            {\r\n                imageView = new ImageView(new Image(\"https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg\"));\r\n            }\r\n            // temporrary until I know how to put items\r\n\r\n\r\n            Text item = new Text(\"[\" + p.getItemID() + \"]\\n\" + p.getCategory() + \":  \" + p.getName() + \"\\nCost:  $\" + p.getBasePrice() + \"\\n\" + p.getQuantity() + \" remaining\");\r\n            vBox.getChildren().addAll(imageView,item);\r\n           // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));\r\n\r\n            listView.getItems().add(vBox);\r\n\r\n        }\r\n    }\r\n\r\n    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox comboBox, Stage stage) {\r\n        listView.getItems().clear();\r\n        if(comboBox.getSelectionModel().getSelectedItem() == null || comboBox.getSelectionModel().getSelectedItem().toString().equals(\"All\")) {\r\n\r\n            for (Product p : inv.getProducts().values()) {\r\n                setItems(listView, customer, p , stage);\r\n\r\n                System.out.println(p.toString());\r\n            }\r\n        }\r\n            else\r\n            {\r\n\r\n                for(Product p : inv.getProducts().values())\r\n                {\r\n                    if(!Objects.equals(p.getCategory(), (String) comboBox.getSelectionModel().getSelectedItem()))\r\n                    {\r\n                        continue;\r\n                    }\r\n                    setItems(listView, customer, p, stage);\r\n\r\n                }\r\n\r\n\r\n        }\r\n    }\r\n\r\n    private static void setItems(ListView<VBox> listView, Customer customer, Product p , Stage stage) {\r\n        VBox vBox = new VBox();\r\n        vBox.setSpacing(10);\r\n        vBox.setPadding(new Insets(10));\r\n\r\n        Button button = new Button(\"Add to cart\");\r\n        button.setOnAction(e->{\r\n            customer.getCart().addProduct(p);\r\n            CustomerPanel customerPanel = null;\r\n            try {\r\n                customerPanel = new CustomerPanel(customer);\r\n            } catch (IOException | ClassNotFoundException ex) {\r\n                throw new RuntimeException(ex);\r\n            }\r\n            customerPanel.start(stage);\r\n\r\n\r\n        });\r\n        ImageView imageView;\r\n        try{\r\n            imageView = new ImageView(new Image(p.ImageSource));\r\n\r\n            imageView.setFitHeight(100);\r\n            imageView.setFitWidth(100);\r\n        }\r\n        catch (IllegalArgumentException ex)\r\n        {\r\n            imageView = new ImageView(new Image(\"https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg\"));\r\n        }\r\n        HBox hBox = new HBox();\r\n        hBox.setSpacing(30);\r\n\r\n        hBox.getChildren().addAll(imageView,button);\r\n        imageView.setFitHeight(100);\r\n        imageView.setFitWidth(100);\r\n        Text item = new Text(p.toString());\r\n        vBox.getChildren().addAll(hBox,item);\r\n\r\n        listView.getItems().add(vBox);\r\n    }\r\n\r\n    public static void getCategories(ComboBox<String> category) {\r\n        category.getItems().addAll(\"Hoodie\",\"T-Shirt\",\"Shirt\",\"Pants\",\"Shorts\",\"Sweater\",\"Jacket\",\"Socks\",\"Shoes\",\"Hat\",\"Scarf\",\"Other\");\r\n    }\r\n\r\n    public static void ConfirmAdd(Stage stage, GridPane gridPane, TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource, Button button, Inventory inv) {\r\n\r\n    }\r\n    public static void main(String[] args) {\r\n        launch();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/cms/Main.java b/src/main/java/com/example/cms/Main.java
+--- a/src/main/java/com/example/cms/Main.java	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
++++ b/src/main/java/com/example/cms/Main.java	(date 1672596058825)
+@@ -6,6 +6,8 @@
+ import com.example.cms.Classes.Inventory;
+ import com.example.cms.Classes.Product;
+ import com.example.cms.CustomerSide.CustomerPanel;
++import com.example.cms.CustomerSide.Regestration;
++import com.example.cms.CustomerSide.login;
+ import javafx.application.Application;
+ import javafx.geometry.Insets;
+ import javafx.geometry.Pos;
+@@ -34,8 +36,23 @@
+         setText(title);
+ 
+         Button Register = new Button("Registration");
++
++
++
+         Button Login = new Button("Login");
+ 
++        Register.setOnAction(e->{
++            Regestration regestration = new Regestration();
++            regestration.start(stage);
++        });
++
++        Login.setOnAction(e->{
++            login login = new login();
++            login.start(stage);
++
++
++        });
++
+         Text admin = new Text("Admin Login");
+         admin.setOnMouseClicked(e-> {
+             AdminLogin adminLogin = new AdminLogin();
+Index: src/main/Data/Customers.dat
+===================================================================
+diff --git a/src/main/Data/Customers.dat b/src/main/Data/Customers.dat
+deleted file mode 100644
+--- a/src/main/Data/Customers.dat	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
++++ /dev/null	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
+@@ -1,3 +0,0 @@
+-�� sr java.util.TreeMap��>-%j� L 
+-comparatort Ljava/util/Comparator;xppw   sr java.lang.Integer⠤���8 I valuexr java.lang.Number������  xp   sr  com.example.cms.Classes.CustomerB:�s���] L address1t Ljava/lang/String;L address2q ~ L cartt Lcom/example/cms/Classes/Cart;L zipCodeq ~ xr com.example.cms.Classes.User�jy��� L emailAddressq ~ L 	firstNameq ~ L genderq ~ L lastNameq ~ L mobileNumberq ~ L passwordq ~ L userNameq ~ xpt JUST_Work@gmail.comt Adamt Malet HELPt 01116607644t 1234t HELPER12t 
+-HelpingStreetpsr com.example.cms.Classes.Cart$|T���� I countD sumL arrt Ljava/util/ArrayList;xp            sr java.util.ArrayListx����a� I sizexp    w    xpx
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"2462b4e4-dd8f-4779-bc52-877c0ed5cba1\" name=\"Changes\" comment=\"GOOD SHIT\">\r\n      <change afterPath=\"$PROJECT_DIR$/lib/gson-2.10.jar\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/cms/Main.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JavaFXApplication\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2IoR3rofCksxYgGVCOu4yfgpctX\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/Uni/Semister 3/OOP/Projects/CMS/src/main&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Classes\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\Images\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\Data\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Classes\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Images\" />\r\n      <recent name=\"D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\" />\r\n    </key>\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"com.example.cms\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"2462b4e4-dd8f-4779-bc52-877c0ed5cba1\" name=\"Changes\" comment=\"\" />\r\n      <created>1670845756934</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1670845756934</updated>\r\n      <workItem from=\"1670845758209\" duration=\"3198000\" />\r\n      <workItem from=\"1670874655959\" duration=\"900000\" />\r\n      <workItem from=\"1670875567763\" duration=\"1690000\" />\r\n      <workItem from=\"1670968209720\" duration=\"1204000\" />\r\n      <workItem from=\"1671025731866\" duration=\"8187000\" />\r\n      <workItem from=\"1671208675434\" duration=\"3000\" />\r\n      <workItem from=\"1671208707648\" duration=\"4305000\" />\r\n      <workItem from=\"1671257830431\" duration=\"14000\" />\r\n      <workItem from=\"1671389327841\" duration=\"3926000\" />\r\n      <workItem from=\"1671889874290\" duration=\"14205000\" />\r\n      <workItem from=\"1671913177394\" duration=\"934000\" />\r\n      <workItem from=\"1671914424069\" duration=\"4000\" />\r\n      <workItem from=\"1671962613928\" duration=\"12340000\" />\r\n      <workItem from=\"1672055013899\" duration=\"9895000\" />\r\n      <workItem from=\"1672433412923\" duration=\"125000\" />\r\n      <workItem from=\"1672434904794\" duration=\"1673000\" />\r\n      <workItem from=\"1672484947783\" duration=\"664000\" />\r\n      <workItem from=\"1672510583310\" duration=\"3162000\" />\r\n      <workItem from=\"1672572754121\" duration=\"1561000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"sadad\">\r\n      <created>1670845813536</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670845813536</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"sadad\">\r\n      <created>1670845875925</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670845875925</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1670876427342</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670876427342</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1670876657601</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1670876657601</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1671040352622</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671040352622</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Scuffed main page look with a weird ICON\">\r\n      <created>1671212419493</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671212419493</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Added binary files\">\r\n      <created>1671643571527</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671643571527</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Added binary files\">\r\n      <created>1671643589801</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671643589801</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"remove and add works\">\r\n      <created>1671894133604</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671894133604</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Edit works wahooo\">\r\n      <created>1671904536322</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671904536322</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"made thte list clickable\">\r\n      <created>1671986506616</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1671986506616</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"added validations\">\r\n      <created>1672059856031</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672059856031</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"ADDED IMAGESSSSS\">\r\n      <created>1672430019192</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672430019192</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Fixed a bug\">\r\n      <created>1672432192712</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672432192712</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Fixed a bug\">\r\n      <created>1672433032199</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672433032199</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Semi- added categories\">\r\n      <created>1672492269704</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672492269704</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Semi- added categories\">\r\n      <created>1672512811579</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672512811579</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"added a label for choosing a category\">\r\n      <created>1672512974794</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672512974794</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"IDK\">\r\n      <created>1672515077448</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672515077448</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00020\" summary=\"GOOD SHIT\">\r\n      <created>1672594654090</created>\r\n      <option name=\"number\" value=\"00020\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1672594654090</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"21\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"sadad\" />\r\n    <MESSAGE value=\"Scuffed main page look with a weird ICON\" />\r\n    <MESSAGE value=\"Added binary files\" />\r\n    <MESSAGE value=\"remove and add works\" />\r\n    <MESSAGE value=\"Edit works wahooo\" />\r\n    <MESSAGE value=\"made thte list clickable\" />\r\n    <MESSAGE value=\"added validations\" />\r\n    <MESSAGE value=\"ADDED IMAGESSSSS\" />\r\n    <MESSAGE value=\"Fixed a bug\" />\r\n    <MESSAGE value=\"Semi- added categories\" />\r\n    <MESSAGE value=\"added a lable for chosing a category\" />\r\n    <MESSAGE value=\"added a label for choosing a category\" />\r\n    <MESSAGE value=\"IDK\" />\r\n    <MESSAGE value=\"GOOD SHIT\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"GOOD SHIT\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/CMS$AdminPannel.ic\" NAME=\"AdminPannel Coverage Results\" MODIFIED=\"1671975531814\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\">\r\n      <FILTER>com.example.cms.*</FILTER>\r\n    </SUITE>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 39910bc48ec4b59b88bae4ee3d8d8d186d6da47c)
++++ b/.idea/workspace.xml	(date 1672595824469)
+@@ -4,8 +4,13 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="GOOD SHIT">
+-      <change afterPath="$PROJECT_DIR$/lib/gson-2.10.jar" afterDir="false" />
++    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="IDK">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/Data/Customers.dat" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Customer.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/login.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -232,14 +237,7 @@
+       <option name="project" value="LOCAL" />
+       <updated>1672515077448</updated>
+     </task>
+-    <task id="LOCAL-00020" summary="GOOD SHIT">
+-      <created>1672594654090</created>
+-      <option name="number" value="00020" />
+-      <option name="presentableId" value="LOCAL-00020" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1672594654090</updated>
+-    </task>
+-    <option name="localTasksCounter" value="21" />
++    <option name="localTasksCounter" value="20" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -270,8 +268,7 @@
+     <MESSAGE value="added a lable for chosing a category" />
+     <MESSAGE value="added a label for choosing a category" />
+     <MESSAGE value="IDK" />
+-    <MESSAGE value="GOOD SHIT" />
+-    <option name="LAST_COMMIT_MESSAGE" value="GOOD SHIT" />
++    <option name="LAST_COMMIT_MESSAGE" value="IDK" />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+     <SUITE FILE_PATH="coverage/CMS$AdminPannel.ic" NAME="AdminPannel Coverage Results" MODIFIED="1671975531814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
