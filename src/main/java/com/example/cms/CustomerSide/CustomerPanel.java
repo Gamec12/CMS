@@ -1,7 +1,8 @@
-package com.example.cms;
+package com.example.cms.CustomerSide;
 
 import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Inventory;
+import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

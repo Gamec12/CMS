@@ -1,10 +1,10 @@
-package com.example.cms;
+package com.example.cms.AdminSide;
 
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
 import com.example.cms.Classes.Validations;
+import com.example.cms.Main;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -33,7 +33,7 @@ public class AddItem extends Application {
 
     @Override
     public void start(Stage stage) {
-        GridPane gridPane =Main.GetDefaultPane();
+        GridPane gridPane = Main.GetDefaultPane();
         Text title = new Text("Enter the item's details");
         title.setFont(Font.font("arial", FontWeight.BOLD, 18));
         gridPane.add(title , 0 , 0 , 2 ,2);

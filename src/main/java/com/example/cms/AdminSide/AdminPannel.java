@@ -1,9 +1,9 @@
-package com.example.cms;
+package com.example.cms.AdminSide;
 
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
+import com.example.cms.Main;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,9 +14,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class AdminPannel extends Application {

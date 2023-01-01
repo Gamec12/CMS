@@ -1,7 +1,6 @@
-package com.example.cms;
+package com.example.cms.CustomerSide;
 
 import com.example.cms.Classes.Customer;
-import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -19,26 +18,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class cart extends Application {
+public class OrderDetails extends Application {
     Customer ahmed;
-    public cart(Customer ahmed) {
-        this.ahmed = ahmed;
+    public OrderDetails(Customer ahmed){
+        this.ahmed=ahmed;
     }
-    public static void getItemsCart( ListView<VBox> listView, Customer customer,Stage stage) {
+    public static void getItemsOrderDetails( ListView<VBox> listView, Customer customer,Stage stage) {
         for(Product p : customer.getCart().getArr())
         {
             VBox vBox = new VBox();
             vBox.setSpacing(10);
             vBox.setPadding(new Insets(10));
 
-            Button button = new Button("Remove From Cart");
-            button.setOnAction(e->{
-                customer.getCart().removeFromCart(p.getItemID());
-                cart cart1=new cart(customer);
-                cart1.start(stage);
-            });
             ImageView imageView;
             try{
                 imageView = new ImageView(new Image(p.ImageSource));
@@ -53,7 +44,7 @@ public class cart extends Application {
             HBox hBox = new HBox();
             hBox.setSpacing(30);
 
-            hBox.getChildren().addAll(imageView,button);
+            hBox.getChildren().addAll(imageView);
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
             Text item = new Text(p.toString());
@@ -65,38 +56,27 @@ public class cart extends Application {
 
         }
     }
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage stage) {
-
-
-        stage.setTitle("cart");
- ListView x =new ListView();
- getItemsCart(x,ahmed,stage);
-        Button b=new Button("Back");
-        b.setOnAction(e->{
-            CustomerPanel c1 = null;
-            try {
-                c1 = new CustomerPanel();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-            c1.start(stage);
-        });
-        Button b1 =new Button("Checkout");
-        b1.setOnAction(e->{
-OrderDetails l=new OrderDetails(ahmed);
-l.start(stage);
-        });
-        VBox box= new VBox(x);
-        box.getChildren().addAll(b,b1);
+    public void start(Stage Stage) {
+Stage.setTitle("Order Details");
+        ListView x =new ListView();
+        getItemsOrderDetails(x,ahmed,Stage);
+        VBox box=new VBox(x);
+        Label l1=new Label(ahmed.getFirstName() +" "+ahmed.getLastName());
+        Label l2=new Label(ahmed.getMobileNumber());
+        Label l3=new Label(ahmed.getEmailAddress());
+        Label l4=new Label(ahmed.getAddress1());
+        Label l5= new Label("Number Of Products  "+String.valueOf(ahmed.getCart().getCount()));
+        Label l6= new Label("Total Price  "+String.valueOf(ahmed.getCart().getSum()));
+        Button confirm=new Button("Confirm Order");
+        box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,confirm);
         box.setBackground(new Background(new BackgroundFill(Color.WHITE , null , null)));
-        stage.setScene(new Scene(box , 500 , 500) );
-        stage.show();
+        Stage.setScene(new Scene(box , 500 , 500) );
+        Stage.show();
     }
 }

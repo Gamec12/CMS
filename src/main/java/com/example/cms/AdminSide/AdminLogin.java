@@ -1,12 +1,10 @@
-package com.example.cms;
+package com.example.cms.AdminSide;
 
-import com.example.cms.AdminPannel;
 import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;

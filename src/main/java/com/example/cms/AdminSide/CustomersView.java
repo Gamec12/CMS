@@ -1,5 +1,7 @@
-package com.example.cms;
+package com.example.cms.AdminSide;
 
+import com.example.cms.AdminSide.AdminPannel;
+import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

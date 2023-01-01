@@ -1,8 +1,9 @@
-package com.example.cms;
+package com.example.cms.AdminSide;
 
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
 import com.example.cms.Classes.Validations;
+import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
