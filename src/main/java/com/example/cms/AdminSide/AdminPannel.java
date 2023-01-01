@@ -123,8 +123,17 @@ public class AdminPannel extends Application {
             }
 
         });
-
-        bottom.getChildren().addAll(add, delete, edit);
+        Button signout=new Button("signout");
+        signout.setOnAction(
+                e->{
+                    Main x=new Main();
+                    try {
+                        x.start(stage);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+        bottom.getChildren().addAll(add, delete, edit,signout);
         border.setBottom(bottom);
 
         box.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));

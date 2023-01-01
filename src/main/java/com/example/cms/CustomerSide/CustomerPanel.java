@@ -76,8 +76,18 @@ cart.setOnAction(e->{
         //Label l1 = new Label("Welcome " + customer.getFirstName());
 
         Label l1 = new Label( String.valueOf(customer.getCart().getCount()));
+        Button signout=new Button("signout");
+        signout.setOnAction(
+                e->{
+                    Main x=new Main();
+                    try {
+                        x.start(stage);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
 
-        hBox.getChildren().addAll(profile,cart , l1);
+        hBox.getChildren().addAll(profile,cart , l1,signout);
         HBox.setMargin(cart, new Insets(0,15,0,0));
 
 
