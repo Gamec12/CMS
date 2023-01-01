@@ -93,7 +93,7 @@ public class Main extends Application {
             // temporrary until I know how to put items
 
 
-            Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory() + ":  " + p.getName() + "\nCost:  $" + p.getDiscountPrice() + "\n" + p.getQuantity() + " remaining");
+            Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory() + ":  " + p.getName() + "\nCost:  $" + p.getBasePrice() + "\n" + p.getQuantity() + " remaining");
             vBox.getChildren().addAll(imageView,item);
            // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));
 
