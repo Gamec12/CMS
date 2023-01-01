@@ -19,16 +19,10 @@ public class AddItem extends Application {
 
     public AddItem(Inventory inv) throws IOException, ClassNotFoundException {
         this.inv = inv;
-
     }
 
     public static void main(String[] args) {
         launch(args);
-
-
-
-
-
     }
 
     @Override
@@ -42,7 +36,6 @@ public class AddItem extends Application {
         TextField ID = new TextField();
         gridPane.add(l1,0 , 3);
         gridPane.add(ID , 1 , 3);
-
 
 
         Label l2 = new Label("Name");
@@ -152,30 +145,8 @@ public class AddItem extends Application {
                 stage.close();
             }
 
-//            if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
-//            {
-//                Product product = new Product(Integer.parseInt(ID.getText()),name.getText() ,color.getText() , category.getSelectionModel().getSelectedItem() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()), ImageSource.getText());
-//                try {
-//                    inv.addProduct(product);
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//                AdminPannel adminPannel = new AdminPannel();
-//                try {
-//                    adminPannel.start(stage);
-//                } catch (IOException | ClassNotFoundException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-
-
-
-
-
-
         });
         EditItem.ItemButtons(stage, gridPane, add);
-
 
     }
 

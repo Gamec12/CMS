@@ -19,11 +19,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ItemDetails extends Application {
-    String itemSelected;
+    int id;
     Inventory inv;
 
-    public ItemDetails(String itemSelected, Inventory inv) {
-        this.itemSelected = itemSelected;
+    public ItemDetails(int id, Inventory inv) {
+        this.id = id;
         this.inv = inv;
     }
 
@@ -34,10 +34,6 @@ public class ItemDetails extends Application {
     @Override
     public void start(Stage stage) {
         GridPane gridPane = Main.GetDefaultPane();
-        int id;
-        System.out.println(itemSelected);
-        id = Integer.parseInt(itemSelected.substring(itemSelected.indexOf("D=") +2 , itemSelected.indexOf(','))); // to get id
-        System.out.println(id);
         Product product = inv.getProduct(id);
 
         Text text = new Text("Item details");

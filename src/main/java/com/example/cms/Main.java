@@ -26,18 +26,17 @@ import java.util.Objects;
 
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException { // throws IOException, ClassNotFoundException {
         GridPane grid = GetDefaultPane();
 
 
-        Text title = new Text("Welcome!");
+        Text title = new Text("Welcome to the CMS");
         setText(title);
 
         Button Register = new Button("Registration");
         Button Login = new Button("Login");
-       // Register.setBackground(new Background(new BackgroundFill(Color.TEAL ,null , null)));
 
-        Text admin = new Text("An admin?");
+        Text admin = new Text("Admin Login");
         admin.setOnMouseClicked(e-> {
             AdminLogin adminLogin = new AdminLogin();
             adminLogin.start(stage);
@@ -94,15 +93,11 @@ public class Main extends Application {
             // temporrary until I know how to put items
 
 
-            Text item = new Text(p.toString());
-
-
+            Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory() + ":  " + p.getName() + "\nCost:  $" + p.getDiscountPrice() + "\n" + p.getQuantity() + " remaining");
             vBox.getChildren().addAll(imageView,item);
            // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));
 
             listView.getItems().add(vBox);
-
-            System.out.println(p.toString());
 
         }
     }
@@ -176,7 +171,7 @@ public class Main extends Application {
     }
 
     public static void getCategories(ComboBox<String> category) {
-        category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Gloves","Scarf","Underwear","Swimwear","Belt","Jewelry","Watch","Bag","Wallet","Other");
+        category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Scarf","Other");
     }
 
     public static void ConfirmAdd(Stage stage, GridPane gridPane, TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource, Button button, Inventory inv) {
