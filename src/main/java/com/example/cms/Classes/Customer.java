@@ -24,7 +24,6 @@ public class Customer extends User implements Serializable {
         customers.put(id, this);
         save();
 
-
     }
 
 
