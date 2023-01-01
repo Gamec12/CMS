@@ -19,10 +19,10 @@ public class CustomerPanel extends Application {
 
 
 Inventory inv;
-Customer customer;
-    public CustomerPanel() throws IOException, ClassNotFoundException {
+Customer customer = new Customer("Adam" , "Loay" , "01116607644", "Male" , "adamlo2ay@gmail.com" , "Gamec" , "1234" , "40 north hillStreet" );
+    public CustomerPanel(Customer customer) throws IOException, ClassNotFoundException {
         inv = new Inventory();
-        this.customer = new Customer("Adam" , "Loay" , "01116607644", "Male" , "adamlo2ay@gmail.com" , "Gamec" , "1234" , "40 north hillStreet" );
+        this.customer = customer ;
     }
 
 
@@ -56,10 +56,10 @@ Customer customer;
 
         borderPane.setBottom(dropDown);
         comboBox.setOnAction(e->{
-            Main.getItemsCustomer(inv , listView ,customer ,comboBox);
+            Main.getItemsCustomer(inv , listView ,customer ,comboBox, stage);
 
         });
-        Main.getItemsCustomer(inv, listView , customer, comboBox);
+        Main.getItemsCustomer(inv, listView , customer, comboBox , stage);
 
         borderPane.setCenter(listView);
 
@@ -76,6 +76,7 @@ cart.setOnAction(e->{
         //Label l1 = new Label("Welcome " + customer.getFirstName());
 
         Label l1 = new Label( String.valueOf(customer.getCart().getCount()));
+
         hBox.getChildren().addAll(profile,cart , l1);
         HBox.setMargin(cart, new Insets(0,15,0,0));
 

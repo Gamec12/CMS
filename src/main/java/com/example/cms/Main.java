@@ -1,9 +1,11 @@
 package com.example.cms;
 
 import com.example.cms.AdminSide.AdminLogin;
+import com.example.cms.AdminSide.CustomersView;
 import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
+import com.example.cms.CustomerSide.CustomerPanel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -105,12 +107,12 @@ public class Main extends Application {
         }
     }
 
-    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox comboBox) {
+    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox comboBox, Stage stage) {
         listView.getItems().clear();
         if(comboBox.getSelectionModel().getSelectedItem() == null || comboBox.getSelectionModel().getSelectedItem().toString().equals("All")) {
 
             for (Product p : inv.getProducts().values()) {
-                setItems(listView, customer, p);
+                setItems(listView, customer, p , stage);
 
                 System.out.println(p.toString());
             }
@@ -124,7 +126,7 @@ public class Main extends Application {
                     {
                         continue;
                     }
-                    setItems(listView, customer, p);
+                    setItems(listView, customer, p, stage);
 
                 }
 
@@ -132,7 +134,7 @@ public class Main extends Application {
         }
     }
 
-    private static void setItems(ListView<VBox> listView, Customer customer, Product p) {
+    private static void setItems(ListView<VBox> listView, Customer customer, Product p , Stage stage) {
         VBox vBox = new VBox();
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
@@ -140,6 +142,14 @@ public class Main extends Application {
         Button button = new Button("Add to cart");
         button.setOnAction(e->{
             customer.getCart().addProduct(p);
+            CustomerPanel customerPanel = null;
+            try {
+                customerPanel = new CustomerPanel(customer);
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            customerPanel.start(stage);
+
 
         });
         ImageView imageView;

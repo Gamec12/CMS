@@ -1,7 +1,8 @@
 package com.example.cms.Classes;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cart {
+public class Cart implements Serializable {
 private ArrayList<Product> arr;
 private int count;
 private double sum;

@@ -78,7 +78,7 @@ public class cart extends Application {
         b.setOnAction(e->{
             CustomerPanel c1 = null;
             try {
-                c1 = new CustomerPanel();
+                c1 = new CustomerPanel(ahmed);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             } catch (ClassNotFoundException ex) {
