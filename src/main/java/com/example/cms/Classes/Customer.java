@@ -18,6 +18,7 @@ public class Customer extends User implements Serializable {
 
     public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password , String address1 ) {
         super(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);
+        load();
         this.address1 = address1;
         id = nextId;
         nextId++;
@@ -81,7 +82,7 @@ public class Customer extends User implements Serializable {
     public static void save() { // using text file
 
         try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/Data/Customers.bin"));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/Data/Customers.dat"));
             out.writeObject(customers);
         } catch (FileNotFoundException ex) {
             System.out.print(ex);
@@ -182,7 +183,7 @@ public class Customer extends User implements Serializable {
 
     public static void load()
     {
-        File file = new File("src/Data/Customers.bin");
+        File file = new File("src/main/Data/Customers.dat");
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
             customers = (Map<Integer, Customer>) in.readObject();
@@ -201,7 +202,10 @@ public class Customer extends User implements Serializable {
         return cart;
     }
 
-
+    public String toString()
+    {
+        return "First Name: "+ firstName +"\n" +"LastName: "+ lastName + "\n"+ "username" + userName+ "Email: " + emailAddress  +"\n" + "Mobile Number: "+ mobileNumber +"\n" + "Address : " + address1;
+    }
 
 }
 

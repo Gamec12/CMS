@@ -37,7 +37,13 @@ public class AdminPannel extends Application {
         Button customers = new Button("Customers");
         customers.setOnAction(e->{
             CustomersView customersView = new CustomersView();
-            customersView.start(stage);
+            try {
+                customersView.start(stage);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         box.getChildren().addAll(orders , customers);
         HBox.setMargin(orders , new Insets(10));

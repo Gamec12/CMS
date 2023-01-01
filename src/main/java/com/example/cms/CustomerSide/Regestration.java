@@ -1,5 +1,7 @@
 package com.example.cms.CustomerSide;
 
+import com.example.cms.Classes.Customer;
+import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +21,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Window;
 
+import java.io.IOException;
+
 
 public class Regestration extends Application {
 
@@ -27,18 +31,18 @@ public class Regestration extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage)
+    public void start(Stage stage)
     {
-        primaryStage.setTitle("Registration Form");
+        stage.setTitle("Registration Form");
 
         GridPane gridPane = createRegistrationFormPane();
 
-        addUIControls(gridPane);
+        addUIControls(gridPane, stage);
 
         Scene scene = new Scene(gridPane, 800, 500);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 
     private GridPane createRegistrationFormPane() {
@@ -68,7 +72,7 @@ public class Regestration extends Application {
 
         return gridPane;
     }
-    private void addUIControls(GridPane gridPane) {
+    private void addUIControls(GridPane gridPane, Stage stage) {
 
         Label headerLabel = new Label("Registration Form");
         headerLabel.setFont(Font.font("Arial", 24));
@@ -138,12 +142,8 @@ public class Regestration extends Application {
         gridPane.add(submitButton, 0, 9, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
+        submitButton.setOnAction(e->{
 
-
-
-    submitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
 
                 if(nameField.getText().isEmpty()) {
                     showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter your firstName");
@@ -197,20 +197,30 @@ public class Regestration extends Application {
                 else
                 {
                     showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a valid Email");
-                return;
+                    return;
                 }
+                Customer customer = new Customer(nameField.getText(),lastnameField.getText(),mobileNumberfield.getText(), genderfield.getText(), emailField.getText(), usernamefield.getText(), passwordField.getText(), addressfield.getText());
+                Main main = new Main();
+                showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Registration Successful!", "Welcome " + nameField.getText());
+            try {
+                main.start(stage);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
 
-            }
-            private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-                Alert alert = new Alert(alertType);
-                alert.setTitle(title);
-                alert.setHeaderText(null);
-                alert.setContentText(message);
-                alert.initOwner(owner);
-                alert.show();
-            }
 
         });
+
+
+
+    }
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }
 
