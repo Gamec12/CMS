@@ -142,6 +142,16 @@ public class Regestration extends Application {
         gridPane.add(submitButton, 0, 9, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e->{
+            Main main = new Main();
+            try {
+                main.start(stage);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        gridPane.add(backButton, 0 , 9);
         submitButton.setOnAction(e->{
 
 

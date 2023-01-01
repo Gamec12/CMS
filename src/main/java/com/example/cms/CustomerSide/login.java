@@ -139,6 +139,16 @@ public class login extends Application {
         gridPane.add(submitButton, 0, 9, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e->{
+            try {
+                Main m = new Main();
+                m.start(stage);
+            } catch (IOException ioException) {
+                System.out.println(e);
+            }
+        });
+        gridPane.add(backButton, 0, 9);
 
 
 

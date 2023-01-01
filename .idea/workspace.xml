@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="GOOD SHIT">
+    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="update idk I forgor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Data/Orders.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Data/Orders.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Data/inventory.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Data/inventory.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AddItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AddItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/ListOfOrders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/ListOfOrders.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Classes/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Regestration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/login.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672594654090</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="update idk I forgor">
+      <created>1672606701579</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1672606701579</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +279,8 @@
     <MESSAGE value="added a label for choosing a category" />
     <MESSAGE value="IDK" />
     <MESSAGE value="GOOD SHIT" />
-    <option name="LAST_COMMIT_MESSAGE" value="GOOD SHIT" />
+    <MESSAGE value="update idk I forgor" />
+    <option name="LAST_COMMIT_MESSAGE" value="update idk I forgor" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CMS$AdminPannel.ic" NAME="AdminPannel Coverage Results" MODIFIED="1671975531814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
