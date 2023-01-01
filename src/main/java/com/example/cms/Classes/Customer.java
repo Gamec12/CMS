@@ -21,9 +21,12 @@ public class Customer extends User implements Serializable {
         this.address1 = address1;
         id = nextId;
         nextId++;
+        customers.put(id, this);
+        save();
 
 
     }
+
 
     public static void addCustomer() {
         customers.put(nextId, register());
