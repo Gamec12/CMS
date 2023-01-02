@@ -73,7 +73,7 @@ public class EditItem extends Application {
 
         subCategory.getSelectionModel().select(product.getSubCategory());
 
-        Main.getCategories(subCategory);
+        Main.getSubCategories(subCategory);
         HBox hBox = new HBox();
         hBox.getChildren().addAll(l4);
         hBox.setSpacing(10);

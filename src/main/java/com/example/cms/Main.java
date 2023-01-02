@@ -124,9 +124,9 @@ public class Main extends Application {
         }
     }
 
-    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox comboBox, Stage stage) {
+    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox categories, ComboBox subCategories ,Stage stage) {
         listView.getItems().clear();
-        if(comboBox.getSelectionModel().getSelectedItem() == null || comboBox.getSelectionModel().getSelectedItem().toString().equals("All")) {
+        if(categories.getSelectionModel().getSelectedItem() .equals("All")  && subCategories.getSelectionModel().getSelectedItem().equals("All")) {
 
             for (Product p : inv.getProducts().values()) {
                 setItems(listView, customer, p , stage);
@@ -134,12 +134,12 @@ public class Main extends Application {
                 System.out.println(p.toString());
             }
         }
-            else
+            else if(!subCategories.getSelectionModel().getSelectedItem().equals("All")  && categories.getSelectionModel().getSelectedItem().equals("All"))
             {
 
                 for(Product p : inv.getProducts().values())
                 {
-                    if(!Objects.equals(p.getCategory(), (String) comboBox.getSelectionModel().getSelectedItem()))
+                    if(!p.getCategory().equals(categories.getSelectionModel().getSelectedItem())   && !p.getSubCategory().equals(subCategories.getSelectionModel().getSelectedItem())  )
                     {
                         continue;
                     }
@@ -148,6 +148,29 @@ public class Main extends Application {
                 }
 
 
+            }
+            else if(subCategories.getSelectionModel().getSelectedItem().equals("All")  &&  !categories.getSelectionModel().getSelectedItem().equals("All"))
+            {
+                for(Product p : inv.getProducts().values())
+                {
+                    if(!p.getCategory().equals(categories.getSelectionModel().getSelectedItem())   && !p.getSubCategory().equals(subCategories.getSelectionModel().getSelectedItem())  )
+                    {
+                        continue;
+                    }
+                    setItems(listView, customer, p, stage);
+
+                }
+            }
+            else {
+            for(Product p : inv.getProducts().values())
+            {
+                if(!p.getCategory().equals(categories.getSelectionModel().getSelectedItem())   && !p.getSubCategory().equals(subCategories.getSelectionModel().getSelectedItem())  )
+                {
+                    continue;
+                }
+                setItems(listView, customer, p, stage);
+
+            }
         }
     }
 
@@ -192,7 +215,7 @@ public class Main extends Application {
         listView.getItems().add(vBox);
     }
 
-    public static void getCategories(ComboBox<String> category) {
+    public static void getSubCategories(ComboBox<String> category) {
 
         category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Scarf","Other");
     }
@@ -215,7 +238,7 @@ public class Main extends Application {
         return button;
     }
 
-    public static void getSubCategories(ComboBox<String> category) {
+    public static void getCategories(ComboBox<String> category) {
         category.getItems().addAll("Men" , "Women" , "Kids");
     }
 

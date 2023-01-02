@@ -41,25 +41,35 @@ Customer customer;
         VBox vBox = new VBox();
 
         ListView<VBox> listView = new ListView<>();
-        ComboBox<String> comboBox = new ComboBox<>();
-        Main.getCategories(comboBox);
-        comboBox.getItems().add("All");
+        ComboBox<String> categories = new ComboBox<>();
+        Main.getCategories(categories);
+        categories.getItems().add("All");
+        categories.getSelectionModel().select("All");
+
+        ComboBox<String> subCategories = new ComboBox<>();
+        subCategories.setOnAction(e->{
+            Main.getItemsCustomer(inv , listView ,customer ,categories, subCategories ,stage);
+        });
+        Main.getSubCategories(subCategories);
+        subCategories.getItems().addAll("All");
+        subCategories.getSelectionModel().select("All");
 
         HBox dropDown = new HBox();
         Label label = new Label("Choose a category");
+        Label labelSub = new Label("Choose a sub category");
         dropDown.setPadding(new Insets(10));
-        dropDown.getChildren().addAll(label,comboBox);
-        HBox.setMargin(comboBox , new Insets(10));
+        dropDown.getChildren().addAll(label,categories , labelSub , subCategories);
+        HBox.setMargin(categories , new Insets(10));
 
 
 
 
         borderPane.setBottom(dropDown);
-        comboBox.setOnAction(e->{
-            Main.getItemsCustomer(inv , listView ,customer ,comboBox, stage);
+        categories.setOnAction(e->{
+            Main.getItemsCustomer(inv , listView ,customer ,categories, subCategories ,stage);
 
         });
-        Main.getItemsCustomer(inv, listView , customer, comboBox , stage);
+        Main.getItemsCustomer(inv, listView , customer, categories ,subCategories, stage);
 
         borderPane.setCenter(listView);
 

@@ -62,7 +62,7 @@ public class AddItem extends Application {
         Main.getSubCategories(category);
         Label sub_category = new Label("Sub Category: ");
         ComboBox<String>subCategory = new ComboBox<>();
-        Main.getCategories(subCategory);
+        Main.getSubCategories(subCategory);
         HBox hBox = new HBox();
         hBox.getChildren().addAll(l4);
         hBox.setSpacing(10);
