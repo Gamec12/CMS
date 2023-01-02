@@ -46,7 +46,7 @@ public class ListOfOrders extends Application {
                 for(Product product :  p.getValue().get(i).getItems())
                 {
                     text+= "Item " + count + " : \n";
-                    text+= "ID: " + "["+ String.valueOf( product.getItemID()) +"] \nCategory "  + product.getCategory() + ": Subcategory " + product.getSubCategory()+ "\nName: " + product.getName() + "\nCost:  $" + product.getBasePrice() + "\n" + "Size: " +product.getSize() + " \n";
+                    text+= "ID: " + "["+ String.valueOf( product.getItemID()) +"] \nCategory "  + product.getCategory() + ", Subcategory " + product.getSubCategory()+ "\nName: " + product.getName() + "\nCost:  $" + product.getBasePrice() + "\n" + "Size: " +product.getSize() + " \n";
                     count++;
                 }
             {

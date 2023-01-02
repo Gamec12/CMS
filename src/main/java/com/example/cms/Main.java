@@ -215,7 +215,9 @@ public class Main extends Application {
         return button;
     }
 
-
+    public static void getSubCategories(ComboBox<String> category) {
+        category.getItems().addAll("Men" , "Women" , "Kids");
+    }
 
     public static void main(String[] args) {
         launch();

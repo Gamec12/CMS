@@ -65,17 +65,23 @@ public class ItemDetails extends Application {
         gridPane.add(l4, 0, 6);
         gridPane.add(category, 1, 6);
 
+        Label sub_categories = new Label("Sub Category");
+        TextField sub = new TextField();
+        sub.setText(product.getSubCategory()) ;
+        gridPane.add(sub_categories , 0 , 7);
+        gridPane.add(sub , 1 , 7);
+
         Label l5 = new Label("Size:");
         TextField size = new TextField(String.valueOf(product.getSize()));
         size.setEditable(false);
-        gridPane.add(l5, 0, 7);
-        gridPane.add(size, 1, 7);
+        gridPane.add(l5, 0, 8);
+        gridPane.add(size, 1, 8);
 
         Label l6 = new Label("Description:");
         TextArea description = new TextArea(String.valueOf(product.getDescription()));
         description.setEditable(false);
-        gridPane.add(l6, 0, 8);
-        gridPane.add(description, 1, 8);
+        gridPane.add(l6, 0, 9);
+        gridPane.add(description, 1, 9);
 
         Label l7 = new Label("Price:");
         TextField price = new TextField("$" + String.valueOf(product.getBasePrice()));
@@ -128,7 +134,7 @@ public class ItemDetails extends Application {
 
         gridPane.add(box, 1, 12);
 
-        stage.setScene(new Scene(gridPane, 750, 650));
+        stage.setScene(new Scene(gridPane, 800, 700));
         stage.show();
 
     }

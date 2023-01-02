@@ -59,7 +59,7 @@ public class AddItem extends Application {
 
         Label l4 = new Label("Category: ");
         ComboBox<String> category = new ComboBox<>();
-        category.getItems().addAll("Men" , "Women" , "Kids");
+        Main.getSubCategories(category);
         Label sub_category = new Label("Sub Category: ");
         ComboBox<String>subCategory = new ComboBox<>();
         Main.getCategories(subCategory);
@@ -170,6 +170,8 @@ public class AddItem extends Application {
         EditItem.ItemButtons(stage, gridPane, add);
 
     }
+
+
 
 
 }

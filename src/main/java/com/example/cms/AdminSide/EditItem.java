@@ -87,7 +87,7 @@ public class EditItem extends Application {
 
         Label l5 = new Label("Size");
         ComboBox size = new ComboBox();
-        size.getSelectionModel().select(product.getCategory());
+        size.getSelectionModel().select(product.getSize());
         size.getItems().addAll("XXS" ,"XS" , "S" , "M" , "L" , "XL" , "XXL" , "XXXL");
         gridPane.add(l5,0 , 7);
         gridPane.add(size , 1 , 7);
@@ -113,7 +113,7 @@ public class EditItem extends Application {
         gridPane.add(ImageSource , 1 , 12);
 
 
-        Button edit = new Button("Edit");
+        Button edit = Main.getDefaultButton("Edit");
         edit.setOnAction(e->{
 
             if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
