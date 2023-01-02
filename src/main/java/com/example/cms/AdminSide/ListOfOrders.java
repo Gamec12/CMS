@@ -47,7 +47,6 @@ public class ListOfOrders extends Application {
         catch (Exception e){
             System.out.println("No customers yet");
         }
-        stage.setTitle("List of orders");
         ListView listView = new ListView();
         for (Map.Entry<Integer, ArrayList<Order>> p : orders.entrySet()) {
             for(int i = 0 ; i < p.getValue().size();i++)

@@ -71,7 +71,6 @@ public class OrderDetails extends Application {
 
     @Override
     public void start(Stage Stage) {
-        Stage.setTitle("Order Details");
         ListView x = new ListView();
         getItemsOrderDetails(x, customer, Stage);
         VBox box = new VBox(x);

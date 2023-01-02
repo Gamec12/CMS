@@ -77,8 +77,6 @@ public class Cart extends Application {
 
     @Override
     public void start(Stage stage) {
-
-        stage.setTitle("cart");
         ListView x = new ListView();
         getItemsCart(x, customer, stage);
         Button b = Main.getRedButton("← Back");

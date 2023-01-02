@@ -52,7 +52,6 @@ public class CustomersView extends Application {
             listView.getItems().add(customer);
             count++;
         }
-        stage.setTitle("Customers");
         stage.setScene(new Scene(gridPane));
         stage.show();
 
