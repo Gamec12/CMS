@@ -20,9 +20,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class cart extends Application {
+public class Cart extends Application {
     Customer customer;
-    public cart(Customer customer) {
+    public Cart(Customer customer) {
         this.customer = customer;
     }
     public static void getItemsCart( ListView<VBox> listView, Customer customer,Stage stage) {
@@ -35,7 +35,7 @@ public class cart extends Application {
             Button button = new Button("Remove From Cart");
             button.setOnAction(e->{
                 customer.getCart().removeFromCart(p.getItemID());
-                cart cart1=new cart(customer);
+                Cart cart1=new Cart(customer);
                 cart1.start(stage);
             });
             ImageView imageView;

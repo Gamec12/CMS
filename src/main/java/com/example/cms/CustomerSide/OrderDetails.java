@@ -97,7 +97,7 @@ Stage.setTitle("Order Details");
         });
         Button back=new Button("back");
         back.setOnAction(e->{
-            cart cart1=new cart(customer);
+            Cart cart1=new Cart(customer);
             cart1.start(Stage);
         });
         box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,confirm,back);

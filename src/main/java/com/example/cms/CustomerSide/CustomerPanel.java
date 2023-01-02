@@ -68,7 +68,7 @@ Customer customer = new Customer("Adam" , "Loay" , "01116607644", "Male" , "adam
 //        Button orders = new Button("Orders");
         Button cart = new Button("Cart"); // maybe image in the future
 cart.setOnAction(e->{
-    cart cart1 = new cart(customer);
+    Cart cart1 = new Cart(customer);
     cart1.start(stage);
 });
         Button profile = new Button("Profile");

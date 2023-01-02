@@ -1,13 +1,12 @@
 package com.example.cms;
 
 import com.example.cms.AdminSide.AdminLogin;
-import com.example.cms.AdminSide.CustomersView;
 import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Inventory;
 import com.example.cms.Classes.Product;
 import com.example.cms.CustomerSide.CustomerPanel;
-import com.example.cms.CustomerSide.Regestration;
-import com.example.cms.CustomerSide.login;
+import com.example.cms.CustomerSide.Registration;
+import com.example.cms.CustomerSide.Login;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -43,12 +42,12 @@ public class Main extends Application {
         Button Login = new Button("Login");
 
         Register.setOnAction(e->{
-            Regestration regestration = new Regestration();
-            regestration.start(stage);
+            Registration registration = new Registration();
+            registration.start(stage);
         });
 
         Login.setOnAction(e->{
-            login login = new login();
+            com.example.cms.CustomerSide.Login login = new Login();
             try {
                 login.start(stage);
             } catch (IOException | ClassNotFoundException ex) {
