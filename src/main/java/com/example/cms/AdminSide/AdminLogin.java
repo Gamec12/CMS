@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AdminLogin extends Application {
+    String password = "12345";
 
     public static void main(String[] args) {
 
@@ -25,7 +26,7 @@ public class AdminLogin extends Application {
     @Override
     public void start(Stage stage) {
         GridPane grid = Main.GetDefaultPane();
-        Text title = new Text("Enter your password!");
+        Text title = new Text("Enter Admin Password");
         title.setFont(Font.font("arial", FontWeight.BOLD, 30));
         grid.add(title , 0 , 0 ,2,2);
         PasswordField passwordField = new PasswordField();
@@ -35,18 +36,18 @@ public class AdminLogin extends Application {
         login.setPrefWidth(80);
         login.setAlignment(Pos.CENTER);
         login.setOnAction(e->{
-            if(passwordField.getText().equals("12345"))
+            if(passwordField.getText().equals(password))
             {
-                AdminPannel adminPannel= new AdminPannel();
+                AdminPanel adminPanel = new AdminPanel();
                 try {
-                    adminPannel.start(stage);
+                    adminPanel.start(stage);
                 } catch (IOException | ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
 
-        Button back = new Main().getLogOutButton("Back");
+        Button back = new Main().getLogOutButton("← Back");
         back.setOnAction(e->{
             Main main = new Main();
             try {

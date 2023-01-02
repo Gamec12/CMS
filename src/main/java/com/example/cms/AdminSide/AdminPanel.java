@@ -1,7 +1,6 @@
 package com.example.cms.AdminSide;
 
 import com.example.cms.Classes.Inventory;
-import com.example.cms.Classes.Product;
 import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -10,19 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
 
-public class AdminPannel extends Application {
-
-
+public class AdminPanel extends Application {
     public static void main(String[] args) {
         launch();
     }
-
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         Inventory inv = new Inventory();
@@ -51,14 +46,13 @@ public class AdminPannel extends Application {
         box.getChildren().addAll(orders, customers);
         HBox.setMargin(orders, new Insets(10));
         HBox.setMargin(customers, new Insets(10));
-        //ScrollPane items = new ScrollPane();
 
         ListView<VBox> listView = new ListView<>();
         Main.getItems(inv, listView);
         border.setCenter(listView);
         listView.setOnMouseClicked(e -> {
             VBox selectedItem = listView.getSelectionModel().getSelectedItem();
-            // get the number between the []
+
             String ID = selectedItem.getChildren().get(1).toString();
             ID = ID.substring(ID.indexOf("\"[") + 2, ID.indexOf("]"));
             System.out.println(ID);
@@ -102,9 +96,9 @@ public class AdminPannel extends Application {
                     throw new RuntimeException(ex);
                 }
             }
-            AdminPannel adminPannel = new AdminPannel();
+            AdminPanel adminPanel = new AdminPanel();
             try {
-                adminPannel.start(stage);
+                adminPanel.start(stage);
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
@@ -130,7 +124,7 @@ public class AdminPannel extends Application {
             }
 
         });
-        Button signout= Main.getLogOutButton("signout");
+        Button signout= Main.getLogOutButton("← Sign out");
         signout.setOnAction(
                 e->{
                     Main x=new Main();
@@ -140,7 +134,7 @@ public class AdminPannel extends Application {
                         throw new RuntimeException(ex);
                     }
                 });
-        bottom.getChildren().addAll(add, delete, edit,signout);
+        bottom.getChildren().addAll(signout, add, delete, edit);
         border.setBottom(bottom);
         border.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 

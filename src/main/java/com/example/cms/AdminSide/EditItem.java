@@ -201,9 +201,9 @@ public class EditItem extends Application {
     static void ItemButtons(Stage stage, GridPane gridPane, Button edit) {
         Button back = Main.getDefaultButton("Back");
         back.setOnAction(e->{
-            AdminPannel adminPannel = new AdminPannel();
+            AdminPanel adminPanel = new AdminPanel();
             try {
-                adminPannel.start(stage);
+                adminPanel.start(stage);
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }

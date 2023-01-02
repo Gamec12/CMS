@@ -158,7 +158,7 @@ public class AddItem extends Application {
                 alert.setTitle("Success");
                 alert.setHeaderText("Item added successfully");
                 alert.showAndWait();
-                AdminPannel ap = new AdminPannel();
+                AdminPanel ap = new AdminPanel();
                 try {
                     ap.start(stage);
                 } catch (IOException | ClassNotFoundException ex) {

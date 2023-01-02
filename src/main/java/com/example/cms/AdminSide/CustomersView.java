@@ -1,6 +1,5 @@
 package com.example.cms.AdminSide;
 
-import com.example.cms.AdminSide.AdminPannel;
 import com.example.cms.Classes.Customer;
 import com.example.cms.Main;
 import javafx.application.Application;
@@ -34,9 +33,9 @@ public class CustomersView extends Application {
         Button button = Main.getDefaultButton("Back");
         gridPane.add(button , 0,3);
         button.setOnAction(e->{
-            AdminPannel adminPannel = new AdminPannel();
+            AdminPanel adminPanel = new AdminPanel();
             try {
-                adminPannel.start(stage);
+                adminPanel.start(stage);
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }

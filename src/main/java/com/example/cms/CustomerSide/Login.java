@@ -119,7 +119,7 @@ public class Login extends Application {
         gridPane.add(submitButton, 0, 9, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0, 20, 0));
-        Button backButton = new Main().getLogOutButton("Back");
+        Button backButton = new Main().getLogOutButton("← Back");
         backButton.setOnAction(e -> {
             try {
                 Main m = new Main();

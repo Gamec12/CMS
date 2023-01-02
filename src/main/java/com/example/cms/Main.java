@@ -107,12 +107,9 @@ public class Main extends Application {
             } catch (IllegalArgumentException ex) {
                 imageView = new ImageView(new Image("https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg"));
             }
-            // temporrary until I know how to put items
 
-
-            Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory() + ":  " + p.getName() + "\nCost:  $" + p.getBasePrice() + "\n" + p.getQuantity() + " remaining");
+            Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory() + "'s " + p.getSubCategory() + "\n\nName:  " + p.getName() + "\nCost:  $" + p.getBasePrice() + "\n" + p.getQuantity() + " remaining");
             vBox.getChildren().addAll(imageView, item);
-            // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));
 
             listView.getItems().add(vBox);
 
@@ -167,7 +164,7 @@ public class Main extends Application {
         hBox.getChildren().addAll(imageView, button);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
-        Text item = new Text(p.toString());
+        Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory()  + "'s " +p.getSubCategory() + ":  " + p.getName() + "\nCost:  $" + p.getBasePrice() );
         vBox.getChildren().addAll(hBox, item);
 
         listView.getItems().add(vBox);

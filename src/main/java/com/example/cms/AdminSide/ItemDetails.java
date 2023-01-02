@@ -12,8 +12,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -98,9 +96,9 @@ public class ItemDetails extends Application {
         Button back = Main.getDefaultButton("Back");
 
         back.setOnAction(e -> {
-            AdminPannel adminPannel = new AdminPannel();
+            AdminPanel adminPanel = new AdminPanel();
             try {
-                adminPannel.start(stage);
+                adminPanel.start(stage);
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
@@ -145,9 +143,9 @@ public class ItemDetails extends Application {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        AdminPannel adminPannel = new AdminPannel();
+        AdminPanel adminPanel = new AdminPanel();
         try {
-            adminPannel.start(stage);
+            adminPanel.start(stage);
         } catch (IOException | ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         }

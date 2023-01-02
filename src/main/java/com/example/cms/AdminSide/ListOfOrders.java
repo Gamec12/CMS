@@ -1,6 +1,5 @@
 package com.example.cms.AdminSide;
 
-import com.example.cms.Classes.Cart;
 import com.example.cms.Classes.Order;
 import com.example.cms.Classes.Product;
 import com.example.cms.Main;
@@ -13,11 +12,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
@@ -60,9 +57,9 @@ public class ListOfOrders extends Application {
         }
         Button back = Main.getDefaultButton("Back");
         back.setOnAction(e->{
-            AdminPannel adminPannel = new AdminPannel();
+            AdminPanel adminPanel = new AdminPanel();
             try {
-                adminPannel.start(stage);
+                adminPanel.start(stage);
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
