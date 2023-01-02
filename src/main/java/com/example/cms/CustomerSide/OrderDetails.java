@@ -3,6 +3,7 @@ package com.example.cms.CustomerSide;
 import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Order;
 import com.example.cms.Classes.Product;
+import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -77,7 +78,8 @@ Stage.setTitle("Order Details");
         Label l4=new Label(customer.getAddress1());
         Label l5= new Label("Number Of Products  "+String.valueOf(customer.getCart().getCount()));
         Label l6= new Label("Total Price  "+String.valueOf(customer.getCart().getSum()));
-        Button confirm=new Button("Confirm Order");
+        Button confirm= Main.getDefaultButton("Confirm Order");
+        confirm.setStyle("-fx-background-color: #33bb33");
         confirm.setOnAction(e->{
             try {
                 Order order=new Order(customer.getCart() ,customer.getId());
@@ -101,12 +103,15 @@ Stage.setTitle("Order Details");
 
 
         });
-        Button back=new Button("back");
+        Button back= Main.getDefaultButton("← back");
         back.setOnAction(e->{
             Cart cart1=new Cart(customer);
             cart1.start(Stage);
         });
-        box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,confirm,back);
+        HBox hBox=new HBox(back,confirm);
+        hBox.setSpacing(10);
+
+        box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,hBox);
         box.setBackground(new Background(new BackgroundFill(Color.WHITE , null , null)));
         Stage.setScene(new Scene(box , 500 , 500) );
         Stage.show();

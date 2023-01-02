@@ -2,6 +2,7 @@ package com.example.cms.CustomerSide;
 
 import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Product;
+import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -32,7 +33,9 @@ public class Cart extends Application {
             vBox.setSpacing(10);
             vBox.setPadding(new Insets(10));
 
-            Button button = new Button("Remove From Cart");
+            Button button = Main.getLogOutButton("X");
+            button.setPrefSize(70, 20);
+
             button.setOnAction(e->{
                 customer.getCart().removeFromCart(p.getItemID());
                 Cart cart1=new Cart(customer);
@@ -75,7 +78,7 @@ public class Cart extends Application {
         stage.setTitle("cart");
  ListView x =new ListView();
  getItemsCart(x, customer,stage);
-        Button b=new Button("Back");
+        Button b= Main.getDefaultButton("Back");
         b.setOnAction(e->{
             CustomerPanel c1 = null;
             try {
@@ -87,7 +90,7 @@ public class Cart extends Application {
             }
             c1.start(stage);
         });
-        Button b1 =new Button("Checkout");
+        Button b1 = Main.getDefaultButton("Checkout");
         b1.setOnAction(e->{
             if(customer.getCart().getArr().size()==0)
             {
@@ -100,7 +103,12 @@ public class Cart extends Application {
             l.start(stage);
         });
         VBox box= new VBox(x);
-        box.getChildren().addAll(b,b1);
+        HBox buttons = new HBox();
+        buttons.getChildren().addAll(b,b1);
+        buttons.setPadding(new Insets(10));
+        buttons.setSpacing(10);
+        box.setSpacing(15);
+        box.getChildren().addAll(buttons);
         box.setBackground(new Background(new BackgroundFill(Color.WHITE , null , null)));
         stage.setScene(new Scene(box , 500 , 500) );
         stage.show();

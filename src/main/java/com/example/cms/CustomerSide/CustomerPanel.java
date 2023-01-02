@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class CustomerPanel extends Application {
 
     @Override
     public void start(Stage stage) {
-        GridPane gridPane = Main.GetDefaultPane();
+
 
 
         BorderPane borderPane = new BorderPane();
@@ -44,6 +45,8 @@ public class CustomerPanel extends Application {
 
 
         VBox vBox = new VBox();
+        setHboxColor(hBox);
+
 
         ListView<VBox> listView = new ListView<>();
         ComboBox<String> categories = new ComboBox<>();
@@ -64,6 +67,7 @@ public class CustomerPanel extends Application {
         Label labelSub = new Label("Choose a sub category");
         dropDown.setPadding(new Insets(10));
         dropDown.getChildren().addAll(label, categories, labelSub, subCategories);
+        setHboxColor(dropDown);
         HBox.setMargin(categories, new Insets(10));
 
 
@@ -87,7 +91,7 @@ public class CustomerPanel extends Application {
         //Label l1 = new Label("Welcome " + customer.getFirstName());
 
         cart.setText("Cart: " + customer.getCart().getCount());
-        Button signOut = Main.getLogOutButton("sign out");
+        Button signOut = Main.getLogOutButton("← sign out");
         signOut.setOnAction(
                 e -> {
                     Main x = new Main();
@@ -108,5 +112,9 @@ public class CustomerPanel extends Application {
 
         stage.setScene(new Scene(borderPane, 500, 500));
         stage.show();
+    }
+
+    private static void setHboxColor(HBox dropDown) {
+        dropDown.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY , null , null)));
     }
 }
