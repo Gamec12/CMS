@@ -19,7 +19,7 @@ public class CustomerPanel extends Application {
 
 
 Inventory inv;
-Customer customer = new Customer("Adam" , "Loay" , "01116607644", "Male" , "adamlo2ay@gmail.com" , "Gamec" , "1234" , "40 north hillStreet" );
+Customer customer;
     public CustomerPanel(Customer customer) throws IOException, ClassNotFoundException {
         inv = new Inventory();
         this.customer = customer ;

@@ -31,7 +31,7 @@ public class CustomersView extends Application {
         Text text = new Text("Customers");
         text.setFont(Font.font("arial", FontWeight.BOLD, 30));
         gridPane.add(text, 0 ,0 ,2,2);
-        Button button = new Button("Back");
+        Button button = Main.getDefaultButton("Back");
         gridPane.add(button , 0,3);
         button.setOnAction(e->{
             AdminPannel adminPannel = new AdminPannel();
@@ -44,12 +44,16 @@ public class CustomersView extends Application {
         ListView listView = new ListView();
         listView.setMinWidth(500);
         gridPane.add(listView , 0 , 4);
-
+        String customer = "";
+        int count = 1;
         for(Customer c : customers.values())
         {
-            listView.getItems().add(c.toString());
-        }
 
+             customer= "Customer " + count + ":\n" + "Username: " + c.getUserName() + "\nFirst name: " + c.getFirstName() + "\nLast name: " + c.getLastName()+"\nEmail: "+ c.getEmailAddress() + "\nAddress : " + c.getAddress1() +"\nMobile number: " +  c.getMobileNumber() + "\nGender: " + c.getGender() ;
+            listView.getItems().add(customer);
+            count++;
+        }
+        stage.setTitle("Customers");
         stage.setScene(new Scene(gridPane));
         stage.show();
 

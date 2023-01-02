@@ -15,7 +15,7 @@ public class Customer extends User implements Serializable {
 
     public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password, String address1) throws IOException, ClassNotFoundException {
         super(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);
-        load();
+        //load();
         this.address1 = address1;
         id = nextId;
         nextId++;

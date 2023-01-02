@@ -193,6 +193,7 @@ public class Main extends Application {
     }
 
     public static void getCategories(ComboBox<String> category) {
+
         category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Scarf","Other");
     }
 
@@ -206,9 +207,16 @@ public class Main extends Application {
         button.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff;");
         return button;
     }
+    public  static  Button getLogOutButton(String string)
     {
-
+        Button button = new Button(string);
+        button.setPrefSize(100,20);
+        button.setStyle("-fx-background-color: #BB2235; -fx-text-fill: #ffffff;");
+        return button;
     }
+
+
+
     public static void main(String[] args) {
         launch();
     }

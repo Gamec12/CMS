@@ -85,9 +85,9 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return
                 "items=" + items +
-                ", date=" + date +
-                '}';
+                ", date=" + date + "\n"
+                ;
     }
 }

@@ -85,7 +85,7 @@ public class AddItem extends Application {
         gridPane.add(l9 , 0 , 12);
         gridPane.add(ImageSource , 1 , 12);
 
-        Button add = new Button("Add");
+        Button add = Main.getDefaultButton("Add");
 
         add.setOnAction(e->{
             if(name.getText().equals("") || color.getText().equals("") || category.getValue().equals("") || size.getText().equals("") || description.getText().equals("") || basePrice.getText().equals("") || quantity.getText().equals("") || ImageSource.getText().equals("") || category.getSelectionModel().getSelectedItem() == null)

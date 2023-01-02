@@ -89,7 +89,8 @@ public class ItemDetails extends Application {
         gridPane.add(l8, 0, 11);
         gridPane.add(quantity, 1, 11);
 
-        Button back = new Button("Back");
+        Button back = Main.getDefaultButton("Back");
+
         back.setOnAction(e -> {
             AdminPannel adminPannel = new AdminPannel();
             try {
@@ -101,7 +102,7 @@ public class ItemDetails extends Application {
 
         gridPane.add(back, 0, 12);
 
-        Button edit = new Button("Edit Item");
+        Button edit = Main.getDefaultButton("Edit Item");
         edit.setOnAction(e -> {
             EditItem editItem = new EditItem(inv, id);
             try {
@@ -113,7 +114,7 @@ public class ItemDetails extends Application {
 
         });
 
-        Button delete = new Button("Delete");
+        Button delete = Main.getDefaultButton("Delete");
         delete.setOnAction(e -> {
             inv.getProducts().remove(id);
             SaveBackToAdmin(stage, inv);
@@ -123,7 +124,8 @@ public class ItemDetails extends Application {
         HBox box = new HBox();
         box.getChildren().addAll(edit, delete);
         box.setPadding(new Insets(10));
-        HBox.setMargin(delete, new Insets(0, 0, 0, 13));
+        HBox.setMargin(delete, new Insets(0, 0, 0, 500));
+
         gridPane.add(box, 1, 12);
 
         stage.setScene(new Scene(gridPane, 750, 650));

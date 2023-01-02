@@ -181,7 +181,7 @@ public class EditItem extends Application {
 
 
     static void ItemButtons(Stage stage, GridPane gridPane, Button edit) {
-        Button back = new Button("Back");
+        Button back = Main.getDefaultButton("Back");
         back.setOnAction(e->{
             AdminPannel adminPannel = new AdminPannel();
             try {

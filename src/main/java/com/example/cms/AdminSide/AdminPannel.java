@@ -86,6 +86,7 @@ public class AdminPannel extends Application {
         });
 
         Button delete = Main.getDefaultButton("Delete Item");
+
         delete.setOnAction(e -> {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Enter an item to delete");
@@ -129,7 +130,7 @@ public class AdminPannel extends Application {
             }
 
         });
-        Button signout= Main.getDefaultButton("signout");
+        Button signout= Main.getLogOutButton("signout");
         signout.setOnAction(
                 e->{
                     Main x=new Main();

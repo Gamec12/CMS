@@ -6,7 +6,7 @@ public abstract class User implements Serializable {
     @Override
     public String toString()
     {
-        return "userData{" + "firstName=" + firstName + ", lastName=" + lastName  + ", mobileNumber=" + mobileNumber + ", gender=" + gender + ", emailAddress=" + emailAddress +  ", userName=" + userName + ", password=" + password + '}';
+        return "userData{" + "firstName=" + firstName + ", lastName=" + lastName  + ", mobileNumber=" + mobileNumber + ", gender=" + gender + ", emailAddress=" + emailAddress +  ", userName=" + userName +  '}';
     }
     public String firstName ;
     public String lastName ;
