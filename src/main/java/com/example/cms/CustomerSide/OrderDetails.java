@@ -25,25 +25,24 @@ import java.io.IOException;
 
 public class OrderDetails extends Application {
     Customer customer;
-    public OrderDetails(Customer customer){
-        this.customer =customer;
+
+    public OrderDetails(Customer customer) {
+        this.customer = customer;
     }
-    public static void getItemsOrderDetails( ListView<VBox> listView, Customer customer,Stage stage) {
-        for(Product p : customer.getCart().getArr())
-        {
+
+    public static void getItemsOrderDetails(ListView<VBox> listView, Customer customer, Stage stage) {
+        for (Product p : customer.getCart().getArr()) {
             VBox vBox = new VBox();
             vBox.setSpacing(10);
             vBox.setPadding(new Insets(10));
 
             ImageView imageView;
-            try{
+            try {
                 imageView = new ImageView(new Image(p.ImageSource));
 
                 imageView.setFitHeight(100);
                 imageView.setFitWidth(100);
-            }
-            catch (IllegalArgumentException ex)
-            {
+            } catch (IllegalArgumentException ex) {
                 imageView = new ImageView(new Image("https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg"));
             }
             HBox hBox = new HBox();
@@ -52,13 +51,17 @@ public class OrderDetails extends Application {
             hBox.getChildren().addAll(imageView);
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
-            Text item = new Text(p.toString());
-            vBox.getChildren().addAll(hBox,item);
-
+            Text item = new Text(
+                    "[" + p.getItemID() + "] " + p.getCategory()
+                            + "'s " + p.getSubCategory()
+                            + "\n\n" + p.getName()
+                            + "\n" + p.getDescription()
+                            + "\n" + p.getSize()
+                            + "  -  " + p.getColor()
+                            + "\nCost:  $" + p.getBasePrice()
+            );
+            vBox.getChildren().addAll(hBox, item);
             listView.getItems().add(vBox);
-
-            System.out.println(p.toString());
-
         }
     }
 
@@ -68,21 +71,21 @@ public class OrderDetails extends Application {
 
     @Override
     public void start(Stage Stage) {
-Stage.setTitle("Order Details");
-        ListView x =new ListView();
-        getItemsOrderDetails(x, customer,Stage);
-        VBox box=new VBox(x);
-        Label l1=new Label(customer.getFirstName() +" "+ customer.getLastName());
-        Label l2=new Label(customer.getMobileNumber());
-        Label l3=new Label(customer.getEmailAddress());
-        Label l4=new Label(customer.getAddress1());
-        Label l5= new Label("Number Of Products  "+String.valueOf(customer.getCart().getCount()));
-        Label l6= new Label("Total Price  "+String.valueOf(customer.getCart().getSum()));
-        Button confirm= Main.getDefaultButton("Confirm Order");
+        Stage.setTitle("Order Details");
+        ListView x = new ListView();
+        getItemsOrderDetails(x, customer, Stage);
+        VBox box = new VBox(x);
+        Label l1 = new Label(customer.getFirstName() + " " + customer.getLastName());
+        Label l2 = new Label("Phone:  " + customer.getMobileNumber());
+        Label l3 = new Label("Email:  " + customer.getEmailAddress());
+        Label l4 = new Label(customer.getAddress1());
+        Label l5 = new Label("Product count:  " + String.valueOf(customer.getCart().getCount()));
+        Label l6 = new Label("Total price:  $" + String.valueOf(customer.getCart().getSum()));
+        Button confirm = Main.getDefaultButton("Confirm Order");
         confirm.setStyle("-fx-background-color: #33bb33");
-        confirm.setOnAction(e->{
+        confirm.setOnAction(e -> {
             try {
-                Order order=new Order(customer.getCart() ,customer.getId());
+                Order order = new Order(customer.getCart(), customer.getId());
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
@@ -95,7 +98,7 @@ Stage.setTitle("Order Details");
             alert.setContentText("Your order will arrive soon");
             alert.showAndWait();
             try {
-                CustomerPanel customerPanel=new CustomerPanel(customer);
+                CustomerPanel customerPanel = new CustomerPanel(customer);
                 customerPanel.start(Stage);
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
@@ -103,17 +106,17 @@ Stage.setTitle("Order Details");
 
 
         });
-        Button back= Main.getDefaultButton("← back");
-        back.setOnAction(e->{
-            Cart cart1=new Cart(customer);
+        Button back = Main.getDefaultButton("← Back");
+        back.setOnAction(e -> {
+            Cart cart1 = new Cart(customer);
             cart1.start(Stage);
         });
-        HBox hBox=new HBox(back,confirm);
+        HBox hBox = new HBox(back, confirm);
         hBox.setSpacing(10);
-
-        box.getChildren().addAll(l1,l2,l3,l4,l5,l6 ,hBox);
-        box.setBackground(new Background(new BackgroundFill(Color.WHITE , null , null)));
-        Stage.setScene(new Scene(box , 500 , 500) );
+        box.setPadding(new Insets(30));
+        box.getChildren().addAll(l1, l2, l3, l4, l5, l6, hBox);
+        box.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        Stage.setScene(new Scene(box, 500, 500));
         Stage.show();
     }
 }

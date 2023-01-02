@@ -47,7 +47,7 @@ public class AdminLogin extends Application {
             }
         });
 
-        Button back = new Main().getLogOutButton("← Back");
+        Button back = new Main().getRedButton("← Back");
         back.setOnAction(e->{
             Main main = new Main();
             try {

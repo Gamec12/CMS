@@ -131,7 +131,7 @@ public class Registration extends Application {
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0, 20, 0));
 
-        Button backButton = new Main().getLogOutButton("← Back");
+        Button backButton = new Main().getRedButton("← Back");
         backButton.setOnAction(e -> {
             Main main = new Main();
             try {

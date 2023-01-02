@@ -124,7 +124,7 @@ public class AdminPanel extends Application {
             }
 
         });
-        Button signout= Main.getLogOutButton("← Sign out");
+        Button signout= Main.getRedButton("← Sign out");
         signout.setOnAction(
                 e->{
                     Main x=new Main();

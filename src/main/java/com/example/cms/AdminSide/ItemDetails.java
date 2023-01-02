@@ -118,7 +118,7 @@ public class ItemDetails extends Application {
 
         });
 
-        Button delete = Main.getLogOutButton("Delete");
+        Button delete = Main.getRedButton("Delete");
         delete.setOnAction(e -> {
             inv.getProducts().remove(id);
             SaveBackToAdmin(stage, inv);

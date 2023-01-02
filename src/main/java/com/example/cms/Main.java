@@ -22,21 +22,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
-
 
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException { // throws IOException, ClassNotFoundException {
+    public void start(Stage stage) throws IOException {
         GridPane grid = GetDefaultPane();
-
 
         Text title = new Text("Welcome to the CMS");
         setText(title);
 
         Button Register = Main.getDefaultButton("Registration");
-
-
         Button Login = Main.getDefaultButton("Login");
 
         Register.setOnAction(e -> {
@@ -51,15 +46,13 @@ public class Main extends Application {
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
-
-
         });
 
         Text admin = new Text("Admin Login");
         admin.setOnMouseClicked(e -> {
             AdminLogin adminLogin = new AdminLogin();
             adminLogin.start(stage);
-        });// open admin login
+        });
 
         grid.add(title, 0, 0, 2, 1);
         HBox hBox = new HBox();
@@ -70,10 +63,7 @@ public class Main extends Application {
         Scene s = new Scene(grid, 500, 500);
         stage.setScene(s);
         stage.setTitle("CMS");
-        //stage.getIcons().add(new Image("D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Images\\Icon.jpg"));
         stage.show();
-
-
     }
 
     public static void setText(Text title) {
@@ -87,11 +77,8 @@ public class Main extends Application {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         grid.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
-        //grid.setStyle("-fx-background-color: #fffff;");
-
         return grid;
     }
-
 
     public static void getItems(Inventory inv, ListView<VBox> listView) {
         for (Product p : inv.getProducts().values()) {
@@ -152,7 +139,6 @@ public class Main extends Application {
         ImageView imageView;
         try {
             imageView = new ImageView(new Image(p.ImageSource));
-
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
         } catch (IllegalArgumentException ex) {
@@ -164,7 +150,15 @@ public class Main extends Application {
         hBox.getChildren().addAll(imageView, button);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
-        Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory()  + "'s " +p.getSubCategory() + ":  " + p.getName() + "\nCost:  $" + p.getBasePrice() );
+        Text item = new Text(
+                "[" + p.getItemID() + "] " + p.getCategory()
+                        + "'s " + p.getSubCategory()
+                        + "\n\n" + p.getName()
+                        + "\n" + p.getDescription()
+                        + "\n" + p.getSize()
+                        + "  -  " + p.getColor()
+                        + "\nCost:  $" + p.getBasePrice()
+        );
         vBox.getChildren().addAll(hBox, item);
 
         listView.getItems().add(vBox);
@@ -174,10 +168,6 @@ public class Main extends Application {
         category.getItems().addAll("Hoodie", "T-Shirt", "Shirt", "Pants", "Shorts", "Sweater", "Jacket", "Socks", "Shoes", "Hat", "Scarf", "Other");
     }
 
-    public static void ConfirmAdd(Stage stage, GridPane gridPane, TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource, Button button, Inventory inv) {
-
-    }
-
     public static Button getDefaultButton(String text) {
         Button button = new Button(text);
         button.setPrefSize(100, 20);
@@ -185,7 +175,7 @@ public class Main extends Application {
         return button;
     }
 
-    public static Button getLogOutButton(String string) {
+    public static Button getRedButton(String string) {
         Button button = new Button(string);
         button.setPrefSize(100, 20);
         button.setStyle("-fx-background-color: #BB2235; -fx-text-fill: #ffffff;");
