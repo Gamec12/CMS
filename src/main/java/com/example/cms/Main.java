@@ -139,7 +139,7 @@ public class Main extends Application {
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
 
-        Button button = new Button("Add to cart");
+        Button button = getDefaultButton("Add to cart");
         button.setOnAction(e -> {
             customer.getCart().addProduct(p);
             CustomerPanel customerPanel = null;

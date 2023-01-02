@@ -39,6 +39,9 @@ public class CustomerPanel extends Application {
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10));
+        hBox.setSpacing(10);
+
+
         VBox vBox = new VBox();
 
         ListView<VBox> listView = new ListView<>();
@@ -52,7 +55,7 @@ public class CustomerPanel extends Application {
             Main.getItemsCustomer(inv, listView, customer, categories, subCategories, stage);
         });
         Main.getSubCategories(subCategories);
-        subCategories.getItems().add(0, "All");
+        subCategories.getItems().addAll("All");
         subCategories.getSelectionModel().select("All");
 
         HBox dropDown = new HBox();
@@ -79,13 +82,12 @@ public class CustomerPanel extends Application {
             Cart cart1 = new Cart(customer);
             cart1.start(stage);
         });
-        Button profile = new Button("Profile");
 
         //Label l1 = new Label("Welcome " + customer.getFirstName());
 
-        Label l1 = new Label(String.valueOf(customer.getCart().getCount()));
-        Button signout = new Button("signout");
-        signout.setOnAction(
+        Label l1 = new Label(" Items in Cart: " + String.valueOf(customer.getCart().getCount()));
+        Button signOut = Main.getLogOutButton("sign out");
+        signOut.setOnAction(
                 e -> {
                     Main x = new Main();
                     try {
@@ -95,12 +97,12 @@ public class CustomerPanel extends Application {
                     }
                 });
 
-        hBox.getChildren().addAll(profile, cart, l1, signout);
+
         HBox.setMargin(cart, new Insets(0, 15, 0, 0));
 
 
         borderPane.setTop(hBox);
-        HBox.setMargin(profile, new Insets(0, 15, 0, 0));
+        hBox.getChildren().addAll(signOut, cart, l1);
 
 
         stage.setScene(new Scene(borderPane, 500, 500));
