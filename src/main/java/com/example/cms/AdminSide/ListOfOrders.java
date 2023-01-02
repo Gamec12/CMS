@@ -1,5 +1,6 @@
 package com.example.cms.AdminSide;
 
+import com.example.cms.Classes.Customer;
 import com.example.cms.Classes.Order;
 import com.example.cms.Classes.Product;
 import com.example.cms.Main;
@@ -23,6 +24,7 @@ import java.util.TreeMap;
 
 public class ListOfOrders extends Application {
     Map<Integer, ArrayList<Order>> orders = new TreeMap<>();
+    Map<Integer, Customer> customers = new TreeMap<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -31,8 +33,20 @@ public class ListOfOrders extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         int counter = 1;
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/orders.dat"));
-        orders = (Map<Integer, ArrayList<Order>>) in.readObject();
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/orders.dat"));
+            orders = (Map<Integer, ArrayList<Order>>) in.readObject();
+        }
+        catch (Exception e){
+            System.out.println("No orders yet");
+        }
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/Customers.dat"));
+            customers = (Map<Integer, Customer>) in.readObject();
+        }
+        catch (Exception e){
+            System.out.println("No customers yet");
+        }
         stage.setTitle("List of orders");
         ListView listView = new ListView();
         for (Map.Entry<Integer, ArrayList<Order>> p : orders.entrySet()) {
@@ -43,6 +57,7 @@ public class ListOfOrders extends Application {
                 for(Product product :  p.getValue().get(i).getItems())
                 {
                     text+= "Item " + count + " : \n";
+                    text+= "Customer : " + customers.get(p.getKey()).getUserName() + "(" + customers.get(p.getKey()).getEmailAddress()  +")\n";
                     text+= "ID: " + "["+ String.valueOf( product.getItemID()) +"] \nCategory "  + product.getCategory() + ", Subcategory " + product.getSubCategory()+ "\nName: " + product.getName() + "\nCost:  $" + product.getBasePrice() + "\n" + "Size: " +product.getSize() + " \n";
                     count++;
                 }

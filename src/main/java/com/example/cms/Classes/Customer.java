@@ -15,7 +15,11 @@ public class Customer extends User implements Serializable {
 
     public Customer(String firstName, String lastName, String mobileNumber, String gender, String emailAddress, String userName, String password, String address1) throws IOException, ClassNotFoundException {
         super(firstName, lastName, mobileNumber, gender, emailAddress, userName, password);
-        load();
+        try{
+            load();
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
         this.address1 = address1;
         id = nextId;
         nextId++;
@@ -43,6 +47,34 @@ public class Customer extends User implements Serializable {
 
     public static int getId() {
         return id;
+    }
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void setNextId(int nextId) {
+        Customer.nextId = nextId;
+    }
+
+    public static void setId(int id) {
+        Customer.id = id;
+    }
+
+    public static Map<Integer, Customer> getCustomers() {
+        return customers;
+    }
+
+    public static void setCustomers(Map<Integer, Customer> customers) {
+        Customer.customers = customers;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
 
