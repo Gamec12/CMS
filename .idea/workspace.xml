@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="update idk I forgor">
+    <list default="true" id="2462b4e4-dd8f-4779-bc52-877c0ed5cba1" name="Changes" comment="hoss">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AdminLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AdminLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AdminPannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/AdminSide/AdminPannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cms/CustomerSide/Registration.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +301,8 @@
     <MESSAGE value="IDK" />
     <MESSAGE value="GOOD SHIT" />
     <MESSAGE value="update idk I forgor" />
-    <option name="LAST_COMMIT_MESSAGE" value="update idk I forgor" />
+    <MESSAGE value="hoss" />
+    <option name="LAST_COMMIT_MESSAGE" value="hoss" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CMS$AdminPannel.ic" NAME="AdminPannel Coverage Results" MODIFIED="1671975531814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

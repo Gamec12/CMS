@@ -115,6 +115,11 @@ public class Registration extends Application {
         gridPane.add(mobileNumber, 0, 8);
         TextField mobileNumberField = new TextField();
         mobileNumberField.setPrefHeight(40);
+        mobileNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                mobileNumberField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
         gridPane.add(mobileNumberField, 1, 8);
 
         Button submitButton = new Button("Submit");
@@ -167,7 +172,7 @@ public class Registration extends Application {
                 return;
             }
 
-            if (genderTile.getChildren().isEmpty()) {
+            if (g.getSelectedToggle() == null) {
                 showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please select your gender");
                 return;
             }
@@ -184,7 +189,15 @@ public class Registration extends Application {
                 return;
             }
             try {
-                new Customer(nameField.getText(), lastnameField.getText(), mobileNumberField.getText(), g.toString(), emailField.getText(), usernameField.getText(), passwordField.getText(), addressField.getText());
+                new Customer(
+                        nameField.getText(),
+                        lastnameField.getText(),
+                        mobileNumberField.getText(),
+                        ((RadioButton)g.getSelectedToggle()).getText(),
+                        emailField.getText(),
+                        usernameField.getText(),
+                        passwordField.getText(),
+                        addressField.getText());
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
