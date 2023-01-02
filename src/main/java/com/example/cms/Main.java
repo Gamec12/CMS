@@ -37,16 +37,14 @@ public class Main extends Application {
         Button Register = Main.getDefaultButton("Registration");
 
 
-
-
         Button Login = Main.getDefaultButton("Login");
 
-        Register.setOnAction(e->{
+        Register.setOnAction(e -> {
             Registration registration = new Registration();
             registration.start(stage);
         });
 
-        Login.setOnAction(e->{
+        Login.setOnAction(e -> {
             com.example.cms.CustomerSide.Login login = new Login();
             try {
                 login.start(stage);
@@ -58,18 +56,18 @@ public class Main extends Application {
         });
 
         Text admin = new Text("Admin Login");
-        admin.setOnMouseClicked(e-> {
+        admin.setOnMouseClicked(e -> {
             AdminLogin adminLogin = new AdminLogin();
             adminLogin.start(stage);
-        } );// open admin login
+        });// open admin login
 
-        grid.add(title , 0 , 0 ,2, 1);
+        grid.add(title, 0, 0, 2, 1);
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(Register,Login);
+        hBox.getChildren().addAll(Register, Login);
         hBox.setSpacing(95);
-        grid.add(hBox , 0 , 3);
-        grid.add(admin , 0 , 4);
-        Scene s  = new Scene(grid , 500 , 500);
+        grid.add(hBox, 0, 3);
+        grid.add(admin, 0, 4);
+        Scene s = new Scene(grid, 500, 500);
         stage.setScene(s);
         stage.setTitle("CMS");
         //stage.getIcons().add(new Image("D:\\Uni\\Semister 3\\OOP\\Projects\\CMS\\src\\main\\java\\com\\example\\cms\\Images\\Icon.jpg"));
@@ -84,11 +82,11 @@ public class Main extends Application {
 
     public static GridPane GetDefaultPane() {
         GridPane grid = new GridPane();
-        grid.setPadding( new Insets(10));
+        grid.setPadding(new Insets(10));
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-        grid.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY ,null , null)));
+        grid.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
         //grid.setStyle("-fx-background-color: #fffff;");
 
         return grid;
@@ -96,91 +94,53 @@ public class Main extends Application {
 
 
     public static void getItems(Inventory inv, ListView<VBox> listView) {
-        for(Product p : inv.getProducts().values())
-        {
+        for (Product p : inv.getProducts().values()) {
             VBox vBox = new VBox();
             vBox.setSpacing(10);
             vBox.setPadding(new Insets(10));
             ImageView imageView;
-            try{
+            try {
                 imageView = new ImageView(new Image(p.ImageSource));
 
                 imageView.setFitHeight(100);
                 imageView.setFitWidth(100);
-            }
-            catch (IllegalArgumentException ex)
-            {
+            } catch (IllegalArgumentException ex) {
                 imageView = new ImageView(new Image("https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg"));
             }
             // temporrary until I know how to put items
 
 
             Text item = new Text("[" + p.getItemID() + "]\n" + p.getCategory() + ":  " + p.getName() + "\nCost:  $" + p.getBasePrice() + "\n" + p.getQuantity() + " remaining");
-            vBox.getChildren().addAll(imageView,item);
-           // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));
+            vBox.getChildren().addAll(imageView, item);
+            // vBox.setBackground(new Background(new BackgroundFill(Color.WHITE ,null , null)));
 
             listView.getItems().add(vBox);
 
         }
     }
 
-    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer , ComboBox categories, ComboBox subCategories ,Stage stage) {
+    public static void getItemsCustomer(Inventory inv, ListView<VBox> listView, Customer customer, ComboBox categories, ComboBox subCategories, Stage stage) {
         listView.getItems().clear();
-        if(categories.getSelectionModel().getSelectedItem() .equals("All")  && subCategories.getSelectionModel().getSelectedItem().equals("All")) {
-
-            for (Product p : inv.getProducts().values()) {
-                setItems(listView, customer, p , stage);
-
-                System.out.println(p.toString());
-            }
-        }
-            else if(!subCategories.getSelectionModel().getSelectedItem().equals("All")  && categories.getSelectionModel().getSelectedItem().equals("All"))
-            {
-
-                for(Product p : inv.getProducts().values())
-                {
-                    if(!p.getCategory().equals(categories.getSelectionModel().getSelectedItem())   && !p.getSubCategory().equals(subCategories.getSelectionModel().getSelectedItem())  )
-                    {
-                        continue;
-                    }
+        String category = (String) categories.getSelectionModel().getSelectedItem();
+        String subCategory = (String) subCategories.getSelectionModel().getSelectedItem();
+        if (category == null) category = "All";
+        if (subCategory == null) subCategory = "All";
+        for (Product p : inv.getProducts().values()) {
+            if (category.equals("All") || category.equals(p.getCategory())) {
+                if (subCategory.equals("All") || subCategory.equals(p.getSubCategory())) {
                     setItems(listView, customer, p, stage);
-
                 }
-
-
-            }
-            else if(subCategories.getSelectionModel().getSelectedItem().equals("All")  &&  !categories.getSelectionModel().getSelectedItem().equals("All"))
-            {
-                for(Product p : inv.getProducts().values())
-                {
-                    if(!p.getCategory().equals(categories.getSelectionModel().getSelectedItem())   && !p.getSubCategory().equals(subCategories.getSelectionModel().getSelectedItem())  )
-                    {
-                        continue;
-                    }
-                    setItems(listView, customer, p, stage);
-
-                }
-            }
-            else {
-            for(Product p : inv.getProducts().values())
-            {
-                if(!p.getCategory().equals(categories.getSelectionModel().getSelectedItem())   && !p.getSubCategory().equals(subCategories.getSelectionModel().getSelectedItem())  )
-                {
-                    continue;
-                }
-                setItems(listView, customer, p, stage);
-
             }
         }
     }
 
-    private static void setItems(ListView<VBox> listView, Customer customer, Product p , Stage stage) {
+    private static void setItems(ListView<VBox> listView, Customer customer, Product p, Stage stage) {
         VBox vBox = new VBox();
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
 
         Button button = new Button("Add to cart");
-        button.setOnAction(e->{
+        button.setOnAction(e -> {
             customer.getCart().addProduct(p);
             CustomerPanel customerPanel = null;
             try {
@@ -193,31 +153,28 @@ public class Main extends Application {
 
         });
         ImageView imageView;
-        try{
+        try {
             imageView = new ImageView(new Image(p.ImageSource));
 
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
-        }
-        catch (IllegalArgumentException ex)
-        {
+        } catch (IllegalArgumentException ex) {
             imageView = new ImageView(new Image("https://github.com/Gamec12/CMS/blob/b6a4bf0f77234d7e5a406d1e7b6a4a62ed3788fb/src/main/java/com/example/cms/Images/Icon.jpg"));
         }
         HBox hBox = new HBox();
         hBox.setSpacing(30);
 
-        hBox.getChildren().addAll(imageView,button);
+        hBox.getChildren().addAll(imageView, button);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
         Text item = new Text(p.toString());
-        vBox.getChildren().addAll(hBox,item);
+        vBox.getChildren().addAll(hBox, item);
 
         listView.getItems().add(vBox);
     }
 
     public static void getSubCategories(ComboBox<String> category) {
-
-        category.getItems().addAll("Hoodie","T-Shirt","Shirt","Pants","Shorts","Sweater","Jacket","Socks","Shoes","Hat","Scarf","Other");
+        category.getItems().addAll("Hoodie", "T-Shirt", "Shirt", "Pants", "Shorts", "Sweater", "Jacket", "Socks", "Shoes", "Hat", "Scarf", "Other");
     }
 
     public static void ConfirmAdd(Stage stage, GridPane gridPane, TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource, Button button, Inventory inv) {
@@ -226,20 +183,20 @@ public class Main extends Application {
 
     public static Button getDefaultButton(String text) {
         Button button = new Button(text);
-        button.setPrefSize(100,20);
+        button.setPrefSize(100, 20);
         button.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff;");
         return button;
     }
-    public  static  Button getLogOutButton(String string)
-    {
+
+    public static Button getLogOutButton(String string) {
         Button button = new Button(string);
-        button.setPrefSize(100,20);
+        button.setPrefSize(100, 20);
         button.setStyle("-fx-background-color: #BB2235; -fx-text-fill: #ffffff;");
         return button;
     }
 
     public static void getCategories(ComboBox<String> category) {
-        category.getItems().addAll("Men" , "Women" , "Kids");
+        category.getItems().addAll("Men", "Women", "Kids");
     }
 
     public static void main(String[] args) {

@@ -18,11 +18,12 @@ import java.io.IOException;
 public class CustomerPanel extends Application {
 
 
-Inventory inv;
-Customer customer;
+    Inventory inv;
+    Customer customer;
+
     public CustomerPanel(Customer customer) throws IOException, ClassNotFoundException {
         inv = new Inventory();
-        this.customer = customer ;
+        this.customer = customer;
     }
 
 
@@ -47,49 +48,46 @@ Customer customer;
         categories.getSelectionModel().select("All");
 
         ComboBox<String> subCategories = new ComboBox<>();
-        subCategories.setOnAction(e->{
-            Main.getItemsCustomer(inv , listView ,customer ,categories, subCategories ,stage);
+        subCategories.setOnAction(e -> {
+            Main.getItemsCustomer(inv, listView, customer, categories, subCategories, stage);
         });
         Main.getSubCategories(subCategories);
-        subCategories.getItems().addAll("All");
+        subCategories.getItems().add(0, "All");
         subCategories.getSelectionModel().select("All");
 
         HBox dropDown = new HBox();
         Label label = new Label("Choose a category");
         Label labelSub = new Label("Choose a sub category");
         dropDown.setPadding(new Insets(10));
-        dropDown.getChildren().addAll(label,categories , labelSub , subCategories);
-        HBox.setMargin(categories , new Insets(10));
-
-
+        dropDown.getChildren().addAll(label, categories, labelSub, subCategories);
+        HBox.setMargin(categories, new Insets(10));
 
 
         borderPane.setBottom(dropDown);
-        categories.setOnAction(e->{
-            Main.getItemsCustomer(inv , listView ,customer ,categories, subCategories ,stage);
+        categories.setOnAction(e -> {
+            Main.getItemsCustomer(inv, listView, customer, categories, subCategories, stage);
 
         });
-        Main.getItemsCustomer(inv, listView , customer, categories ,subCategories, stage);
+        Main.getItemsCustomer(inv, listView, customer, categories, subCategories, stage);
 
         borderPane.setCenter(listView);
 
 
-
 //        Button orders = new Button("Orders");
         Button cart = new Button("Cart"); // maybe image in the future
-cart.setOnAction(e->{
-    Cart cart1 = new Cart(customer);
-    cart1.start(stage);
-});
+        cart.setOnAction(e -> {
+            Cart cart1 = new Cart(customer);
+            cart1.start(stage);
+        });
         Button profile = new Button("Profile");
 
         //Label l1 = new Label("Welcome " + customer.getFirstName());
 
-        Label l1 = new Label( String.valueOf(customer.getCart().getCount()));
-        Button signout=new Button("signout");
+        Label l1 = new Label(String.valueOf(customer.getCart().getCount()));
+        Button signout = new Button("signout");
         signout.setOnAction(
-                e->{
-                    Main x=new Main();
+                e -> {
+                    Main x = new Main();
                     try {
                         x.start(stage);
                     } catch (IOException ex) {
@@ -97,15 +95,12 @@ cart.setOnAction(e->{
                     }
                 });
 
-        hBox.getChildren().addAll(profile,cart , l1,signout);
-        HBox.setMargin(cart, new Insets(0,15,0,0));
-
+        hBox.getChildren().addAll(profile, cart, l1, signout);
+        HBox.setMargin(cart, new Insets(0, 15, 0, 0));
 
 
         borderPane.setTop(hBox);
-        HBox.setMargin(profile, new Insets(0,15,0,0));
-
-
+        HBox.setMargin(profile, new Insets(0, 15, 0, 0));
 
 
         stage.setScene(new Scene(borderPane, 500, 500));
