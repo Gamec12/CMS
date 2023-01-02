@@ -20,7 +20,12 @@ public class Order implements Serializable {
 
         if(!c1.isEmpty())
         {
-            Load();
+            try {
+                load();
+            }
+            catch (Exception exception){
+                System.out.println(exception);
+            }
             if((orders.containsKey(id)))
             {
                 orders.get(id).add(this);

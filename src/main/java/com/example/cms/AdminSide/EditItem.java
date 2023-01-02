@@ -5,9 +5,11 @@ import com.example.cms.Classes.Product;
 import com.example.cms.Classes.Validations;
 import com.example.cms.Main;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -62,15 +64,31 @@ public class EditItem extends Application {
         gridPane.add(l3,0 , 5);
         gridPane.add(color , 1 , 5);
 
-        Label l4 = new Label("Category");
+        Label l4 = new Label("Category: ");
         ComboBox<String> category = new ComboBox<>();
-        Main.getCategories(category);
-        category.getSelectionModel().select(category.getItems().indexOf(product.getCategory()));
-        gridPane.add(l4,0 , 6);
-        gridPane.add(category , 1 , 6);
+        category.getItems().addAll("Men" , "Women" , "Kids");
+        category.getSelectionModel().select(product.getCategory());
+        Label sub_category = new Label("Sub Category: ");
+        ComboBox<String>subCategory = new ComboBox<>();
+
+        subCategory.getSelectionModel().select(product.getSubCategory());
+
+        Main.getCategories(subCategory);
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(l4);
+        hBox.setSpacing(10);
+
+        HBox hBox1 = new HBox();
+        hBox1.setAlignment(Pos.CENTER_LEFT);
+        hBox1.getChildren().addAll(category ,sub_category, subCategory);
+        hBox1.setSpacing(20);
+        gridPane.add(hBox,0 , 6);
+        gridPane.add(hBox1, 1 , 6);
 
         Label l5 = new Label("Size");
-        TextField  size = new TextField(product.getSize());
+        ComboBox size = new ComboBox();
+        size.getSelectionModel().select(product.getCategory());
+        size.getItems().addAll("XXS" ,"XS" , "S" , "M" , "L" , "XL" , "XXL" , "XXXL");
         gridPane.add(l5,0 , 7);
         gridPane.add(size , 1 , 7);
 
@@ -100,7 +118,7 @@ public class EditItem extends Application {
 
             if(Validations.isInt(ID) && Validations.isDouble(basePrice) && Validations.isInt(quantity))
             {
-                if(name.getText().equals("") || color.getText().equals("") || category.getValue().equals("") || size.getText().equals("") || description.getText().equals("") || basePrice.getText().equals("") || quantity.getText().equals("") || ImageSource.getText().equals("") || category.getSelectionModel().getSelectedItem() == null)
+                if(name.getText().equals("") || color.getText().equals("") || category.getValue().equals("") || size.getSelectionModel().getSelectedItem() == null || description.getText().equals("") || basePrice.getText().equals("") || quantity.getText().equals("") || ImageSource.getText().equals("") || category.getSelectionModel().getSelectedItem() == null)
                 {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
@@ -147,7 +165,7 @@ public class EditItem extends Application {
                 else
                 {
 
-                    Product p = new Product(Integer.parseInt(ID.getText()) , name.getText() , color.getText() , category.getValue() , size.getText() , description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) , ImageSource.getText());
+                    Product p = new Product(Integer.parseInt(ID.getText()) , name.getText() , color.getText() , category.getValue() , (String) size.getValue(), description.getText() , Double.parseDouble(basePrice.getText()) , Integer.parseInt(quantity.getText()) , ImageSource.getText() , category.getValue());
                     try {
                         inv.addProduct(p);
                     } catch (IOException ex) {
@@ -193,7 +211,7 @@ public class EditItem extends Application {
 
         gridPane.add(edit , 2 , 14);
         gridPane.add(back , 1 , 14);
-        stage.setScene(new Scene(gridPane , 650 , 600));
+        stage.setScene(new Scene(gridPane , 750 , 700));
         stage.show();
     }
 }

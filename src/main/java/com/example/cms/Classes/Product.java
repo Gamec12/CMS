@@ -11,12 +11,12 @@ public class Product implements Serializable {
     private String description;
 
     private int quantity;
-
+    private String subCategory;
 
 
     public String ImageSource;
     private double basePrice;
-    public Product(int itemID,String Name, String color, String category, String size, String description, double basePrice , int quantity, String ImageSource) {
+    public Product(int itemID,String Name, String color, String category, String size, String description, double basePrice , int quantity, String ImageSource , String subCategory) {
         this.itemID = itemID;
         this.color = color;
         this.category = category;
@@ -26,6 +26,9 @@ public class Product implements Serializable {
         this.Name = Name;
         this.quantity =quantity;
         this.ImageSource = ImageSource;
+        this.subCategory = subCategory;
+        
+
     }
 
     public int getItemID() {
@@ -101,6 +104,7 @@ public class Product implements Serializable {
                 ", Name : " + Name + '\'' +
                 ", color : " + color + '\'' +
                 ", category : '" + category + '\'' +
+                        ", sub-Category"+ subCategory +
                 ", size : " + size + '\'' +
                 ", description : " + description + '\'' +
                 ", basePrice : " + basePrice +
@@ -108,4 +112,15 @@ public class Product implements Serializable {
                 '}';
     }
 
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(String subCategory) {
+        this.subCategory = subCategory;
+    }
 }

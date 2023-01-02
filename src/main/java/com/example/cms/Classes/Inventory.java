@@ -12,8 +12,14 @@ public class Inventory implements Serializable {
 
     public Inventory() throws IOException, ClassNotFoundException {                                // Default constructor (calls parameterized constructor)
         this(1000);
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/main/Data/inventory.dat"));
-        products = (Map<Integer, Product>) objectInputStream.readObject();
+        try{
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/main/Data/inventory.dat"));
+            products = (Map<Integer, Product>) objectInputStream.readObject();
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
     }
 
     public Inventory(int capacity) {                // Constructor with "capacity" parameter
@@ -50,5 +56,23 @@ public class Inventory implements Serializable {
         return products;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
 
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public static void setProducts(Map<Integer, Product> products) {
+        Inventory.products = products;
+    }
 }
