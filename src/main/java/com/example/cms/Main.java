@@ -35,12 +35,12 @@ public class Main extends Application {
         Text title = new Text("Welcome to the CMS");
         setText(title);
 
-        Button Register = new Button("Registration");
+        Button Register = Main.getDefaultButton("Registration");
 
 
 
 
-        Button Login = new Button("Login");
+        Button Login = Main.getDefaultButton("Login");
 
         Register.setOnAction(e->{
             Regestration regestration = new Regestration();
@@ -65,9 +65,10 @@ public class Main extends Application {
         } );// open admin login
 
         grid.add(title , 0 , 0 ,2, 1);
-
-        grid.add(Register , 0 , 3);
-        grid.add(Login , 1 , 3);
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(Register,Login);
+        hBox.setSpacing(95);
+        grid.add(hBox , 0 , 3);
         grid.add(admin , 0 , 4);
         Scene s  = new Scene(grid , 500 , 500);
         stage.setScene(s);
@@ -197,6 +198,16 @@ public class Main extends Application {
     }
 
     public static void ConfirmAdd(Stage stage, GridPane gridPane, TextField ID, TextField name, TextField color, TextField category, TextField size, TextArea description, TextField basePrice, TextField quantity, TextField imageSource, Button button, Inventory inv) {
+
+    }
+
+    public static Button getDefaultButton(String text) {
+        Button button = new Button(text);
+        button.setPrefSize(100,20);
+        button.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff;");
+        return button;
+    }
+    {
 
     }
     public static void main(String[] args) {
