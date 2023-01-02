@@ -34,7 +34,7 @@ public class ListOfOrders extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         int counter = 1;
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/Orders.dat"));
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/Data/orders.dat"));
         orders = (Map<Integer, ArrayList<Order>>) in.readObject();
         stage.setTitle("List of orders");
         ListView listView = new ListView();

@@ -89,7 +89,7 @@ public class Login extends Application {
         PasswordField passwordField = new PasswordField();
         passwordField.setPrefHeight(40);
         gridPane.add(passwordField, 1, 3);
-        Button submitButton = new Button("Log in");
+        Button submitButton = new Main().getDefaultButton("Log in");
         submitButton.setPrefHeight(40);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
@@ -119,7 +119,7 @@ public class Login extends Application {
         gridPane.add(submitButton, 0, 9, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0, 20, 0));
-        Button backButton = new Button("Back");
+        Button backButton = new Main().getLogOutButton("Back");
         backButton.setOnAction(e -> {
             try {
                 Main m = new Main();

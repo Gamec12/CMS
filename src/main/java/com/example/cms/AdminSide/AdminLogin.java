@@ -46,7 +46,7 @@ public class AdminLogin extends Application {
             }
         });
 
-        Button back = new Main().getDefaultButton("Back");
+        Button back = new Main().getLogOutButton("Back");
         back.setOnAction(e->{
             Main main = new Main();
             try {
@@ -60,7 +60,7 @@ public class AdminLogin extends Application {
         back.setDefaultButton(true);
         back.setPrefWidth(80);
         back.setAlignment(Pos.CENTER);
-        hBox.getChildren().addAll(login,back);
+        hBox.getChildren().addAll(back, login);
         hBox.setSpacing(140);
         grid.add(passwordField , 1 , 3);
         grid.add(hBox , 1 ,4);

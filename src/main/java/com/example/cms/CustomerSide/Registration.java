@@ -122,7 +122,7 @@ public class Registration extends Application {
         });
         gridPane.add(mobileNumberField, 1, 8);
 
-        Button submitButton = new Button("Submit");
+        Button submitButton = new Main().getDefaultButton("Submit");
         submitButton.setPrefHeight(40);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
@@ -131,7 +131,7 @@ public class Registration extends Application {
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0, 20, 0));
 
-        Button backButton = new Button("Back");
+        Button backButton = new Main().getLogOutButton("Back");
         backButton.setOnAction(e -> {
             Main main = new Main();
             try {
@@ -193,7 +193,7 @@ public class Registration extends Application {
                         nameField.getText(),
                         lastnameField.getText(),
                         mobileNumberField.getText(),
-                        ((RadioButton)g.getSelectedToggle()).getText(),
+                        ((RadioButton) g.getSelectedToggle()).getText(),
                         emailField.getText(),
                         usernameField.getText(),
                         passwordField.getText(),
