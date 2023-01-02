@@ -38,6 +38,10 @@ public class Order implements Serializable {
             for(int i = 0 ; i < c1.getArr().size();i++)
             {
                 c1.getArr().get(i).setQuantity(c1.getArr().get(i).getQuantity()-1);
+                Inventory myInv = new Inventory();
+                myInv.getProducts().get(c1.getArr().get(i).getItemID()).setQuantity(c1.getArr().get(i).getQuantity()-1);
+
+                Inventory.save();
             }
             orders.put(id , arrayList);
 

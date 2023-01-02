@@ -8,7 +8,7 @@ public class Inventory implements Serializable {
     private int capacity;                               // Determine the maximum number of products
     private int count;                                  // Current count of products in inventory
 
-    private Map<Integer, Product> products = new HashMap<>();                         // Initialize array of Product type
+    private static Map<Integer, Product> products = new HashMap<>();                         // Initialize array of Product type
 
     public Inventory() throws IOException, ClassNotFoundException {                                // Default constructor (calls parameterized constructor)
         this(1000);
@@ -32,7 +32,7 @@ public class Inventory implements Serializable {
         products.remove(id);
     }
 
-    public void save() throws IOException {                             // Saves inventory object to JSON
+    public static void save() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/Data/inventory.dat"));
         out.writeObject(products);
     }
@@ -49,5 +49,6 @@ public class Inventory implements Serializable {
     public Map<Integer, Product> getProducts() {
         return products;
     }
+
 
 }

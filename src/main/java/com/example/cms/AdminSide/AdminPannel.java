@@ -31,14 +31,20 @@ public class AdminPannel extends Application {
         HBox box = gethBox();
 
         Button orders = new Button("Orders");
+        orders.setOnAction(e->{
+            ListOfOrders listOfOrders = new ListOfOrders();
+            try {
+                listOfOrders.start(stage);
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         Button customers = new Button("Customers");
         customers.setOnAction(e -> {
             CustomersView customersView = new CustomersView();
             try {
                 customersView.start(stage);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         });
