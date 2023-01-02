@@ -59,7 +59,7 @@ public class AddItem extends Application {
 
         Label l4 = new Label("Category: ");
         ComboBox<String> category = new ComboBox<>();
-        Main.getSubCategories(category);
+        Main.getCategories(category);
         Label sub_category = new Label("Sub Category: ");
         ComboBox<String>subCategory = new ComboBox<>();
         Main.getSubCategories(subCategory);
