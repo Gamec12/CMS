@@ -30,7 +30,7 @@ public class AdminPannel extends Application {
 
         HBox box = gethBox();
 
-        Button orders = new Button("Orders");
+        Button orders = Main.getDefaultButton("Orders");
         orders.setOnAction(e->{
             ListOfOrders listOfOrders = new ListOfOrders();
             try {
@@ -39,7 +39,7 @@ public class AdminPannel extends Application {
                 throw new RuntimeException(ex);
             }
         });
-        Button customers = new Button("Customers");
+        Button customers = Main.getDefaultButton("Customers");
         customers.setOnAction(e -> {
             CustomersView customersView = new CustomersView();
             try {
@@ -74,7 +74,7 @@ public class AdminPannel extends Application {
 
         HBox bottom = gethBox();
         bottom.setAlignment(Pos.BOTTOM_LEFT);
-        Button add = new Button("Add a product");
+        Button add = Main.getDefaultButton("Add a product");
         add.setOnAction(e -> {
             AddItem addItem;
             try {
@@ -85,7 +85,7 @@ public class AdminPannel extends Application {
             addItem.start(stage);
         });
 
-        Button delete = new Button("Delete Item");
+        Button delete = Main.getDefaultButton("Delete Item");
         delete.setOnAction(e -> {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Enter an item to delete");
@@ -109,7 +109,7 @@ public class AdminPannel extends Application {
             }
         });
 
-        Button edit = new Button("Edit Item");
+        Button edit = Main.getDefaultButton("Edit Item");
         edit.setOnAction(e -> {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Enter an item to delete");
@@ -129,7 +129,7 @@ public class AdminPannel extends Application {
             }
 
         });
-        Button signout=new Button("signout");
+        Button signout= Main.getDefaultButton("signout");
         signout.setOnAction(
                 e->{
                     Main x=new Main();
@@ -141,8 +141,9 @@ public class AdminPannel extends Application {
                 });
         bottom.getChildren().addAll(add, delete, edit,signout);
         border.setBottom(bottom);
+        border.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        box.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        box.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
         stage.setScene(new Scene(border, 500, 500));
         stage.show();
