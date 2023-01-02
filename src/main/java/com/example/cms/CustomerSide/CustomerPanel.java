@@ -5,6 +5,7 @@ import com.example.cms.Classes.Inventory;
 import com.example.cms.Main;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -77,7 +78,7 @@ public class CustomerPanel extends Application {
 
 
 //        Button orders = new Button("Orders");
-        Button cart = new Button("Cart"); // maybe image in the future
+        Button cart = Main.getDefaultButton("Cart"); // maybe image in the future
         cart.setOnAction(e -> {
             Cart cart1 = new Cart(customer);
             cart1.start(stage);
@@ -85,7 +86,7 @@ public class CustomerPanel extends Application {
 
         //Label l1 = new Label("Welcome " + customer.getFirstName());
 
-        Label l1 = new Label(" Items in Cart: " + String.valueOf(customer.getCart().getCount()));
+        cart.setText("Cart: " + customer.getCart().getCount());
         Button signOut = Main.getLogOutButton("sign out");
         signOut.setOnAction(
                 e -> {
@@ -102,7 +103,7 @@ public class CustomerPanel extends Application {
 
 
         borderPane.setTop(hBox);
-        hBox.getChildren().addAll(signOut, cart, l1);
+        hBox.getChildren().addAll(signOut, cart );
 
 
         stage.setScene(new Scene(borderPane, 500, 500));
